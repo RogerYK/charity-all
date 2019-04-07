@@ -1,0 +1,48 @@
+.footer {
+    padding: 30px 0;
+    background: #3a3a3a;
+    color: #fff;
+
+    > .main-info {
+        display: flex;
+        justify-content: center;
+        font-size: 1.4em;
+        font-weight: 200;
+        line-height: 1.5;
+        text-align: center;
+    
+        > * {
+            width: 25%;
+        }
+    }
+
+    > .sub-info {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        text-align: center;
+        font-weight: 200;
+
+        > * {
+            width: 25%;
+
+        }
+
+        img {
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .credit-level {
+            > img {
+                width: 60px;
+            }
+        }
+    }
+
+    > .copyright {
+        text-align: center;
+        font-weight: 200;
+        margin-top: 30px;
+    }
+}

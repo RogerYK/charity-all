@@ -1,0 +1,36 @@
+.authentication {
+  background: white;
+  min-height: 500px;
+  padding: 15px 24px;
+
+  > .header {
+    line-height: 33px;
+    margin-top: 10px;
+    margin-bottom: -10px;
+
+    > .title {
+      font-weight: 700;
+      font-size: 24px;
+      color: #222c37;
+    }
+  }
+
+  > .content {
+    padding-top: 30px;
+
+    >.info {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+  }
+
+  > .resort-link-wrap {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+  }
+
+
+}

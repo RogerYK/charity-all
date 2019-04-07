@@ -1,0 +1,87 @@
+.project-card {
+    background: white;
+    transition: all .2s linear;
+
+    &:hover {
+        box-shadow: 0 10px 30px 0 rgba(0,0,0,.1);
+    }
+
+    >img {
+        display: block;
+        width: 100%;
+        height: 191px;
+    }
+
+    >.body {
+        padding: 0 15px 15px 15px;
+
+        >.project-name {
+            overflow: hidden;
+            height: 48px;
+            text-overflow: ellipsis;
+            margin: 16px 0;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 24px;
+            color: #222c37;
+        }
+
+        > .author {
+            display: flex;
+            > .logo {
+                width: 20px;
+                height: 20px;
+                border: 1px solid #dee0e1;
+                border-radius: 50%;
+                margin-right: 4px;
+            }
+
+            > .name {
+                font-size: 14px;
+                height: 22px;
+                line-height: 22px;
+                color: #7a8087;
+            }
+        }
+
+        > .status {
+            margin-top: 17px;
+            margin-bottom: 10px;
+            height: 16px;
+            overflow: hidden;
+
+            > .money {
+                float: left;
+                font-size: 16px;
+                line-height: 16px;
+                color: #21b6c7;
+                font-weight: 700;
+            }
+
+            > .percent {
+                font-size: 14px;
+                line-height: 16px;
+                color: #7a8087;
+                font-weight: 400;
+                float: right;
+            }
+        }
+
+        > .count {
+                padding-top: 10px;
+                font-size: 14px;
+                line-height: 21px;
+                color: #7a8087;
+                overflow: hidden;
+                text-overflow: ellipsis;
+        }
+    }
+
+    &.bordered {
+        border: 1px solid #dee0e1;
+
+        > .body {
+            border-top: 1px solid #dee0e1;
+        }
+    }
+}

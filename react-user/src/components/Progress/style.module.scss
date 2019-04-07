@@ -1,0 +1,12 @@
+
+.progress {
+    background: linear-gradient(90deg,#21b6c7,#00d6a6);
+    height: 6px;
+    
+
+    > .mask {
+        float: right;
+        background: #dee0e1;
+        height: 100%;
+    }
+}

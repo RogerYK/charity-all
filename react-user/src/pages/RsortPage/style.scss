@@ -1,0 +1,178 @@
+@import "../../config.scss";
+
+$title-color: #3d3d3d;
+
+.resort-page {
+    background-color: #f7f7f7;
+    >.container {
+        margin-top: 50px;
+        padding-top: 50px;
+
+        > .steps {
+            padding: 0 140px;
+        }
+
+        > .steps-content {
+            margin: 0 150px;
+            padding: 30px 0;
+            min-height: 400px;
+
+
+            > .steps-form {
+                > .title {
+                    color: $title-color;
+                    text-align: center;
+                    font-size: 18px;
+                    font-weight: 400;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                }
+            }
+
+            > .resort-protocol {
+                > .title {
+                    font-weight: bold;
+                    color: #3d3d3d;
+                    text-align: center;
+                    font-size: 18px;
+                }
+                > .protocol {
+                    height: 430px;
+                    background-color: #fff;
+                    border: 1px solid #ccc;
+                    padding: 25px 36px 40px;
+                    overflow-y: auto;
+                    margin: 30px 0 0 0;
+
+                    h3 {
+                        color: #3d3d3d;
+                        padding-bottom: 15px;
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                        font-size: 24px;
+                        font-family: inherit;
+                        font-weight: 500;
+                        line-height: 1.1;
+                    }
+                    p {
+                        color: #9b9b9b;
+                        font-size: 12px;
+                        line-height: 22px;
+                        padding-bottom: 10px;
+                        margin: 0 0 10px;
+                    }
+                }
+                > .checkbox {
+                    margin: 10px 20px;
+                }
+            }
+
+            > .identify-type {
+                .identify-list {
+                    margin-top: 50px;
+                    margin-bottom: 10px;
+                    padding: 0 40px;
+                    display: flex;
+                    justify-content: space-between;
+
+                    > .item {
+                        min-height: 365px;
+                        text-align: center;
+                        padding: 0 10px;
+                        margin-bottom: 10px;
+                        .panel {
+                            height: 90%;
+                            padding: 10px 17px;
+                            margin-bottom: 20px;
+                            > .img {
+                                width: 178px;
+                                height: 178px;
+                                margin: 0 auto;
+                                background-image: url("./spritesheet.png");
+                                
+                                &.personal {
+                                    background-position: -381px -5px;
+                                }
+    
+                                &.non-organization {
+                                    background-position: -193px -193px;
+                                }
+                                &.organization {
+                                    background-position: -5x -5px;
+                                }
+                            }
+                            > .name {
+                                padding: 10px 0;
+                                font-size: 20px;
+                                color: #333;
+                            }
+                            > .desc {
+                                font-size: 16px;
+                                color: #999;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            > .identify-info {
+                padding: 10px 17px;
+                background: white;
+
+                .custom-panel {
+                    border: none;
+                    background: #f2f5f7;
+                    margin-bottom: 5px;
+
+                    .ant-collapse-content-box {
+                        background-color: white;
+
+                        .identify-type {
+                            color: #999;
+                            font-size: 14px;
+                            font-weight: 700;
+                        }
+
+                        .phone-msg-input {
+                            width: 50%;
+                            margin-right: 10px;
+                        }
+
+                        .save-btn {
+                            display: block;
+                            margin-left: auto;
+                            margin-right: 10px;
+                        }
+
+                        .brief-intro-area {
+                            width: 100%;
+                            font-size: 14px;
+                            line-height: 1.45;
+                            color: #555;
+                        }
+
+                        .brief-intro {
+                            font-size: 13px;
+                            font-weight: 400;
+                            line-height: 1.4;
+                            color: #73879c;
+                        }
+
+                    }
+                }
+            }
+        }
+
+        > .steps-action {
+            padding: 20px 5px;
+            text-align: center;
+            width: 100%;
+            border-top: 1px solid #ddd;
+            margin-top: 10px;
+
+            > .action {
+                margin-right: 10px;
+            }
+        }
+    }
+}

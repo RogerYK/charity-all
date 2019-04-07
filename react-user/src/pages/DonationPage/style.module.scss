@@ -1,0 +1,31 @@
+.content {
+    padding-top: 50px;
+
+    .banner {
+        width: 100%;
+        height: 350px;
+        background: url("./succor_banner.png");
+        background-position: center center;
+    }
+
+    .main {
+        > .menu-wrap {
+            max-width: 1080px;
+            margin: 0 auto;
+            > .search {
+                width: 300px;
+                float: right;
+            }
+        }
+
+        > .project-content-wrap {
+            background: #f8f8f9;
+            overflow: hidden;
+
+            > .project-content {
+                max-width: 1080px;
+                margin: 0 auto;
+            }
+        }
+    }
+}

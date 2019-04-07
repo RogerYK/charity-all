@@ -1,0 +1,31 @@
+@import "../../../config.scss";
+
+.search-page {
+
+    .search-div {
+        width: 980px;
+        margin: auto;
+        margin-top: 70px;
+        background: #f4f4f4;
+        border-top: 2px solid $primary-color;
+        border-bottom: 1px solid #E5E5E5;
+        display: flex;
+        align-items: center;
+        padding: 10px 10px;
+    }
+    
+    .project-fliter {
+        display: flex;
+        line-height: 20px;
+        align-items: center;
+        margin-right: 30px;
+    }
+    .project-fliter .label {
+        white-space: nowrap;
+        margin-right: 9px;
+    }
+    
+    .search-div .searchInput {
+        margin-left: 310px;
+    }
+}

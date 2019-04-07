@@ -1,0 +1,60 @@
+.project-show {
+}
+
+.project-show-wrap {
+    max-width: 1170px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.project-show .project {
+    width: 30%;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+
+}
+
+.project-show .project-author-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-show .project-type {
+    background: #f8b500;
+    color: white;
+    padding: 3px 5px;
+    font-size: 13px;
+    border-radius: 3px;
+}
+
+.project-show .project-name {
+    font-weight: 700px;
+    font-size: 24px;
+    padding: 10px 0;
+}
+
+.project-show .project-record {
+    display: flex;
+}
+.project-show .project-record-item {
+    flex: 1 1 auto;
+    text-align: center;
+    border-right: 1px solid #e7e7e7;
+}
+.project-show .project-record-item:last-child {
+    border-right: none;
+}
+.project-show .project-record-item .amount{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.project-show .project-record-item .amount .suffix{
+    font-size: 14px;
+}

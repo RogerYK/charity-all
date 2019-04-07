@@ -1,0 +1,21 @@
+.about-page {
+    > .container {
+        padding-top: 50px;
+
+        .section {
+            padding-top: 50px;
+
+            > .section-head {
+                padding-top: 10px;
+                padding-bottom: 10px;
+                font-size: 30px;
+                text-align: center;
+                font-weight: 700;
+            }
+
+            > .body {
+                padding-top: 40px;
+            }
+        }
+    }
+}

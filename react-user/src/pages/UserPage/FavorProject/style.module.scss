@@ -1,0 +1,45 @@
+.favor-projects {
+  background: white;
+
+  min-height: 500px;
+  padding: 15px 24px;
+
+  > .header {
+    line-height: 33px;
+    margin-top: 10px;
+    margin-bottom: -10px;
+
+    > .title {
+      font-weight: 700;
+      font-size: 24px;
+      color: #222c37;
+    }
+
+    > .total {
+      font-size: 16px;
+      padding-left: 40px;
+      color: #7a8087;
+    }
+  }
+
+  > .project-list {
+    padding-bottom: 20px;
+
+    > .content {
+      > .empty-projects {
+        text-align: center;
+        display: block;
+        margin-top: 30px;
+        background: url("./empty_project@2x.png") center 20px / 130px 130px no-repeat;
+        padding-top: 160px;
+      }
+
+    }
+    
+    > .pagination-wrap {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

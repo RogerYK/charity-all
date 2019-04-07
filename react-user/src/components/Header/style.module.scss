@@ -1,0 +1,79 @@
+@import "../../config.scss";
+
+.header {
+    background: #fff;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    height: 50px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.header-wrap {
+    max-width: 1170px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    line-height: 50px;
+}
+
+.header .logo img {
+    height: 40px;
+}
+
+.top-navbar {
+    display: flex;
+}
+.top-navbar .navbar-item {
+    padding: 0 10px;
+    color: #777;
+
+    &.active {
+        color: $primary-color;
+    }
+}
+
+.top-navbar .navbar-item:hover {
+    background: #e8e8e8;
+    color: $primary-color;
+}
+
+.top-user-info {
+    float: right;
+    height: 100%;
+}
+.top-user-info .tourist-div{
+    height: 50px;
+    width: 145px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 33px;
+}
+
+.header .link {
+    color: #777;
+}
+
+.header .link:hover {
+    color: $primary-color;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #dee0e1;
+    box-sizing: border-box;
+}
+
+.user-div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+}

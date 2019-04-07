@@ -1,0 +1,490 @@
+.detail-page {
+    .content-container {
+        padding-top: 41px;
+        width: 980px;
+        margin: 50px auto;
+
+        > .content-top {
+            padding-bottom: 34px;
+            > .title {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                margin-bottom: 8px;
+
+                .project-name {
+                    font-size: 24px;
+                    line-height: 32px;
+                    color: #2f3742;
+                }
+
+                .share-links {
+                    display: flex;
+
+                    .word {
+                        margin-right: 5px; 
+                    }
+
+                    .share-icon {
+                        width: 19px;
+                        height: 19px;
+                        opacity: 0.5;
+                        background-image: url("./lp_icon_gather_png8_v3.png");
+                        margin-left: 3px;
+
+                        &.qq-weibo{
+                            background-position: 0 0;
+                        }
+
+                        &.qq-space {
+                            background-position: -19px 0;   
+                        }
+
+                        &.xl-weibo {
+                            background-position: -78px 0;
+                        }
+
+                        &.rr {
+                            background-position: -97px 0;
+                        }
+
+                        &.kx {
+                            background-position: -118px 0;
+                        }
+                    }
+                }
+            }
+            .project {
+                background-color: #fff;
+                border: 1px solid #dadada;
+                border-top: 3px solid #35b306;
+                display: flex;
+
+                .project-img {
+                    width: 500px;
+                    height: 280px;
+                    background-color: #f1f1f1;
+                    border-right: 1px solid #dadada;
+                    position: relative;
+
+                    .verification {
+                        background: url("./real_icon.png") no-repeat;
+                        position: absolute;
+                        width: 49px;
+                        height: 43px;
+                        right: 0;
+                        top: -8px;
+                    }
+
+                    .img {
+                        width: 100%;
+                        height: 100%;
+                        background-position: center center;
+                        background-repeat: no-repeat;
+                        background-size: 100% 100%;
+                    }
+
+                }
+
+                .project-detail {
+                    flex: 1 1 auto;
+                    display: flex;
+                    flex-direction: column;
+                    > .item {
+                        margin-left: 34px;
+                        margin-bottom: 20px;
+                        display: flex;
+                        align-items: center;
+
+                        > .label {
+                            font: 14px microsoft yahei;
+                            margin-right: 27px;
+                            color: #858585;
+                        }
+
+                        &.project-status {
+                            padding: 10px 0;
+                            border-bottom: 1px solid #e2e2e2;
+                        }
+                        &.raised-money {
+                            .label {
+                                background-color: red;
+                                color: white;
+                                padding: 0 3px;
+                                position: relative;
+                                &::before {
+                                    content: "";
+                                    position: absolute;
+                                    border: 3px solid red;
+                                    border-color: transparent transparent transparent red;
+                                    left: 100%;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                }
+                            }
+
+                            .field {
+                                .num {font-size: 14px;}
+                            }
+                        }
+                        &.time-range {
+                            .field {
+                                color: #858585;
+                                font-style: 12px;
+                            }
+                        }
+                        &.donate-money {
+                            flex: 1 1 auto;
+                            border-top: 1px solid #e2e2e2;
+                            background-color: #f1f1f1;
+                            margin: 0;
+                            padding-left: 34px;
+                            padding-top: 10px;
+                            line-height: 26px;
+                            .field {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+
+                                .radio {
+                                    border: 1px solid #ddd;
+                                    padding: 1px;
+                                    height: 26px;
+                                    line-height: 22px;
+                                    width: 45px;
+                                    background-color: #fff;
+                                    text-align: center;
+                                    margin-right: 20px;;
+
+                                    &.active {    
+                                        padding: 0;
+                                        border: 2px solid #589f23;
+                                    }
+                                }
+
+                                .input-div {
+                                    display: flex;
+                                    border: 1px solid #eee;
+                                    padding: 1px;
+
+                                    &.active {    
+                                        padding: 0;
+                                        border: 2px solid #589f23;
+                                    }
+
+                                    .addon {
+                                        border: 1px solid #ddd;
+                                        width: 45px;
+                                        display: inline-block;
+                                        background-color: #fff;
+                                        text-align: center;
+                                    }
+
+                                    input {
+                                        width: 92px;
+                                        border: none;
+                                        border-left: none;
+                                        text-indent: 3px;
+                                        outline: 0;
+                                    }
+                                }
+                            }
+                        }
+                        &.detail-bottom {
+                            margin: 0;
+                            padding-left: 34px;
+                            flex: 1 1 auto;
+                            display: flex;
+                            background-color: #f1f1f1;
+
+                            > .donate-btn {
+                                width: 117px;
+                                height: 40px;
+                                border: none;
+                                cursor: pointer;
+                                color: #FFF;
+                                font-size: 16px;
+                                font-weight: bold;
+                                text-align: center;
+                                line-height: 40px;
+                                margin-right: 16px;
+                                background-color: #589f23;
+                            }
+
+                            > .wechat-pay {
+                                background: url("./succor_wx_icon5.png") 4px 6px no-repeat #fff;
+                                padding-left: 40px;
+                                width: 117px;
+                                height: 38px;
+                                font-size: 16px;
+                                line-height: 38px;
+                                margin-right: 16px;
+                                color: #646464;
+
+                            }
+                            
+                            > .donation-info {
+                                > .item {
+                                    display: flex;
+                                    
+                                    > .label {
+                                        font-size: 12px;
+                                        color: #9c9a9b;
+                                    }
+
+                                    > .field {
+                                        > .num {
+                                            font-size: 12px;
+                                            color: #f43f00;
+                                            font-family: Tahoma, Geneva, sans-serif;
+                                            line-height: 18px;
+                                            margin: 0 5px;
+                                            font-weight: bold;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        > .content-bottom {
+            margin-top: 21px;
+            display: flex;
+            justify-content: space-between;
+            > .bottom-left {
+                width: 598px;
+
+                .project-content { 
+                    h3 {
+                        background: url("./border-bottom.png") no-repeat left bottom;
+                        padding-bottom: 14px;
+                        padding-top: 30px;
+                        margin-bottom: 17px;
+                        font: 22px microsoft yahei;
+                        color: #2a2a2a;
+                    }
+                    h4 {
+                        padding-bottom: 14px;
+                        margin-bottom: 17px;
+                        padding-top: 30px;
+                        font: 18px microsoft yahei;
+                        color: #2a2a2a;
+                    }
+                    p {
+                        color: rgb(119, 119, 119);
+                        width: 596px;
+                        font: 14px/28px "微软雅黑";
+                        margin: 0px;
+                    }
+                    img {
+                        margin: 15px 0;
+                        display: block;
+                        width: 500px;
+                    }
+                    .donation-btn {
+                        width: 176px;
+                        height: 48px;
+                        margin: 30px auto 0 auto;
+                        display: block;
+                    }
+                }
+
+                .timeline {
+                    margin-top: 30px;
+                    .timeline-right {
+                        margin-left: 30px;
+                        h3 {
+                            color: #000;
+                            line-height: 1;
+                            padding-bottom: 15px;
+                            font-size: 16px;
+                            margin: 0;
+                        }
+                        p {
+                            margin-bottom: 20px;
+                            font-size: 14px;
+                            color: #999;
+                            line-height: 26px;
+                        }
+                        .time {
+                            color: #777;
+                            font: 14px/28px;
+                            margin-bottom: 20px;
+                        }
+                    }
+                }
+
+            }
+            > .bottom-right {
+                margin-top: 46px;
+
+                > .weichat-qrccode {
+
+                    height: 90px;
+                    margin-bottom: 12px;
+                    border: 1px solid #dcdcdc;
+                    padding: 12px;
+                    display: flex;
+    
+                    > .img {
+                        margin-right: 10px;
+                        width: 74px;
+                        height: 74px;
+    
+                        background: url("./qrcode.gif") no-repeat;
+                    }
+    
+                    > .body {
+                        > .title {
+                            font-weight: 600;
+                            font-size: 15px;
+                            color: #787878;
+    
+                            > .icon {
+                                background: url("./lp_icon_gather_png8_v3.png") -84px -237px no-repeat #fff;
+                                display: inline-block;
+                                height: 17px;
+                                margin: 0;
+                                padding: 0;
+                                vertical-align: middle;
+                                width: 21px;
+                            }
+    
+                        }
+                        > .tip {
+                            color: #787878;
+                            margin-top: 12px;
+                            font-size: 12px;
+                            line-height: 18px;
+                        }
+                    }
+                }
+
+                > .project-organization {
+                    margin-bottom: 16px;
+                    background-color: #f5f5f5;
+                    padding-left: 32px;
+                    padding-right: 20px;
+                    border: 1px solid #d9d9d9;
+                    padding-bottom: 20px;
+
+                    > .item {
+                        padding-bottom: 30px;
+                        border-bottom: 1px solid #e1e1e1;
+
+                        &:last-child {border-bottom: none;}
+
+                        > .title {
+                            padding: 23px 0 18px 0;
+                            font: 16px hiragino sans gb, microsoft yahei, simsun, tahoma, sans-serif;
+                            color: #2f3742;
+                        }
+                        > .body {
+                            padding-bottom: 8px;
+                            color: #777;
+                        }
+                    }
+                }
+
+                > .donation-feedback {
+                    background-color: #f5f5f5;
+                    border: 1px solid #d9d9d9;
+
+                    > .title {
+                        margin: 18px 0 16px 32px;
+                        font: 16px hiragino sans gb, microsoft yahei, simsun, tahoma, sans-serif;
+                        color: #2f3742;
+                    }
+
+                    > .item {
+                        font-size: 12px;
+                        background: url("./lp_icon_gather_png8_v3.png") no-repeat ;
+                        padding: 15px 32px 16px 32px;
+                        margin-bottom: 16px;
+                        color: #777;
+                        line-height: 20px;
+                        border-bottom: 1px solid #e1e1e1;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                            border-bottom: none;
+                        }
+
+                        &:hover {
+                            background-color: #e1e1e1;
+                        }
+
+                        &.love-icon {
+                            background-position:  -118px -133px;
+                        }
+                        &.caibei-icon {
+                            background-position: -118px -207px;
+                        }
+                        &.bean-icon {
+                            background-position: -118px -37px;
+                        }
+                    }
+                }
+
+                > .right-recommend {
+                    > .title {
+                        padding-top: 0;
+                        margin-top: 34px;
+                        font: 16px hiragino sans gb, microsoft yahei, simsun, tahoma, sans-serif;
+                        color: #2f3742;
+                        border-bottom: 1px solid #c5c8ce;
+                        > .text {
+                            display: inline-block;
+                            padding-bottom: 5px;
+                            border-bottom: 2px solid #777;
+                        }
+                    }
+                    > .project-list {
+                        padding-top: 22px;
+                    }
+                }
+
+                > .frequently-problems {
+                    font-size: 12px;
+                    > .title {
+                        padding-top: 0;
+                        margin-top: 34px;
+                        color: #2f3742;
+                        border-bottom: 1px solid #c5c8ce;
+                        > .text {
+                            display: inline-block;
+                            font: 16px hiragino sans gb, microsoft yahei, simsun, tahoma, sans-serif;
+                            padding-bottom: 5px;
+                            border-bottom: 2px solid #777;
+                        }
+
+                        > a {
+                            float: right;
+                            color: #777;
+                            font-size: 12px;
+
+                        }
+                    }
+
+                    > .problem-list {
+                        padding-top: 25px;
+                        > .item {
+                            margin-bottom: 16px;
+                        }
+                    }
+
+                    a {
+                        color: #777;
+                        &:hover {
+                            text-decoration: underline;
+                            color: #589f23;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

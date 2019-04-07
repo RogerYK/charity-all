@@ -1,0 +1,74 @@
+.record {
+  
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: white;
+  box-shadow: 0px 2px 8px 0 rgba(0, 0, 0, 0.1);
+  height: 150px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+
+  .project-img {
+    width: 200px;
+    height: 100%;
+  }
+
+  .project-info {
+    width: 180px;
+    height: 100%;
+    padding: 20px 20px;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      left: 100%;
+      top:0;
+      bottom: 0;
+      width: 1px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      background: #cccccc;
+    }
+
+    > .name {
+      height: 48px;
+      line-height: 24px;
+      font-size: 14px;
+      color: #223318;
+      font-weight: bold;
+    }
+
+    > .other {
+      height: 24px;
+    }
+
+    > .money {
+      line-height: 26px;
+      font-size: 14px;
+      color: #223318;
+      font-weight: bold;
+
+      display: flex;
+      justify-content: space-between;
+
+      > .num {
+        color: #223318;
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  > .actions {
+    height: 100%;
+    flex-grow: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+}

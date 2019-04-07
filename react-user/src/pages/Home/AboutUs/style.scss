@@ -1,0 +1,33 @@
+.home-aboutus {
+    background: #fff;
+    height: 500px;
+
+    > .body {
+
+        max-width: 1170px;
+        margin: auto;
+        padding-top: 70px;
+
+        .aboutus-item {
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+
+
+            .title {
+                text-align: center;
+                font-size: 20px;
+                background: #ff5b37;
+                color: #fff;
+                padding: 20px;
+            }
+            .content {
+                padding: 15px;
+                padding-top: 30px;
+                height: 250px;
+                font-size: 15px;
+                border-top: none;
+            }
+        }
+    }
+}

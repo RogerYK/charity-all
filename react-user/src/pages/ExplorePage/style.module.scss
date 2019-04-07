@@ -1,0 +1,46 @@
+.expore-page {
+  background: #f8f8f9;
+}
+
+.main {
+  padding-top: 50px;
+  max-width: 1080px;
+  margin: auto;
+
+  > .header {
+    margin-top: 60px;
+    padding-bottom: 20px;
+    width: 100%;
+    border-bottom: 1px solid #dee0e1;
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 16px;
+    color: #7a8087;
+    line-height: 24px;
+
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #222c37;
+      line-height: 24px;
+      margin-right: 40px;
+    }
+
+    .dropdown {
+      margin-left: 60px;
+    }
+  }
+
+  > .content {
+    padding: 20px 0 40px 0;
+
+    min-height: 500px;
+
+    > .pagination-wrap {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

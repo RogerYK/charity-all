@@ -1,0 +1,70 @@
+.user-content {
+
+    background: white;
+
+    min-height: 800px;
+
+    > .user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 14px;
+        font-variant: tabular-nums;
+        line-height: 1.5;
+        color: rgba(0,0,0,.65);
+        .user-account {
+            margin-bottom: 20px;
+            text-align: center;
+            > .name {
+                font-size: 20px;
+                line-height: 28px;
+                font-weight: 500;
+                color: rgba(0,0,0,.85);
+                margin-bottom: 4px;
+            }
+        }
+
+        .user-items {
+
+            margin-bottom: 20px;
+
+            > .item {
+                display: flex;
+                > .label {
+                    width: 50px;
+                    margin-right: 5px;
+                }
+
+                > .field {
+                    flex: 1 1 auto;
+                }
+            }
+        }
+
+        .footer {
+            white-space: nowrap;
+            display: flex;
+
+            > .footer-item {
+                padding: 0 5px;
+                flex: 1 1 auto;
+
+                &:first-child {
+                    padding-left: 0;
+                }
+            }
+        }
+
+    }
+
+    .message-title {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 33px;
+        color: #222c37;
+    }
+
+    .message-list {
+        min-height: 200px;
+    }
+}

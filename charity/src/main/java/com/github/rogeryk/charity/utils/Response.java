@@ -1,0 +1,24 @@
+package com.github.rogeryk.charity.utils;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+
+@Data
+@AllArgsConstructor
+public class Response {
+
+    private int errCode;
+
+    private Object data;
+
+    private String msg;
+
+    public static  Response ok(Object data) {
+        return new Response(0, data, "");
+    }
+
+    public static Response error(int errCode, String msg) {
+        return new Response(errCode, null, msg);
+    }
+}

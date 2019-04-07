@@ -1,0 +1,23 @@
+.user-page {
+    > .container {
+        padding: 0!important;
+        width: 1080px;
+        margin: 110px auto 40px;
+
+        display: flex;
+        align-items: flex-start;
+        
+        > .side-menu {
+            flex: 1 1;
+            margin-right: 30px;
+
+            .index {
+
+            }
+        }
+
+        > .content {
+            flex: 4 4;
+        }
+    }
+}

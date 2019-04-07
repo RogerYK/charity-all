@@ -1,0 +1,22 @@
+.home-advantages {
+    height: 550px;
+}
+.home-advantages .body{
+    max-width: 1170px;
+    margin: auto;
+}
+
+
+.advantage {
+    text-align: center;
+}
+.advantage h2{
+    font-weight: 700;
+    margin-top: 1em;
+    font-size: 25px;
+}
+.advantage p{
+    font-size: 1.2em;
+    font-weight: 300;
+    line-height: 1.4;
+}

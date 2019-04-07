@@ -1,0 +1,27 @@
+
+.recommend-show {
+    padding-top: 30px;
+
+    > .projects-wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        overflow: hidden;
+        > .project-list-wrap {
+            margin-top: 20px;
+            >.title {
+                margin-top: 30px;
+                padding-bottom: 20px;
+                font-size: 24px;
+                font-weight: 700;
+                line-height: 18px;
+                border-bottom: 1px solid #dee0e1;
+                color: #222c37;
+            }
+            >.project-list {
+                padding-top: 20px;
+        
+            }
+        }
+    }
+
+}
