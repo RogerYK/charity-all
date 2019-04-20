@@ -8,13 +8,14 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Banner {
+public class News {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    private String name;
+
     private String img;
 
-    Long projectId;
 }

@@ -1,5 +1,9 @@
-.user-page {
-    > .container {
+.container-wrap {
+    background: #f8f8f9;
+    overflow: hidden;
+}
+
+     .container {
         padding: 0!important;
         width: 1080px;
         margin: 110px auto 40px;
@@ -10,14 +14,9 @@
         > .side-menu {
             flex: 1 1;
             margin-right: 30px;
-
-            .index {
-
-            }
         }
 
         > .content {
             flex: 4 4;
         }
     }
-}

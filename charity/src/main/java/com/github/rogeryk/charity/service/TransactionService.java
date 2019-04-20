@@ -1,14 +1,19 @@
 package com.github.rogeryk.charity.service;
 
-import com.github.rogeryk.charity.domain.*;
-import com.github.rogeryk.charity.repository.*;
+import com.github.rogeryk.charity.domain.Project;
+import com.github.rogeryk.charity.domain.Transaction;
+import com.github.rogeryk.charity.domain.User;
+import com.github.rogeryk.charity.repository.ProjectRepository;
+import com.github.rogeryk.charity.repository.TransactionRepository;
+import com.github.rogeryk.charity.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -41,6 +46,12 @@ public class TransactionService {
         transactionRepository.save(ts);
         payee.setMoney(payee.getMoney().add(amount));
         userRepository.save(payee);
+    }
+
+    public Page<Transaction> donationBy(User user, Pageable pageable) {
+        return transactionRepository.findAllByPayerIsAndType(user,
+                Transaction.TransactionType.Donation,
+                pageable);
     }
 
 }

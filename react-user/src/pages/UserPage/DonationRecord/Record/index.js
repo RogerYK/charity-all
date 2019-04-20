@@ -1,5 +1,5 @@
 import React from 'react'
-import {convertMoneyStr} from '../../../../utils'
+import {convertMoneyStr} from '../../../../utils/format'
 
 import styles from './style.module.scss'
 import { Button } from 'antd';

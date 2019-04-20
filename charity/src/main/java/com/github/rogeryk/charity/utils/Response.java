@@ -18,6 +18,9 @@ public class Response {
         return new Response(0, data, "");
     }
 
+    public static Response ok() {
+        return new Response(0, null, null);}
+
     public static Response error(int errCode, String msg) {
         return new Response(errCode, null, msg);
     }

@@ -3,13 +3,15 @@ package com.github.rogeryk.charity.service;
 import com.github.rogeryk.charity.domain.Category;
 import com.github.rogeryk.charity.domain.Project;
 import com.github.rogeryk.charity.domain.User;
+import com.github.rogeryk.charity.exception.ServiceException;
 import com.github.rogeryk.charity.repository.CategoryRepository;
 import com.github.rogeryk.charity.repository.ProjectRepository;
+import com.github.rogeryk.charity.utils.ErrorCodes;
+import com.github.rogeryk.charity.utils.PageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -35,41 +37,34 @@ public class ProjectService {
         return projectRepository.findAll(pageable).getContent();
     }
 
-    @Cacheable(key = "'projectByCategory('+#p0+','+#p1+','+#p2+','+#p3+','+#p4+')'")
-    public Page<Project> getProjectByCategory(Long id,
-                                              Integer page,
-                                              Integer limit,
-                                              String sortField,
-                                              String sortDirection) throws Exception {
-        Category category = categoryRepository.findById(id).orElseThrow(Exception::new);
-        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
-        Pageable pageable = PageRequest.of(page, limit, sort);
-        return projectRepository.findByCategory(category, pageable);
+    @Cacheable
+    public PageData<Project> getProjectByCategory(Long id, Pageable pageable) {
+        Category category = categoryRepository
+                .findById(id)
+                .orElseThrow(() -> new ServiceException(ErrorCodes.CATEGORY_NOT_EXIST, "分类不存在"));
+        return PageData.of(projectRepository.findByCategory(category, pageable));
     }
 
-    @Cacheable(key = "'findByName('+#p0+','+#p1+','+#p2+','+#p3+','+#p4+')'")
-    public Page<Project> findProjectByNameLike(String name,
-                                           int page,
-                                           int size,
-                                           String field,
-                                           String direction) {
+    @Cacheable
+    public PageData<Project> findProjectByNameLike(String name, Pageable pageable) {
         name = "%" + name + "%";
-        PageRequest pageRequest = PageRequest.of(page, size,
-                Sort.by(Sort.Direction.valueOf(direction), field));
-        return projectRepository.findAllByNameLike(name, pageRequest);
+        return PageData.of(projectRepository.findAllByNameLike(name, pageable));
+
     }
 
-    @Cacheable(key = "'findById('+#p0+')'")
+    @Cacheable
     public Project getProject(Long id) {
-        return projectRepository.getOne(id);
+        return projectRepository
+                .findById(id)
+                .orElseThrow(() -> new ServiceException(ErrorCodes.PROJECT_NOT_EXIST, "项目不存在"));
     }
 
-    public Page<Project> findUserFavorProjects(User user, Pageable pageable) {
-        return projectRepository.findAllByFavorUsersContains(user, pageable);
+    public PageData<Project> findUserFavorProjects(User user, Pageable pageable) {
+        return PageData.of(projectRepository.findAllByFavorUsersContains(user, pageable));
     }
 
-    public Page<Project> findUserReleaseProjects(User user, Pageable pageable) {
-        return projectRepository.findAllByAuthor(user, pageable);
+    public PageData<Project> findUserReleaseProjects(User user, Pageable pageable ) {
+        return PageData.of(projectRepository.findAllByAuthor(user, pageable));
     }
 
 

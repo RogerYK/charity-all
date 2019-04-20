@@ -23,7 +23,8 @@ spring:
       max-file-size: 2MB
       max-request-size: 2MB
   jackson:
-    date-format: YYYY-MM-DD HH:mm:ss
+    date-format: 'yyyy-MM-dd HH:mm:ss'
+    time-zone: GMT+8
 
 
   data:
@@ -65,7 +66,6 @@ logging:
   level:
     root: info
     com.github.rogeryk.charity: debug
-debug: true
 
 
 

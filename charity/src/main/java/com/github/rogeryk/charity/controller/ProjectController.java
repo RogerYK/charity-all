@@ -1,23 +1,31 @@
 package com.github.rogeryk.charity.controller;
 
+import com.github.rogeryk.charity.controller.form.PageParam;
 import com.github.rogeryk.charity.controller.form.ProjectForm;
 import com.github.rogeryk.charity.domain.Project;
 import com.github.rogeryk.charity.domain.User;
 import com.github.rogeryk.charity.service.ProjectService;
 import com.github.rogeryk.charity.service.RecommendProjectService;
 import com.github.rogeryk.charity.service.UserService;
-import com.github.rogeryk.charity.utils.Response;
 import com.github.rogeryk.charity.utils.PageData;
-import lombok.extern.slf4j.Slf4j;
+import com.github.rogeryk.charity.utils.Response;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/project")
@@ -35,16 +43,13 @@ public class ProjectController {
     private UserService userService;
 
     @GetMapping("/")
-    public Response getProject(Long id) {
+    public Response byId(@NotNull Long id) {
         Project project = projectService.getProject(id);
-        if (project == null) {
-            return Response.error(1, "错误");
-        }
         return Response.ok(project);
     }
 
-    @PostMapping("/save")
-    public Response saveProject(@RequestBody ProjectForm form) {
+    @PostMapping("/")
+    public Response save(@RequestBody ProjectForm form) {
         Project project = null;
         if (form.getId() == null) {
             String phoneNumber = (String) SecurityContextHolder
@@ -56,9 +61,6 @@ public class ProjectController {
             project.setAuthor(user);
         } else {
             project = projectService.getProject(form.getId());
-            if (project == null) {
-                return Response.error(1, "项目不存在");
-            }
         }
 
         form.merge(project);
@@ -70,38 +72,29 @@ public class ProjectController {
 
 
     @GetMapping("/byName")
-    public Response searchByName(@NotBlank String name,
-                                 @RequestParam(defaultValue = "0") Integer page,
-                                 @RequestParam(defaultValue = "12") Integer size,
-                                 @RequestParam(defaultValue = "createTime") String field,
-                                 @RequestParam(defaultValue = "DESC") String direction) {
-        Page<Project> projects = projectService.findProjectByNameLike(name,
-                page,
-                size,
-                field,
-                direction);
-        return Response.ok(PageData.of(projects));
+    public Response searchByName(@NotBlank String name, PageParam pageParam) {
+        PageData<Project> projects = projectService.findProjectByNameLike(name, pageParam.toPageable());
+        return Response.ok(projects);
     }
 
-
     @GetMapping("/byCategory")
-    public Response getProjectByCategory(@NotNull Long categoryId,
-                                         @RequestParam(defaultValue = "0") Integer page,
-                                         @RequestParam(defaultValue = "12") Integer size,
-                                         @RequestParam(defaultValue = "createTime") String sortField,
-                                         @RequestParam(defaultValue = "DESC") String sortDirection) {
-        Page<Project> projectPage = null;
-        try {
-            projectPage = projectService.getProjectByCategory(categoryId,
-                    page,
-                    size,
-                    sortField,
-                    sortDirection);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.error(1, "错误");
-        }
-        return Response.ok(PageData.of(projectPage));
+    public Response getProjectByCategory(@NotNull Long categoryId, PageParam pageParam) {
+        PageData<Project> projectPage = projectService.getProjectByCategory(categoryId, pageParam.toPageable());
+        return Response.ok(projectPage);
+    }
+
+    @GetMapping("/favoritedBy")
+    public Response favoritedBy(@NotNull Long userId, PageParam pageParam) {
+        User user = userService.findById(userId);
+        PageData<Project> projectPage = projectService.findUserFavorProjects(user, pageParam.toPageable());
+        return Response.ok(projectPage);
+    }
+
+    @GetMapping("/releasedBy")
+    public Response releasedBy(@NotNull Long userId, PageParam pageParam) {
+        User user = userService.findById(userId);
+        PageData<Project> projectPage = projectService.findUserReleaseProjects(user, pageParam.toPageable());
+        return Response.ok(projectPage);
     }
 
     @GetMapping("/hot")

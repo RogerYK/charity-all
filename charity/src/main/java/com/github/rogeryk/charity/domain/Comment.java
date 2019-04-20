@@ -1,13 +1,26 @@
 package com.github.rogeryk.charity.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 
-import javax.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import lombok.Data;
 
 @Entity
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public class Comment {
 
     @Id
@@ -23,10 +36,21 @@ public class Comment {
     @ManyToOne
     private User commenter;
 
-    @OneToMany(mappedBy = "lastComment")
+    @OneToOne
+    private Comment replyComment;
+
+    @OneToMany(mappedBy = "parentComment")
     private List<Comment> subComment;
 
     @JsonIgnore
     @ManyToOne
-    private Comment lastComment;
+    private Comment parentComment;
+
+    @CreatedDate
+    private Date createdTime;
+
+    @Override
+    public String toString() {
+        return "{" + "id:" + id + ",content:" + content + ",cteatedTime:" + createdTime.toString() + "}";
+    }
 }

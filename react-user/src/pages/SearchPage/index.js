@@ -1,47 +1,27 @@
 import React, { Component } from 'react'
-
-import Header from '../../components/Header'
-import Footer from '../../components/Footer';
-
 import styles from './style.module.scss'
-import { SearchDiv } from './SearcchDiv';
-import { ProjectList } from './ProjectList';
-import { searchProjectByName } from '../../api';
-import { Pagination } from 'antd';
+import SearchDiv from './searchDiv';
+import { ProjectResult } from './ResultDiv';
+import { observer, inject } from 'mobx-react';
 
+@inject('searchStore')
+@observer
 export default class SearchPage extends Component {
 
-  state = {
-    name: '',
-    projects: [],
-    page: 0,
-    total: 0,
-  }
-
-  componentDidMount() {
-    window.scrollTo(0, 0)
-  }
-
-  handleSearch= (name) => {
-    this.setState({name}, this.getProjects)
-  }
-
-  getProjects = () => {
-    searchProjectByName(this.state.name, this.state.page).then(res => {
-      this.setState({total: res.data.total, projects: res.data.content})
-    })
-  }
-
   render() {
+    const total = this.props.searchStore.projectResult.total
     return (
-      <div className='search-page'>
-        <Header />
-        <SearchDiv onSearch={this.handleSearch}/>
-        <ProjectList projects={this.state.projects}/>
-        <div className={styles['pagination-wrap']}>
-          <Pagination current={this.state.page+1} pageSize={10} total={this.state.total} />
+      <div className={styles['search-container']}>
+        <SearchDiv />
+        <div className={styles['result']}>
+          <div className={styles['title']}>
+            搜索结果
+            <span className={styles['total']}>共{total}个结果</span>
+          </div>
+          <div className={styles['content']}>
+            <ProjectResult />
+          </div>
         </div>
-        <Footer />
       </div>
     )
   }

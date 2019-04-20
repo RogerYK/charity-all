@@ -9,26 +9,20 @@ import com.github.rogeryk.charity.repository.ProjectRepository;
 import com.github.rogeryk.charity.repository.TransactionRepository;
 import com.github.rogeryk.charity.repository.UserRepository;
 import com.github.rogeryk.charity.utils.ErrorCodes;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.management.ServiceNotFoundException;
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -64,7 +58,8 @@ public class UserService implements UserDetailsService {
     }
 
     public User findById(Long userId) {
-        return userRepository.findById(userId).orElse(null);
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new ServiceException(ErrorCodes.USER_NOT_EXIST, "用户不存在"));
     }
 
     @Override
@@ -82,28 +77,18 @@ public class UserService implements UserDetailsService {
     }
 
     public UserInfo getUserInfo(Long id) {
-        UserInfo userInfo = new UserInfo();
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ServiceException(ErrorCodes.USER_NOT_EXIST, "用户不存在"));
-        userInfo.setAvatar(user.getAvatar());
-        userInfo.setAddress(user.getAddress());
-        userInfo.setDonatedCount(transactionRepository.countAllByPayerEqualsAndType(user, Transaction.TransactionType.Donation));
-        userInfo.setNickname(user.getNickName());
-        userInfo.setPresentation(user.getProfession());
-        userInfo.setReleasedProjectCount(projectRepository.countProjectByAuthor(user));
-        return userInfo;
+        int donatedCount =  transactionRepository.countAllByPayerEqualsAndType(user, Transaction.TransactionType.Donation);
+        int releasedProjectCount = projectRepository.countProjectByAuthor(user);
+        return UserInfo.from(user, donatedCount, releasedProjectCount);
     }
 
     public UserInfo getUserInfo(String phoneNumber) {
-        UserInfo userInfo = new UserInfo();
         User user = userRepository.findByPhoneNumber(phoneNumber);
-        userInfo.setAvatar(user.getAvatar());
-        userInfo.setAddress(user.getAddress());
-        userInfo.setDonatedCount(transactionRepository.countAllByPayerEqualsAndType(user, Transaction.TransactionType.Donation));
-        userInfo.setNickname(user.getNickName());
-        userInfo.setPresentation(user.getPresentation());
-        userInfo.setReleasedProjectCount(projectRepository.countProjectByAuthor(user));
-        return userInfo;
+        int donatedCount =  transactionRepository.countAllByPayerEqualsAndType(user, Transaction.TransactionType.Donation);
+        int releasedProjectCount = projectRepository.countProjectByAuthor(user);
+        return UserInfo.from(user, donatedCount, releasedProjectCount);
     }
 
     public void saveUser(User user) {

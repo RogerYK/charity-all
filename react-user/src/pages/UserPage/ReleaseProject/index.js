@@ -7,31 +7,24 @@ import 'react-quill/dist/quill.snow.css'; // ES6
 import { Divider, Row, Col, Pagination, Modal } from 'antd';
 import ProjectCard from '../../../components/ProjectCard';
 
-import {getReleaseProjectsInfo, getReleaseProjects} from '@/api'
 import AddProjectForm from './AddProjectForm';
+import { observer, inject } from 'mobx-react';
 
 
+@inject('releaseStore')
+@observer
 export default class ReleaseProject extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      total: 0,
-      projects: [],
-      page: 1,
       modalVisible: false,
       newProject:{},
     }
   }
 
   componentDidMount() {
-    getReleaseProjects(0).then(res => {
-      this.setState({
-        page: 1,
-        total: res.data.total,
-        projects: res.data.content,
-      })
-    })
+    this.props.releaseStore.pullProjects()
   }
 
   showModal = () => {
@@ -44,8 +37,7 @@ export default class ReleaseProject extends Component {
 
 
   render() {
-    const total = this.state.total 
-    const projects = this.state.projects
+    const {total, projects, setPage} = this.props.releaseStore
     const visible = this.state.modalVisible
     return (
       <div className={styles['favor-projects']}>
@@ -68,7 +60,9 @@ export default class ReleaseProject extends Component {
             </div>}
           </div>
             <div className={styles['pagination-wrap']}>
-              <Pagination defaultCurrent={1} current={this.state.page} pageSize={9} total={this.state.total} />
+              <Pagination defaultCurrent={1} pageSize={9} total={this.state.total}
+                onChange={(page) => setPage(page-1)}
+               />
             </div>
         </div>
 

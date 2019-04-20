@@ -2,33 +2,41 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
+import { BrowserRouter as Router} from 'react-router-dom'
 
-import LoginPage from './pages/Login';
-import SignPage from './pages/SignPage';
-import SearchPage from './pages/SearchPage';
-import DonationPage from './pages/DonationPage';
-import DetailPage from './pages/DetailPage';
-import ResortPage from './pages/RsortPage';
+import {Provider} from 'mobx-react'
+import userStore from './store/userStore';
+import commonStore from './store/commonStore';
+import uiStore from './store/uiStore'
+import indexStore from './store/indexStore'
+import exploreStore from './store/exploreStore'
+import favoriteStore from './store/favoriteStore'
+import recordStore from './store/recordStore'
+import releaseStore from './store/releaseStore'
+import searchStore from './store/searchStore'
+import detailStore from './store/detailStore'
+import App from './App';
 
-import UserPage from './pages/UserPage';
-import ExplorePage from './pages/ExplorePage';
+const stores = {
+    userStore,
+    commonStore,
+    uiStore,
+    indexStore,
+    exploreStore,
+    favoriteStore,
+    recordStore,
+    releaseStore,
+    searchStore,
+    detailStore,
+}
 
 
 ReactDOM.render((
+<Provider {...stores}>
     <Router>
-        <Switch>
-        <Redirect exact from='/' to="/donation" />
-        <Route path='/login' component={LoginPage}/>
-        <Route path='/sign' component={SignPage} />
-        <Route path='/search' component={SearchPage} />
-        <Route path='/donation' component={DonationPage} />
-        <Route path='/detail/:id' component={DetailPage} />
-        <Route path="/resort" component={ResortPage} />
-        <Route path="/user" component={UserPage} />
-        <Route path="/explore" component={ExplorePage} />
-        </Switch>
+        <App />
     </Router>
+</Provider>
 ), document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

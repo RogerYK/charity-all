@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import { Card, Form, Input, Button, Icon, Checkbox, message, InputNumber } from 'antd'
+import { Card, Form, Input, Button, Icon, Checkbox} from 'antd'
 
-import { setToken } from '@/utils/auth'
-
-import { login } from '@/api'
 
 const FormItem = Form.Item
 
@@ -21,9 +18,9 @@ class RowLoginForm extends Component {
   render() {
     const { getFieldDecorator } = this.props.form
     return (
-      <div className='login-form-container'>
-        <Card className='login-card' title={<div style={{ textAlign: "center" }}>登陆</div>} headStyle={{ justifyContent: 'center' }}>
-          <Form className='login-form'>
+      <div className={this.props.className}>
+        <Card title={<div style={{ textAlign: "center" }}>登陆</div>} headStyle={{ justifyContent: 'center' }}>
+          <Form>
             <FormItem>
               {getFieldDecorator('phoneNumber',{
                 rules: [{
@@ -65,9 +62,9 @@ class RowLoginForm extends Component {
               })(
               <Checkbox>记住密码</Checkbox>
               )}
-              <a className='login-form-forgot' href=".">忘记密码</a>
-              <Button onClick={this.handleSubmit} type='primary' className='login-submit-btn'>登陆</Button>
+              <a style={{marginLeft: 20}} href=".">忘记密码</a>
             </FormItem>
+            <Button onClick={this.handleSubmit} type='primary' className='login-submit-btn'>登陆</Button>
           </Form>
         </Card>
       </div>
@@ -75,6 +72,7 @@ class RowLoginForm extends Component {
   }
 }
 
-export const LoginForm = Form.create()(RowLoginForm)
+const LoginForm = Form.create()(RowLoginForm)
+export default LoginForm
 
 

@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import ReactQuill from 'react-quill'
 import moment from 'moment'
-import styles from './style.module.scss'
 import { Form, Input, Upload, Icon, Button, DatePicker, InputNumber, message, Select } from 'antd';
-import { saveProject, getAllCategories } from '../../../../api';
 import config from '../../../../utils/config';
+import { inject, observer } from 'mobx-react';
+import api from '../../../../api';
 
+@inject('releaseStore')
+@observer
 export default class AddProjectForm extends Component {
 
   constructor(props) {
@@ -28,11 +30,12 @@ export default class AddProjectForm extends Component {
   }
 
   componentDidMount() {
-    getAllCategories().then(res => {
-      this.setState({categories: res.data})
-    }).catch(res => {
+    api.Category.all()
+      .then(res => {
+        this.setState({categories: res.data})
+      }).catch(res => {
       message.error('获取分类出错')
-    })
+      })
   }
 
   handleFileListChange = (info) => {
@@ -71,12 +74,9 @@ export default class AddProjectForm extends Component {
       img: this.state.imgList[0].response.data,
       gallery: this.state.fileList.map(f => f.response.data)
     }
-    saveProject(data).then(res => {
-      this.props.onSuccess()
-    }).catch(res =>{
-      message.error('保存失败')
 
-    })
+    
+    this.props.releaseStore.saveProject(data)
   }
 
   render() {

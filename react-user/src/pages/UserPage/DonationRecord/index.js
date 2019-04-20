@@ -4,33 +4,18 @@ import styles from './style.module.scss'
 import { Divider, Pagination } from 'antd';
 import Record from './Record'
 
-import {getRecordInfo, getRecords} from '@/api'
+import { observer, inject } from 'mobx-react';
 
+@inject('recordStore')
+@observer
 export default class DonationRecord extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      total: 0,
-      records: [],
-      page: 1,
-    }
-  }
-
   componentDidMount() {
-    getRecords(0).then(res => {
-      this.setState({
-        page: 1,
-        total: res.data.total,
-        records: res.data.content,
-      })
-    })
+    this.props.recordStore.pullRecords()
   }
-
 
   render() {
-    const total = this.state.total
-    const records = this.state.records
+    const {total, records, setPage} = this.props.recordStore
     return (
       <div className={styles['donation-records']}>
         <div className={styles['header']}>
@@ -43,7 +28,9 @@ export default class DonationRecord extends Component {
             {records.map((r, i) =><div key={i} style={{marginBottom: '20px', width: '640px'}}><Record key={i} record={r} /></div>)}
           </div>
             <div className={styles['pagination-wrap']}>
-              <Pagination defaultCurrent={1} current={this.state.page} pageSize={9} total={this.state.total} />
+              <Pagination defaultCurrent={1} pageSize={9} total={total}
+                onChange={(page) => setPage(page-1)}
+               />
             </div>
         </div>
       </div>

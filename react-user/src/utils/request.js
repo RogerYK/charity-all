@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getToken } from './auth';
+import commonStore from '../store/commonStore'
 
 const service = axios.create({
   baseURL: 'http://localhost:8080/api',
@@ -8,9 +8,8 @@ const service = axios.create({
 
 service.interceptors.request.use(
   config => {
-    const token = getToken()
-    if (token) {
-      config.headers['access_token'] = getToken()
+    if (commonStore.accessToken) {
+      config.headers['access_token'] = commonStore.accessToken
     }
     return config
   },

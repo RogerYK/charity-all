@@ -3,7 +3,9 @@ package com.github.rogeryk.charity.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.rogeryk.charity.fliter.AuthticationFliter;
 import com.github.rogeryk.charity.fliter.LoginFilter;
+import com.github.rogeryk.charity.service.UserService;
 import com.github.rogeryk.charity.utils.Response;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,23 +18,26 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
+
+    @Autowired
+    private UserService userService;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -46,9 +51,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/**").authenticated()
                 .and()
                 .formLogin().disable()
-                .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new AuthticationFliter(authenticationManager(), redisTemplate), BasicAuthenticationFilter.class)
-                .addFilterBefore(corsFilter(), CorsFilter.class)
+                .addFilter(customAuthenticationFilter())
+                .addFilter(authticationFliter())
+                .addFilter(corsFilter())
                 .csrf().disable();
         http.exceptionHandling().accessDeniedHandler(getAccessDeniedHandler())
                 .authenticationEntryPoint(new AuthenticationEntryPoint() {
@@ -87,13 +92,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-//        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//        manager.createUser(User.withDefaultPasswordEncoder().username("123").password("123").roles("USER").build());
-//        return manager;
-//    }
 
 
     private LoginFilter customAuthenticationFilter() throws Exception {
@@ -101,4 +99,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         loginFilter.setFilterProcessesUrl("/api/auth/login");
         return loginFilter;
     }
+
+    private AuthticationFliter authticationFliter() throws Exception {
+        return new AuthticationFliter(authenticationManager(), userService, redisTemplate);
+    }
+
 }

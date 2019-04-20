@@ -1,52 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 
 import styles from './style.module.scss'
 import logo from './charity.png'
-import { getCurUserInfo } from '../../api';
 import { Dropdown, Menu } from 'antd';
+import { inject, observer } from 'mobx-react';
 
-export default class Header extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      isShow: true,
-      logined: false,
-      user: {}
-    }
-    this.scrolledY = 0
-  }
-
-  refreshUserInfo() {
-    getCurUserInfo().then(res => {
-      console.log(res.data)
-        this.setState({logined: true, user: res.data})
-    }).catch(res => {
-      this.setState({logined: false, user: {}})
-    })
-  }
-
-  handScroll = (e) => {
-    this.setState({ isShow: (window.scrollY <= this.scrolledY || window.scrollY <= 50) })
-    this.scrolledY = window.scrollY
-  }
-
-  componentDidMount() {
-    this.refreshUserInfo()
-    window.addEventListener('scroll', this.handScroll)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handScroll)
-  }
-
-  render() {
-    const isShow = this.state.isShow
+const Header = inject('userStore', 'uiStore')(observer((props) => {
+    const isShow = props.uiStore.headerShow
+    const {currentUser} = props.userStore
     return (
+      <div className={styles['header-wrap']}>
       <div className={styles['header']} style={{ visibility: isShow ? 'visible' : 'hidden' }}>
         <div className={styles['top-user-info']}>
-          {!this.state.logined ? 
+          {!currentUser ? 
           <div className={styles['tourist-div']}>
             <Link to="/login" className={styles['link']}>登陆</Link>
             <Link to="/sign" className={styles['link']}>注册</Link>
@@ -62,7 +29,7 @@ export default class Header extends Component {
                 <Menu.Item><Link to="/user/feedback">反馈建议</Link></Menu.Item>
               </Menu>
             }>
-              <img className={styles['avatar']} src={this.state.user.avatar} alt="avatar" />
+              <img className={styles['avatar']} src={currentUser.avatar} alt="avatar" />
             </Dropdown>
           </div>}
         </div>
@@ -71,7 +38,7 @@ export default class Header extends Component {
             <img src={logo} alt='慈善' />
           </div>
           <div className={styles['top-navbar']} >
-            <NavLink to="/donation" className={styles['navbar-item']} key='1'>首页</NavLink>
+            <NavLink to="/" className={styles['navbar-item']} key='1'>首页</NavLink>
             <NavLink to="/explore" className={styles['navbar-item']} key='2'>发现项目</NavLink>
             <NavLink to="/resort" className={styles['navbar-item']} key='3'>求助</NavLink>
             <NavLink to="/aboutus" className={styles['navbar-item']} key='4'>关于我们</NavLink>
@@ -79,6 +46,10 @@ export default class Header extends Component {
           </div>
         </div>
       </div>
+      </div>
     )
   }
-}
+))
+
+export default Header
+ 

@@ -6,8 +6,8 @@ import { Divider, Form, Upload, Button, Input, Radio, DatePicker, Cascader, mess
 import default_icon from './default_profile@3x.png'
 import RadioGroup from 'antd/lib/radio/group';
 import config from '../../../utils/config';
-import { getToken } from '../../../utils/auth';
-import { updateUser } from '../../../api';
+import { observer, inject } from 'mobx-react';
+import commonStore from '../../../store/commonStore';
 
 
 
@@ -71,7 +71,7 @@ class RowUserForm extends Component {
               {getFieldDecorator('avatar')(
                 <Upload
                   name="file"
-                  headers={{ acess_token: getToken() }}
+                  headers={{ acess_token: commonStore.accessToken }}
                   action={config.baseURL + '/upload/'}
                   listType="picture-card"
                   onChange={this.handleAvatarChange}
@@ -134,6 +134,8 @@ const UserForm = Form.create({
   },
 })(RowUserForm)
 
+@inject('userStore')
+@observer
 export default class UserInfo extends Component {
 
   constructor(props) {
@@ -165,9 +167,7 @@ export default class UserInfo extends Component {
       presentation: fields.presentation ? fields.presentation.value : undefined,
     }
     console.log(data)
-    updateUser(data).then(res => {
-      message.success('修改成功')
-    })
+    this.props.userStore.updateUser(data)
   }
 
   render() {

@@ -1,26 +1,15 @@
 import React, { Component } from 'react'
-import { Card, Icon, Avatar, Divider, Row, Col } from 'antd';
+import { Card, Avatar, Divider } from 'antd';
 
 import styles from './index_content.module.scss'
-import { getCurUserInfo } from '../../../api';
+import { observer, inject } from 'mobx-react';
 
+@inject('userStore')
+@observer
 export default class IndexContent extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      user: {}
-    }
-  }
-
-  componentDidMount() {
-    getCurUserInfo().then(res => {
-      this.setState({user: res.data})
-    })
-  }
-
   render() {
-    const user = this.state.user
+    const user = this.props.userStore.currentUser
     return (
       <div className={styles['user-content']}>
         <Card

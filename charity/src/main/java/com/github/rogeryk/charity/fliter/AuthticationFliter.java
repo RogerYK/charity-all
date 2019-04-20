@@ -1,28 +1,33 @@
 package com.github.rogeryk.charity.fliter;
 
+import com.github.rogeryk.charity.domain.User;
+import com.github.rogeryk.charity.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class AuthticationFliter extends BasicAuthenticationFilter {
 
     private RedisTemplate<Object, Object> redisTemplate;
 
-    public AuthticationFliter(AuthenticationManager authenticationManager, RedisTemplate<Object, Object> redisTemplate) {
+    private UserService userService;
+
+    @Autowired
+    public AuthticationFliter(AuthenticationManager authenticationManager, UserService userService, RedisTemplate<Object, Object> redisTemplate) {
         super(authenticationManager);
+        this.userService = userService;
         this.redisTemplate = redisTemplate;
     }
 
@@ -37,7 +42,9 @@ public class AuthticationFliter extends BasicAuthenticationFilter {
         String username = (String) redisTemplate.opsForValue().get(token);
 
         if (username != null) {
-            Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>());
+            logger.info("filter"+username);
+            User user = userService.findUserByPhoneNumber(username);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(user, username, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         chain.doFilter(request, response);

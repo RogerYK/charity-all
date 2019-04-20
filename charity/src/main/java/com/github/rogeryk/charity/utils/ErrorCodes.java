@@ -10,5 +10,8 @@ public interface ErrorCodes {
     int USER_EXIST = 350; // 用户已存在
     int USER_NOT_EXIST = 351; //用户不存在
 
+    int CATEGORY_NOT_EXIST = 400; //分类不存在
+    int PROJECT_NOT_EXIST = 401; //项目不存在
+
 
 }
