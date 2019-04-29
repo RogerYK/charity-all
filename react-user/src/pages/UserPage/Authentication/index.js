@@ -37,7 +37,7 @@ export default class Authentication extends Component {
             status="wait"
           current={this.state.current}>
             {steps.map(s => (
-              <Steps.Step key={s} title={s.title}></Steps.Step>
+              <Steps.Step key={s.title} title={s.title}></Steps.Step>
             ))}
           </Steps>
           <div className={styles['info']}>{steps[current].info}</div>

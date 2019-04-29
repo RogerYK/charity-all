@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/api/comment")
 @Slf4j
+@Validated
 public class CommentController {
 
     @Autowired
@@ -41,9 +42,8 @@ public class CommentController {
 
     @GetMapping("/byProjectId")
     public Response byProjectId(@NotNull Long projectId, PageParam pageParam) {
-        PageData<Comment> commentPageData = commentService.findCommentByProjectId(projectId,
+        PageData<Comment> commentPageData = commentService.findRootCommentByProjectId(projectId,
                 pageParam.toPageable());
-        log.info("commentPage:"+ commentPageData.toString());
-        return Response.ok(commentService.findCommentByProjectId(projectId, pageParam.toPageable()));
+        return Response.ok(commentService.findRootCommentByProjectId(projectId, pageParam.toPageable()));
     }
 }

@@ -2,7 +2,9 @@ package com.github.rogeryk.charity.controller;
 
 import com.github.rogeryk.charity.controller.form.PageParam;
 import com.github.rogeryk.charity.controller.form.ProjectForm;
+import com.github.rogeryk.charity.controller.form.ProjectScheduleForm;
 import com.github.rogeryk.charity.domain.Project;
+import com.github.rogeryk.charity.domain.ProjectSchedule;
 import com.github.rogeryk.charity.domain.User;
 import com.github.rogeryk.charity.service.ProjectService;
 import com.github.rogeryk.charity.service.RecommendProjectService;
@@ -68,6 +70,19 @@ public class ProjectController {
         projectService.save(project);
 
         return Response.ok(null);
+    }
+
+    @PostMapping("/schedule")
+    public Response addSchedule(@Validated @RequestBody ProjectScheduleForm form) {
+        ProjectSchedule schedule = new ProjectSchedule();
+        schedule.setContent(form.getContent());
+
+        Project project = new Project();
+        project.setId(form.getProjectId());
+        schedule.setProject(project);
+
+        projectService.addSchedule(schedule);
+        return Response.ok();
     }
 
 

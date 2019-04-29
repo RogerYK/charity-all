@@ -34,15 +34,6 @@
     padding-bottom: 20px;
 
 
-    > .content {
-      > .empty-projects {
-        text-align: center;
-        display: block;
-        margin-top: 30px;
-        background: url("./empty_project@2x.png") center 20px / 130px 130px no-repeat;
-        padding-top: 160px;
-      }
-    }
     
     > .pagination-wrap {
       margin-top: 20px;
@@ -55,4 +46,29 @@
 
 .project-modal {
   margin-top: 20px;
+}
+
+.project-card-wrap {
+  position: relative;
+
+  &:hover {
+    .project-mask {
+      visibility: visible;
+    }
+  }
+
+  .project-mask {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .4);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }

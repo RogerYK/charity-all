@@ -9,6 +9,8 @@
     "babel-plugin-import": "^1.11.0",
     "customize-cra": "^0.2.12",
     "js-cookie": "^2.2.0",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
     "mobx": "^5.9.4",
     "mobx-react": "^5.4.3",
     "mobx-utils": "^5.2.0",

@@ -58,11 +58,7 @@ class RowLoginForm extends Component {
               )}
             </FormItem>
             <FormItem>
-              {getFieldDecorator('remeber',{
-              })(
-              <Checkbox>记住密码</Checkbox>
-              )}
-              <a style={{marginLeft: 20}} href=".">忘记密码</a>
+              <a href=".">忘记密码</a>
             </FormItem>
             <Button onClick={this.handleSubmit} type='primary' className='login-submit-btn'>登陆</Button>
           </Form>

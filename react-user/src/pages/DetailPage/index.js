@@ -12,10 +12,8 @@ import Detail from "./Detail/detail";
 export default class DetailPage extends Component {
 
   componentDidMount() {
-    console.log(this.props.match.params)
     const id = this.props.match.params.id;
     this.props.detailStore.id = id
-    console.log(this.props.detailStore.id)
   }
 
 

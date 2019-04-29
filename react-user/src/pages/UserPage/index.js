@@ -18,6 +18,14 @@ import { observer, inject } from 'mobx-react';
 @observer
 export default class UserPage extends Component {
 
+  constructor(props) {
+    super(props)
+    const logined = this.props.userStore.logined
+    if (!logined) {
+      this.props.history.push('/login')
+    }
+  }
+
   render() {
     const user = this.props.userStore.currentUser
     return (

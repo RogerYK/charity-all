@@ -26,7 +26,12 @@ export default class LoginPage extends Component {
         message.success("登陆成功");
         this.props.commonStore.setToken(res.data);
         setTimeout(() => {
-          this.props.history.push("/");
+          const history = this.props.history
+          if (history.length === 0) {
+            history.push("/")
+          } else {
+            history.goBack()
+          }
         }, 1000);
       })
       .catch(res => {

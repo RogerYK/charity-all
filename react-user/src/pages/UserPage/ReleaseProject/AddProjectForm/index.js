@@ -20,8 +20,8 @@ export default class AddProjectForm extends Component {
         categoryId: '',
         content: '',
         targetMoney: '',
-        startTime: undefined,
-        endTime: undefined,
+        startTime: moment(),
+        endTime: moment(),
       },
       fileList: [],
       imgList: [],
@@ -67,7 +67,6 @@ export default class AddProjectForm extends Component {
   }
 
   handleSubmit = () => {
-    /*do submit */
     const data = {
       id: this.props.id,
       ...this.state.form,
@@ -77,6 +76,13 @@ export default class AddProjectForm extends Component {
 
     
     this.props.releaseStore.saveProject(data)
+      .then(res => {
+        message.success('保存成功')
+        this.props.onCancel()
+      }).catch(res => {
+        message.error('保存失败')
+        this.props.onCancel()
+      })
   }
 
   render() {

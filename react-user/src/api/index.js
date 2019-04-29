@@ -17,6 +17,8 @@ const Project = {
     request.get('/project/releasedBy', {params:{userId}}),
   save: (project) =>
     request.post('/project/', project),
+  addSchedule: (data) =>
+    request.post('/project/schedule', data)
 }
 
 const Comment = {
@@ -63,7 +65,7 @@ const Upload = {
 
 const User = {
   current: () => 
-    request.get('/user/'),
+    request.get('/user/current'),
   update: (newUser) =>
     request.put('/user/', newUser)
 }

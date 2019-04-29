@@ -4,78 +4,125 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './style.module.scss'
 import 'react-quill/dist/quill.snow.css'; // ES6
-import { Divider, Row, Col, Pagination, Modal } from 'antd';
+import { Divider, Button, Pagination, Modal, Empty } from 'antd';
 import ProjectCard from '../../../components/ProjectCard';
 
 import AddProjectForm from './AddProjectForm';
 import { observer, inject } from 'mobx-react';
+import { observable } from 'mobx';
+import ProjectList from '../../../components/ProjectList';
+import ScheduleForm from './AddScheduleForm';
 
 
 @inject('releaseStore')
 @observer
 export default class ReleaseProject extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      modalVisible: false,
-      newProject:{},
-    }
-  }
+  @observable projectModalVisible = false
+
+  @observable scheduleModalVisible = false
+
+  @observable selectProjectId
 
   componentDidMount() {
     this.props.releaseStore.pullProjects()
   }
 
-  showModal = () => {
-    this.setState({modalVisible: true})
+  showProjectModal = () => {
+    this.projectModalVisible = true
   }
 
-  handleCancel = () => {
-    this.setState({modalVisible: false})
+  projectModalCancel = () => {
+    this.projectModalVisible = false
+  }
+
+  showScheduleModal = (projectId) => {
+    this.selectProjectId = projectId
+    this.scheduleModalVisible = true
+  }
+
+  scheduleModalCancel = () => {
+    this.scheduleModalVisible = false
   }
 
 
   render() {
     const {total, projects, setPage} = this.props.releaseStore
-    const visible = this.state.modalVisible
+    console.log(projects.length)
+    const {
+      selectProjectId,
+      projectModalVisible,
+      scheduleModalVisible,
+      showProjectModal,
+      projectModalCancel,
+      showScheduleModal,
+      scheduleModalCancel
+    } = this
     return (
       <div className={styles['favor-projects']}>
         <div className={styles['header']}>
           <span className={styles['title']}>我发布的项目</span>
           <span className={styles['total']}>共{total}个项目</span>
-          <div onClick={e => this.showModal()} className={styles['add-project']}>发布项目</div>
+          <div onClick={showProjectModal} className={styles['add-project']}>发布项目</div>
         </div>
         <Divider />
         <div className={styles['project-list']}>
           <div className={styles['content']}>
-            {projects.length > 0 ? <Row gutter={24}>{projects.map((p, i) => (
-              <Col key={i} span={8} style={{marginBottom: '20px'}}>
-                <Link to="/detail">
-                  <ProjectCard bordered={true} project={p} />
-                </Link>
-              </Col>
-            ))}</Row>:<div className={styles['empty-projects']}>
-              还没有发布项目
-            </div>}
+          { projects.length > 0 ?
+
+            <ProjectList 
+                projects={projects}
+                bordered={true}
+                cols={3} 
+                itemWidth={255}
+                itemRender={p => (
+                  <div key={p.id} className={styles['project-card-wrap']} >
+                    <ProjectCard project={p} />
+                    <div className={styles['project-mask']}>
+                      <Button type="primary" style={{marginBottom: 20}} onClick={() => showScheduleModal(p.id)}>添加进展</Button>
+                      <Link to={`/detail/${p.id}`}><Button>查看详情</Button></Link>
+                    </div>
+                  </div>
+                  )
+                }
+              />
+            :
+            <Empty description="未发布项目" />
+          }
+            
           </div>
             <div className={styles['pagination-wrap']}>
+              { total > 9 ?
               <Pagination defaultCurrent={1} pageSize={9} total={this.state.total}
                 onChange={(page) => setPage(page-1)}
                />
+               :
+               null
+              }
             </div>
         </div>
 
         <Modal
+          width={500}
+          name="添加进展"
+          visible={scheduleModalVisible}
+          footer={null}
+          onCancel={scheduleModalCancel}
+          title="添加进展"
+        >
+          <ScheduleForm onCancel={scheduleModalCancel} projectId={selectProjectId} />
+        </Modal>
+
+        <Modal
           width={800}
           name="新建项目"
-          visible={visible}
+          visible={projectModalVisible}
           footer={null}
-          onCancel={e => this.handleCancel()}
+          onCancel={projectModalCancel}
           title="添加项目"
         >
           <div className={styles['project-modal']}>
-            <AddProjectForm onSuccess={this.handleCancel} />
+            <AddProjectForm onCancel={projectModalCancel} />
           </div>
         </Modal>
       </div>

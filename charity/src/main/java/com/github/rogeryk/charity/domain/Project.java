@@ -2,15 +2,29 @@ package com.github.rogeryk.charity.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.AttributeConverter;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import lombok.Data;
 
 @Entity
 @Data
@@ -65,6 +79,9 @@ public class Project {
     @OneToMany(mappedBy = "project")
     @JsonIgnore
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "project")
+    private List<ProjectSchedule> projectSchedules;
 
     @JsonIgnore
     @ManyToMany

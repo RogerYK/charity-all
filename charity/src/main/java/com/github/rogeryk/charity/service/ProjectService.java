@@ -2,10 +2,12 @@ package com.github.rogeryk.charity.service;
 
 import com.github.rogeryk.charity.domain.Category;
 import com.github.rogeryk.charity.domain.Project;
+import com.github.rogeryk.charity.domain.ProjectSchedule;
 import com.github.rogeryk.charity.domain.User;
 import com.github.rogeryk.charity.exception.ServiceException;
 import com.github.rogeryk.charity.repository.CategoryRepository;
 import com.github.rogeryk.charity.repository.ProjectRepository;
+import com.github.rogeryk.charity.repository.ProjectScheduleRepository;
 import com.github.rogeryk.charity.utils.ErrorCodes;
 import com.github.rogeryk.charity.utils.PageData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class ProjectService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ProjectScheduleRepository projectScheduleRepository;
 
 
     @Cacheable(key = "'hotProject('+#p0+')'")
@@ -65,6 +70,10 @@ public class ProjectService {
 
     public PageData<Project> findUserReleaseProjects(User user, Pageable pageable ) {
         return PageData.of(projectRepository.findAllByAuthor(user, pageable));
+    }
+
+    public void addSchedule(ProjectSchedule schedule) {
+        projectScheduleRepository.save(schedule);
     }
 
 

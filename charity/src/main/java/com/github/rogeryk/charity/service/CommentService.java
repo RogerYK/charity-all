@@ -46,8 +46,8 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public PageData<Comment> findCommentByProjectId(Long projectId, Pageable pageable) {
-        return PageData.of(commentRepository.findAllByProjectId(projectId, pageable));
+    public PageData<Comment> findRootCommentByProjectId(Long projectId, Pageable pageable) {
+        return PageData.of(commentRepository.findByProjectIdAndParentCommentId(projectId, null, pageable));
     }
 
 }
