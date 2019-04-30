@@ -3,17 +3,18 @@ import { NavLink, Link } from 'react-router-dom'
 
 import styles from './style.module.scss'
 import logo from './charity.png'
-import { Dropdown, Menu } from 'antd';
+import { Dropdown, Menu, Avatar } from 'antd';
 import { inject, observer } from 'mobx-react';
 
-const Header = inject('userStore', 'uiStore')(observer((props) => {
+const Header = inject('userStore', 'uiStore', 'commonStore')(observer((props) => {
     const isShow = props.uiStore.headerShow
-    const {currentUser} = props.userStore
+    const logined = props.commonStore.logined
+    const {currentUser, pulling} = props.userStore
     return (
       <div className={styles['header-wrap']}>
       <div className={styles['header']} style={{ visibility: isShow ? 'visible' : 'hidden' }}>
         <div className={styles['top-user-info']}>
-          {!currentUser ? 
+          {!logined ? 
           <div className={styles['tourist-div']}>
             <Link to="/login" className={styles['link']}>登陆</Link>
             <Link to="/sign" className={styles['link']}>注册</Link>
@@ -29,7 +30,10 @@ const Header = inject('userStore', 'uiStore')(observer((props) => {
                 <Menu.Item><Link to="/user/feedback">反馈建议</Link></Menu.Item>
               </Menu>
             }>
-              <img className={styles['avatar']} src={currentUser.avatar} alt="avatar" />
+             {pulling ? 
+             <Avatar className={styles['avatar']} icon="user" />
+              :
+             <img className={styles['avatar']} src={currentUser.avatar} alt="avatar" />}
             </Dropdown>
           </div>}
         </div>

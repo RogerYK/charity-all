@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 
 import styles from './user.module.scss'
-import { Menu, Avatar } from 'antd';
+import { Menu, Avatar, Spin } from 'antd';
 import {Switch, Route, Link} from 'react-router-dom'
 import IndexContent from './index/index_content';
 import FavorProject from './FavorProject'
@@ -14,28 +14,35 @@ import FeedBack from './Feedback';
 import Authentication from './Authentication';
 import { observer, inject } from 'mobx-react';
 
-@inject("userStore")
+@inject("userStore", "commonStore")
 @observer
 export default class UserPage extends Component {
 
-  constructor(props) {
-    super(props)
-    const logined = this.props.userStore.logined
+
+  render() {
+    const logined = this.props.commonStore.logined
     if (!logined) {
       this.props.history.push('/login')
     }
-  }
-
-  render() {
-    const user = this.props.userStore.currentUser
+    const {currentUser, pulling} = this.props.userStore
     return (
       <div className={styles['container-wrap']}>
       <div className={styles["container"]}>
         <Menu className={styles["side-menu"]} defaultOpenKeys={["index"]}>
           <Menu.Item key="index" className={styles["index"]}>
             <Link to="/user">
-              <Avatar src={user.avatar} style={{ marginRight: "20px" }} />
-              <span>{user.nickname}</span>
+              {pulling || !logined ?
+                <>
+                  <Avatar icon="user" style={{marginRight: "20px"}} />
+                  <span>加载中</span>
+                </>
+                :
+                <>
+                  <Avatar src={currentUser.avatar} style={{ marginRight: "20px" }} />
+                  <span>{currentUser.nickname}</span>
+                </>
+
+              }
             </Link>
           </Menu.Item>
           <Menu.ItemGroup
@@ -74,6 +81,9 @@ export default class UserPage extends Component {
           </Menu.ItemGroup>
         </Menu>
         <div className={styles["content"]}>
+        { pulling || !logined ?
+          <div className={styles['spin-wrap']}><Spin size="large" /></div>
+          :
           <Switch>
             <Route exact path="/user/project/favor" component={FavorProject} />
             <Route
@@ -95,6 +105,7 @@ export default class UserPage extends Component {
             />
             <Route component={IndexContent} />
           </Switch>
+        }
         </div>
       </div>
       </div>
