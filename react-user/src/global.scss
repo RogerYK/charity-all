@@ -1,0 +1,18 @@
+@import 'config.scss';
+
+.header {
+  height: 64px;
+  line-height: 64px;
+  font-size: 24px;
+  font-weight: 700;
+  color: $text-color;
+}
+
+html, body {
+  color: $text-color;
+}
+
+a {
+  text-decoration: none;
+}
+

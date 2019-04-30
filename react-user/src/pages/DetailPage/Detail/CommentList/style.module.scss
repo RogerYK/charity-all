@@ -1,0 +1,28 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.comment-action {
+  display: inline-block;
+  font-size: 18px !important;
+  width: 50px;
+}
+
+.sub-comment-list {
+  background: #f8f8f9;
+  padding-left: 10px;
+  padding-bottom: 20px;
+
+  .load-more-wrap {
+    display: flex;
+    justify-content: center;
+
+    > .load-more {
+    color: #425eb3;
+      cursor: pointer;
+    }
+  }
+}
+

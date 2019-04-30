@@ -1,0 +1,19 @@
+
+.search-div {
+  margin: 0 auto;
+  width: 737px;
+  padding-top: 50px;
+
+  display: flex;
+
+  .search-input {
+    flex: 1 1 auto;
+  }
+
+  .search-btn {
+    margin-left: 10px;
+  }
+
+}
+
+

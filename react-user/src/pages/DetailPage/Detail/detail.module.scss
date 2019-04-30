@@ -1,0 +1,137 @@
+  .top-mark {
+    height: 50px;
+    width: 100%;
+    background: #f8f8f9;
+  }
+
+.content-bottom {
+  width: 1080px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: space-between;
+
+
+  > .bottom-left {
+    width: 598px;
+
+    .project-content {
+      h3 {
+        border-bottom: 2px black solid;
+        padding-bottom: 14px;
+        padding-top: 30px;
+        margin-bottom: 17px;
+        font: 22px microsoft yahei;
+        color: #2a2a2a;
+      }
+      h4 {
+        padding-bottom: 14px;
+        margin-bottom: 17px;
+        padding-top: 30px;
+        font: 18px microsoft yahei;
+        color: #2a2a2a;
+      }
+      p {
+        color: rgb(119, 119, 119);
+        width: 596px;
+        font: 14px/28px "微软雅黑";
+        margin: 0px;
+      }
+      img {
+        margin: 15px 0;
+        display: block;
+        width: 500px;
+      }
+      .donation-btn {
+        width: 176px;
+        height: 48px;
+        margin: 30px auto 0 auto;
+        display: block;
+      }
+    }
+
+    .timeline {
+      margin-top: 30px;
+      .timeline-right {
+        margin-left: 30px;
+        h3 {
+          color: #000;
+          line-height: 1;
+          padding-bottom: 15px;
+          font-size: 16px;
+          margin: 0;
+        }
+        p {
+          margin-bottom: 20px;
+          font-size: 14px;
+          color: #999;
+          line-height: 26px;
+        }
+        .time {
+          color: #777;
+          font: 14px/28px;
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+  > .bottom-right {
+
+    > .right-recommend {
+      > .title {
+        padding-top: 0;
+        margin-top: 34px;
+        font: 16px hiragino sans gb, microsoft yahei, simsun, tahoma, sans-serif;
+        color: #2f3742;
+        border-bottom: 1px solid #c5c8ce;
+        > .text {
+          display: inline-block;
+          padding-bottom: 5px;
+          border-bottom: 2px solid #777;
+        }
+      }
+      > .project-list {
+        padding-top: 22px;
+      }
+    }
+
+    > .frequently-problems {
+      font-size: 12px;
+      > .title {
+        padding-top: 0;
+        margin-top: 34px;
+        color: #2f3742;
+        border-bottom: 1px solid #c5c8ce;
+        > .text {
+          display: inline-block;
+          font: 16px hiragino sans gb, microsoft yahei, simsun, tahoma,
+            sans-serif;
+          padding-bottom: 5px;
+          border-bottom: 2px solid #777;
+        }
+
+        > a {
+          float: right;
+          color: #777;
+          font-size: 12px;
+        }
+      }
+
+      > .problem-list {
+        padding-top: 25px;
+        > .item {
+          margin-bottom: 16px;
+        }
+      }
+
+      a {
+        color: #777;
+        &:hover {
+          text-decoration: underline;
+          color: #589f23;
+        }
+      }
+    }
+  }
+}
