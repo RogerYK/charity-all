@@ -1,17 +1,25 @@
 package com.github.rogeryk.charity.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Version;
+
+import lombok.Data;
 
 @Data
 @Entity
@@ -48,16 +56,19 @@ public class User implements UserDetails {
     private Long version;
 
     @JsonIgnore
-    private String bubiAddress;
+    private String bumoAddress;
+
+    @JsonIgnore
+    private String bumoPrivateKey;
 
 
     @JsonIgnore
-    @ManyToMany
-    private List<Project> favorProjects;
+    @ManyToMany(mappedBy = "followedUsers")
+    private List<Project> followProjects;
 
     @JsonIgnore
     @ManyToMany
-    private List<User> favorUser;
+    private List<User> followedUsers;
 
     @JsonIgnore
     @OneToMany(mappedBy = "payer")

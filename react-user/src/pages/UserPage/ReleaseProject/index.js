@@ -60,16 +60,14 @@ export default class ReleaseProject extends Component {
     } = this
     return (
       <div className={styles['favor-projects']}>
-        <div className={styles['header']}>
+        <div className="title">
           <span className={styles['title']}>我发布的项目</span>
           <span className={styles['total']}>共{total}个项目</span>
           <div onClick={showProjectModal} className={styles['add-project']}>发布项目</div>
         </div>
-        <Divider />
         <div className={styles['project-list']}>
           <div className={styles['content']}>
           { projects.length > 0 ?
-
             <ProjectList 
                 projects={projects}
                 bordered={true}

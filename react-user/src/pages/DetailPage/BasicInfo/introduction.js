@@ -7,8 +7,7 @@ import moment from "moment";
 import { Button } from "antd";
 import IconFont from "../../../components/IconFont";
 
-const Introduction = props => {
-  const project = props.project;
+const Introduction = ({project, onDonate}) => {
   const author = project.author;
   const category = project.category;
 
@@ -64,7 +63,7 @@ const Introduction = props => {
               <div className={styles["label"]}>支持人数</div>
             </div>
             <div className={styles["action"]}>
-              <Button className={styles['btn']} size="large" type="primary">立即支持</Button>
+              <Button onClick={onDonate} className={styles['btn']} size="large" type="primary">立即支持</Button>
               <div className={styles["follow"]}><IconFont className={styles['icon']} type="icon-31shoucang" />关注</div>
             </div>
             <div className={styles['info']}> 人人都有一颗心,大多是善良的。在别人有难的时候,我们献出一点爱心,也许就能挽救一条生命。 </div>

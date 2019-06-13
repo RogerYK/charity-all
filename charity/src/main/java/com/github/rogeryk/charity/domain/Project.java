@@ -58,12 +58,16 @@ public class Project {
 
 
     @CreatedDate
-    private Date createTime = new Date();
+    private Date createdTime = new Date();
 
     private Date startTime;
 
     private Date endTime;
 
+    private String bumoAddress;
+
+    @JsonIgnore
+    private String bumoPrivateKey;
 
     @LastModifiedDate
     private Date updateTime;
@@ -85,7 +89,7 @@ public class Project {
 
     @JsonIgnore
     @ManyToMany
-    private List<User> favorUsers;
+    private List<User> followedUsers;
 
     public static class GalleryConverter implements AttributeConverter<List<String>, String> {
 

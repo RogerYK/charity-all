@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="project_state_bg_color">#fffcfcfc</color>
+    <color name="txt_black">#ff222c37</color>
+    <color name="white">#ffffffff</color>
+
+    <color name="user_head_bg">#ff7a8087</color>
+
+    <color name="txt_gray">#ff7a8087</color>
+    <color name="txt_gray_4">#ff7a8087</color>
+
+    <color name="active_state_end">#ffeeedeb</color>
+
+    <color name="black">#ff4a4a4a</color>
+    <color name="black_20">#cc222c37</color>
+    <color name="black_40">#66000000</color>
+    <color name="black_40_bg">#66000000</color>
+    <color name="black_50">#88000000</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_deep">#ff000000</color>
+    <color name="black_main">#ff222c37</color>
+    <color name="black_title">#ff222c37</color>
+    <color name="black_translucence_06">#0a000000</color>
+    <color name="black_translucence_12">#0f000000</color>
+
+    <color name="transparent">#00000000</color>
+
+
+    <color name="button_bg_color">#ff21b6c7</color>
+
+    <color name="main_bg">#fff2f3f3</color>
+
+    <color name="txt_link">#ff425eb2</color>
+
+    <color name="login_line_text">#ff223318</color>
+
+    <color name="edittext_bg_color">#fff8f8f9</color>
+    <color name="edittext_hint_color">#ffbcbfc3</color>
+
+        <color name="button_gray">#ff7a8087</color>
+    <color name="button_material_dark">#ff5a595b</color>
+    <color name="button_material_light">#ffd6d7d7</color>
+
+
+    <color name="code_color">#ff00cba6</color>
+    <color name="colorAccent">@color/background_title</color>
+    <color name="colorPrimary">#ff00cba6</color>
+    <color name="colorPrimaryDark">#ff00cba6</color>
+    <color name="color_00">#8a000000</color>
+    <color name="color_ff">#fff0f0f0</color>
+    <color name="background_title">#ff01a749</color>
+
+    <color name="text_color_green_4">#ff00cba6</color>
+
+    <color name="line">#ffdee0e1</color>
+
+    <color name="search_border_color">#ff7a8087</color>
+    <color name="search_text_color">#ff222c37</color>
+
+    <color name="background_line">#ffe5e5e5</color>
+
+</resources>

@@ -1,22 +1,7 @@
 .user-info {
-  background: white;
-
-
-  padding: 15px 24px;
-
-  > .header {
-    line-height: 33px;
-    margin-top: 10px;
-    margin-bottom: -10px;
-
-    > .title {
-      font-weight: 700;
-      font-size: 24px;
-      color: #222c37;
-    }
-  }
 
   > .content {
+    margin-top: 20px;
     .avatar-field {
       display:  flex;
       justify-content: space-between;

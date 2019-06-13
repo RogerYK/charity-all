@@ -63,7 +63,7 @@ export default class RankShow extends Component {
                 }}
               >
                 <div className={styles['info']}>
-                  <div className={styles['title']}>{n.name}</div>
+                  <div className={styles['title']}>{n.title}</div>
                 </div>
                 <img src={n.img} className={styles['ico']} alt="ico"/>
               </div>

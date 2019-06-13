@@ -32,6 +32,10 @@ public class Comment {
     @ManyToOne
     private Project project;
 
+    @JsonIgnore
+    @ManyToOne
+    private News news;
+
     @ManyToOne
     private User commenter;
 

@@ -27,10 +27,9 @@ export default class Authentication extends Component {
     const current = this.state.current
     return (
       <div className={styles['authentication']}>
-        <div className={styles['header']}>
-          <div className={styles['title']}>认证状态</div>
+        <div className="title">
+          <div className={styles['desc']}>认证状态</div>
         </div>
-        <Divider />
 
         <div className={styles['content']}>
           <Steps 

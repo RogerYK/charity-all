@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home_fragment"
+    >
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.github.rogeryk.charity_android.ui.fragment.HomeFragment"
+        android:label="Home"
+        />
+    <fragment
+        android:id="@+id/news_fragment"
+        android:name="com.github.rogeryk.charity_android.ui.fragment.NewsFragment"
+        android:label="News"
+        />
+    <fragment
+        android:id="@+id/search_fragment"
+        android:name="com.github.rogeryk.charity_android.ui.fragment.SearchFragment"
+        android:label="Search"
+        />
+    <fragment
+        android:id="@+id/my_fragment"
+        android:name="com.github.rogeryk.charity_android.ui.fragment.MyFragment"
+        android:label="My"
+        />
+</navigation>

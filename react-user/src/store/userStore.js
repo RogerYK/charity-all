@@ -16,8 +16,12 @@ class UserStore {
   }
   
   @action
-  pullUser() {
-    this.pulling = true;
+  pullUser(token) {
+    if (!commonStore.accessToken) {
+      return
+    }
+
+    this.pulling = true
     api.User.current()
       .then(action((res) => {
         this.currentUser = res.data

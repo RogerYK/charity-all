@@ -15,7 +15,7 @@ public class PageParam {
 
     private String direction = "desc";
 
-    private String field = "createTime";
+    private String field = "createdTime";
 
     public Pageable toPageable() {
        return PageRequest.of(page, size,

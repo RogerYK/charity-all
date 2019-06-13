@@ -1,36 +1,24 @@
 .favor-projects {
-  background: white;
 
-  min-height: 500px;
-  padding: 15px 24px;
 
-  > .header {
-    line-height: 33px;
-    margin-top: 10px;
-    margin-bottom: -10px;
-
-    > .title {
-      font-weight: 700;
-      font-size: 24px;
-      color: #222c37;
-    }
-
-    > .total {
+     .total {
       font-size: 16px;
       padding-left: 40px;
       color: #7a8087;
+      font-weight: normal;
     }
 
-    > .add-project {
+     .add-project {
       font-size: 16px;
       font-weight: 400px;
+      font-weight: normal;
       color: #576b95;
       float: right;
       cursor: pointer;
     }
-  }
 
   > .project-list {
+    margin-top: 20px;
     padding-bottom: 20px;
 
 

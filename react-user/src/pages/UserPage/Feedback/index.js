@@ -58,10 +58,9 @@ export default class FeedBack extends Component {
   render() {
     return (
       <div className={styles['feedback']}>
-        <div className={styles['header']}>
-          <div className={styles['title']}>客服留言</div>
+        <div className="title">
+          客服留言
         </div>
-        <Divider />
         <div className={styles['content']}>
           {this.getform()}
         </div>

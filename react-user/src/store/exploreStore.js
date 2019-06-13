@@ -15,7 +15,7 @@ class ExploreStore {
 
   @observable direction = 'desc'
 
-  @observable field = 'createTime'
+  @observable field = 'createdTime'
 
   pageSize = 12
 

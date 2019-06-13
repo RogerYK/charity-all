@@ -1,12 +1,16 @@
 package com.github.rogeryk.charity.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import lombok.Data;
 
 @Data
 @Entity
@@ -16,9 +20,10 @@ public class Transaction {
     @GeneratedValue
     private Long id;
 
-    private String tradeNo;
+    private String hash;
 
     private TransactionType type;
+
 
     @ManyToOne
     private Project project;
@@ -26,11 +31,7 @@ public class Transaction {
     private BigDecimal money;
 
     @CreatedDate
-    private Date createTime;
-
-    @JsonIgnore
-    @OneToOne
-    private Transaction lastTransaction;
+    private Date createdTime;
 
     @ManyToOne
     private User payer; //付款者
@@ -40,6 +41,7 @@ public class Transaction {
 
     public static enum TransactionType {
         Donation,
-        Consumption
+        Consumption,
+        Recharge
     }
 }

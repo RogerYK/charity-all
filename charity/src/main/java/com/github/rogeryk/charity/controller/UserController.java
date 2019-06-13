@@ -4,7 +4,7 @@ import com.github.rogeryk.charity.aop.login.LoginedUser;
 import com.github.rogeryk.charity.controller.form.SignForm;
 import com.github.rogeryk.charity.controller.form.UserForm;
 import com.github.rogeryk.charity.domain.User;
-import com.github.rogeryk.charity.domain.form.UserInfo;
+import com.github.rogeryk.charity.domain.vo.UserInfo;
 import com.github.rogeryk.charity.exception.ServiceException;
 import com.github.rogeryk.charity.service.UserService;
 import com.github.rogeryk.charity.utils.ErrorCodes;

@@ -1,9 +1,10 @@
 package com.github.rogeryk.charity.service;
 
+import com.github.rogeryk.charity.bumo.BumoService;
 import com.github.rogeryk.charity.domain.Project;
 import com.github.rogeryk.charity.domain.Transaction;
 import com.github.rogeryk.charity.domain.User;
-import com.github.rogeryk.charity.domain.form.UserInfo;
+import com.github.rogeryk.charity.domain.vo.UserInfo;
 import com.github.rogeryk.charity.exception.ServiceException;
 import com.github.rogeryk.charity.repository.ProjectRepository;
 import com.github.rogeryk.charity.repository.TransactionRepository;
@@ -22,6 +23,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import io.bumo.model.response.result.AccountCreateResult;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -42,6 +44,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @Autowired
+    private BumoService bumoService;
+
     public void registerUser(String phoneNumber, String password){
         User user = new User();
         user.setPhoneNumber(phoneNumber);
@@ -50,6 +55,11 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
         user = userRepository.findByPhoneNumber(phoneNumber);
         user.setNickName(String.format("CS_%06d", user.getId()));
+
+        AccountCreateResult account = bumoService.createActiveAccount();
+        user.setBumoAddress(account.getAddress());
+        user.setBumoPrivateKey(account.getPrivateKey());
+
         userRepository.save(user);
     }
 
@@ -72,21 +82,21 @@ public class UserService implements UserDetailsService {
     public void favorProject(User user, Long projectId) {
         Project project = new Project();
         project.setId(projectId);
-        user.getFavorProjects().add(project);
+        user.getFollowProjects().add(project);
         userRepository.save(user);
     }
 
     public UserInfo getUserInfo(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ServiceException(ErrorCodes.USER_NOT_EXIST, "用户不存在"));
-        int donatedCount =  transactionRepository.countAllByPayerEqualsAndType(user, Transaction.TransactionType.Donation);
+        int donatedCount =  transactionRepository.countAllByPayer_IdEqualsAndType(user.getId(), Transaction.TransactionType.Donation);
         int releasedProjectCount = projectRepository.countProjectByAuthor(user);
         return UserInfo.from(user, donatedCount, releasedProjectCount);
     }
 
     public UserInfo getUserInfo(String phoneNumber) {
         User user = userRepository.findByPhoneNumber(phoneNumber);
-        int donatedCount =  transactionRepository.countAllByPayerEqualsAndType(user, Transaction.TransactionType.Donation);
+        int donatedCount =  transactionRepository.countAllByPayer_IdEqualsAndType(user.getId(), Transaction.TransactionType.Donation);
         int releasedProjectCount = projectRepository.countProjectByAuthor(user);
         return UserInfo.from(user, donatedCount, releasedProjectCount);
     }
@@ -101,7 +111,7 @@ public class UserService implements UserDetailsService {
                     Sort.by(Sort.Direction.ASC, "time"));
         }
         return transactionRepository.
-                findAllByPayerIsAndType(user, Transaction.TransactionType.Donation, pageable);
+                findAllByPayer_IdAndType(user.getId(), Transaction.TransactionType.Donation, pageable);
     }
 
 

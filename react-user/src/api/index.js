@@ -5,11 +5,11 @@ const Project = {
     request.get('/project/recommend', {params:{n}}),
   hot: () => 
     request.get('/project/hot'),
-  byCategory: (categoryId, page = 0, size = 12, direction='asc', field='createTime') =>
+  byCategory: (categoryId, page = 0, size = 12, direction='asc', field='createdTime') =>
     request.get('/project/byCategory',{params:{categoryId, page, size, direction, field}}),
   detail: (id) => 
     request.get('/project/', {params: {id}}),
-  byName: (name, page = 0, size = 12, direction='asc', field='createTime') => 
+  byName: (name, page = 0, size = 12, direction='asc', field='createdTime') => 
     request.get('/project/byName', {params:{name, page, size, direction, field}}),
   favoritedBy: (userId) =>
     request.get('/project/favoritedBy', {params:{userId}}),
@@ -36,6 +36,14 @@ const Category = {
 const News = {
   hot: () =>
     request.get('/news/hot'),
+  latest: () =>
+    request.get('/news/latest'),
+  byUser: (userId, page, size=9) =>
+    request.get('/news/byUser', {params: {userId, page, size}}),
+  save: (data) =>
+    request.post('/news/', data),
+  detail: (id) =>
+    request.get('/news/', {params: {id}})
 }
 
 const Transaction = {

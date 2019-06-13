@@ -63,7 +63,7 @@ export default class ExplorePage extends Component {
             </div>
           </div>
           <div className={styles['content']}>
-            <ProjectList cols={4} projects={projects} />
+            <ProjectList itemWidth={255} cols={4} projects={projects} />
             <div className={styles['pagination-wrap']}>
               <Pagination 
                 current={page+1} 

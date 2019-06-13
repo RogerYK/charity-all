@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="捐助金额"
+            />
+
+        <EditText
+            android:id="@+id/money_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/edittext_hint_color"
+            android:textColor="@color/black_main"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:background="@drawable/bg_money_edittext"
+            android:hint="输入金额"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

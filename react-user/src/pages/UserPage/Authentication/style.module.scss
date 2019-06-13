@@ -1,18 +1,12 @@
 .authentication {
   background: white;
   min-height: 500px;
-  padding: 15px 24px;
 
-  > .header {
-    line-height: 33px;
-    margin-top: 10px;
-    margin-bottom: -10px;
-
-    > .title {
+   .desc {
       font-weight: 700;
       font-size: 24px;
       color: #222c37;
-    }
+      
   }
 
   > .content {

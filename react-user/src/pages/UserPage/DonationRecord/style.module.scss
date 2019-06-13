@@ -1,9 +1,5 @@
 .donation-records {
 
-  background: white;
-
-  min-height: 500px;
-  padding: 15px 24px;
 
   > .header {
     line-height: 33px;
@@ -27,6 +23,7 @@
 
     > .content {
       display: flex;
+      flex-direction: column;
       flex-wrap: nowrap;
       justify-content: center;
     }

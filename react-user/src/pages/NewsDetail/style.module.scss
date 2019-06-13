@@ -1,0 +1,52 @@
+.main-wrap {
+  background: white;
+  width: 100%;
+  min-height: 500px;
+}
+
+.main {
+  width: 690px;
+  margin: 0 auto;
+}
+
+.title {
+  color: #222c37;
+    font-size: 34px;
+    line-height: 51px;
+    padding: 32px 0 12px 0;
+    font-weight: 700;
+}
+
+.author {
+  display: flex;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.name,.time {
+  margin-left: 10px;
+}
+
+.time {
+  color: #7a8087;
+}
+
+.news-content {
+  padding: 34px 0;
+    font-size: 16px;
+    line-height: 28px;
+    color: #222c37;
+    word-wrap: break-word;
+}
+
+.error-msg {
+  margin-top: 50px;
+  font-weight: 700;
+  font-size: 30px;
+}

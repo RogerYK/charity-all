@@ -173,10 +173,9 @@ export default class UserInfo extends Component {
   render() {
     return (
       <div className={styles['user-info']}>
-        <div className={styles['header']}>
+        <div className="title">
           <span className={styles['title']}>个人资料</span>
         </div>
-        <Divider />
         <div className={styles['content']}>
           <UserForm onChange={this.handleChanges} fields={this.state.fields} />
           <div className={styles['submit-wrapper']}>

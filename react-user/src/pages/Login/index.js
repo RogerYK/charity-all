@@ -24,8 +24,9 @@ export default class LoginPage extends Component {
     api.Auth.login(values)
       .then(res => {
         message.success("登陆成功");
-        this.props.commonStore.setToken(res.data);
+        console.log(res)
         setTimeout(() => {
+          this.props.commonStore.setToken(res.data);
           const history = this.props.history
           if (history.length === 0) {
             history.push("/")

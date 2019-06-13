@@ -60,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     @Override
                     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
                         httpServletResponse.setContentType("application/json;charset=utf-8");
-                        httpServletResponse.getOutputStream().write("{\"error\": 204, \"msg\":\"未登录\"}".getBytes());
+                        httpServletResponse.getOutputStream().write("{\"errCode\": 204, \"msg\":\"未登录\"}".getBytes());
                     }
                 });
         super.configure(http);

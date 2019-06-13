@@ -8,6 +8,7 @@ import styles from './style.module.scss'
 import RankShow from './RankShow';
 import { inject, observer } from 'mobx-react';
 import RecommendProjects from './RecommendProjects';
+import LatestNews from './LatestNews';
 
 @inject('indexStore')
 @observer
@@ -18,14 +19,20 @@ export default class DonationPage extends Component {
   }
 
   render() {
-    const {banners, hotProjects, hotNews, recommendProjects} = this.props.indexStore
-    console.log(this.props.indexStore)
+    const {
+      banners, 
+      hotProjects, 
+      hotNews, 
+      recommendProjects,
+      latestNews
+    } = this.props.indexStore
 
     return (
       <div>
             {banners? <Banner banners={banners} />: null}
             <RankShow hotProjects={hotProjects} hotNews={hotNews} />
             <RecommendProjects projects={recommendProjects} />
+            <LatestNews newsList={latestNews} />
       </div>
     )
   }

@@ -26,9 +26,10 @@ const ProjectList = ({projects, bordered, cols, itemRender, itemWidth}) => {
   }
   if (row.length !== 0) {
     for (let i = projects.length % cols; i < cols-1; i++) {
-      row.push(<div style={{width: itemWidth}} />)
+      row.push(<div key={i} style={{width: itemWidth}} />)
+      row.push(<div key={`${i}-spacer`} className={styles['spacer']} />)
     }
-    row.push(<div style={{width: itemWidth}} />)
+    row.push(<div key={cols-1} style={{width: itemWidth}} />)
     rows.push(row)
   }
 

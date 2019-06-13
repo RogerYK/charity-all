@@ -18,4 +18,8 @@ public class ServiceException extends RuntimeException{
     public int getCode() {
         return code;
     }
+
+    public static ServiceException of(int code, String msg) {
+        return new ServiceException(code, msg);
+    }
 }

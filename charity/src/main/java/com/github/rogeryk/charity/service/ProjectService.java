@@ -1,15 +1,19 @@
 package com.github.rogeryk.charity.service;
 
+import com.github.rogeryk.charity.bumo.BumoService;
 import com.github.rogeryk.charity.domain.Category;
 import com.github.rogeryk.charity.domain.Project;
 import com.github.rogeryk.charity.domain.ProjectSchedule;
 import com.github.rogeryk.charity.domain.User;
+import com.github.rogeryk.charity.domain.vo.ProjectDetailVO;
+import com.github.rogeryk.charity.domain.vo.ProjectVO;
 import com.github.rogeryk.charity.exception.ServiceException;
 import com.github.rogeryk.charity.repository.CategoryRepository;
 import com.github.rogeryk.charity.repository.ProjectRepository;
 import com.github.rogeryk.charity.repository.ProjectScheduleRepository;
 import com.github.rogeryk.charity.utils.ErrorCodes;
 import com.github.rogeryk.charity.utils.PageData;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -20,6 +24,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import io.bumo.model.response.result.AccountCreateResult;
 
 @Service
 @CacheConfig(cacheNames = "project")
@@ -33,6 +39,9 @@ public class ProjectService {
 
     @Autowired
     private ProjectScheduleRepository projectScheduleRepository;
+
+    @Autowired
+    private BumoService bumoService;
 
 
     @Cacheable(key = "'hotProject('+#p0+')'")
@@ -62,10 +71,11 @@ public class ProjectService {
         return projectRepository
                 .findById(id)
                 .orElseThrow(() -> new ServiceException(ErrorCodes.PROJECT_NOT_EXIST, "项目不存在"));
+
     }
 
     public PageData<Project> findUserFavorProjects(User user, Pageable pageable) {
-        return PageData.of(projectRepository.findAllByFavorUsersContains(user, pageable));
+        return PageData.of(projectRepository.findAllByFollowedUsersContaining(user, pageable));
     }
 
     public PageData<Project> findUserReleaseProjects(User user, Pageable pageable ) {
@@ -77,8 +87,20 @@ public class ProjectService {
     }
 
 
+    public ProjectDetailVO findProjectVoByIdAndUserId(Long projectId, Long userId) {
+        ProjectVO vo = projectRepository.findProjectById(projectId)
+                .orElseThrow(()->ServiceException.of(ErrorCodes.PROJECT_NOT_EXIST, "项目不存在"));
+        boolean followed = projectRepository.existsByIdEqualsAndFollowedUsersContaining(projectId, userId);
+        return ProjectDetailVO.valueOf(vo, followed);
+    }
+
     @CacheEvict(allEntries = true)
     public void save(Project project) {
+        if (project.getId() == null) {
+            AccountCreateResult account = bumoService.createActiveAccount();
+            project.setBumoAddress(account.getAddress());
+            project.setBumoPrivateKey(account.getPrivateKey());
+        }
         projectRepository.save(project);
     }
 

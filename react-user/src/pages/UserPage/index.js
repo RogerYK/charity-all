@@ -13,6 +13,7 @@ import UserInfo from './UserInfo';
 import FeedBack from './Feedback';
 import Authentication from './Authentication';
 import { observer, inject } from 'mobx-react';
+import ReleaseNews from './ReleaseNews';
 
 @inject("userStore", "commonStore")
 @observer
@@ -63,6 +64,13 @@ export default class UserPage extends Component {
             </Menu.Item>
           </Menu.ItemGroup>
           <Menu.ItemGroup
+            title={<span className={styles['group-title']}>资讯管理</span>}
+          >
+            <Menu.Item key="news-release">
+              <Link to="/user/news/release">发布的资讯</Link>
+            </Menu.Item>
+          </Menu.ItemGroup>
+          <Menu.ItemGroup
             title={<span className={styles["group-title"]}>我的设置</span>}
           >
             <Menu.Item key="user-info">
@@ -103,6 +111,7 @@ export default class UserPage extends Component {
               path="/user/authentication"
               component={Authentication}
             />
+            <Route path="/user/news/release" component={ReleaseNews} />
             <Route component={IndexContent} />
           </Switch>
         }
