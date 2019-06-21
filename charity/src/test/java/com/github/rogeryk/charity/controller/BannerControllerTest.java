@@ -1,8 +1,9 @@
-package com.github.rogeryk.service;
+package com.github.rogeryk.charity.controller;
 
 import com.github.rogeryk.charity.App;
-import com.github.rogeryk.charity.service.TransactionService;
+import com.github.rogeryk.charity.utils.Response;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +12,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = App.class)
-public class TransactionServiceTest {
-
-    private static long testUserId = 58;
+public class BannerControllerTest {
 
     @Autowired
-    private TransactionService transactionService;
+    private BannerController bannerController;
 
     @Test
-    public void rechargeTest() {
-        transactionService.recharge(testUserId, 10L);
+    public void all() {
+        Response res = bannerController.all();
+        Assert.assertEquals(0, res.getErrCode());
     }
 }

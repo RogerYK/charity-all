@@ -1,6 +1,8 @@
 package com.github.rogeryk.charity.domain.vo;
 
 import com.github.rogeryk.charity.domain.Category;
+import com.github.rogeryk.charity.domain.Project;
+import com.github.rogeryk.charity.domain.ProjectSchedule;
 import com.github.rogeryk.charity.domain.User;
 
 import java.math.BigDecimal;
@@ -26,24 +28,27 @@ public class ProjectDetailVO {
     private Integer donorCount;
     private User author;
     private Category category;
+    private List<ProjectSchedule> projectSchedules;
     private boolean followed;
 
-    public static ProjectDetailVO valueOf(ProjectVO vo, boolean followed) {
+
+    public static ProjectDetailVO valueOf(Project project, boolean followed) {
         return  new ProjectDetailVO(
-                vo.getId(),
-                vo.getName(),
-                vo.getImg(),
-                vo.getGallery(),
-                vo.getContent(),
-                vo.getSummary(),
-                vo.getRaisedMoney(),
-                vo.getTargetMoney(),
-                vo.getStartTime(),
-                vo.getEndTime(),
-                vo.getBumoAddress(),
-                vo.getDonorCount(),
-                vo.getAuthor(),
-                vo.getCategory(),
+                project.getId(),
+                project.getName(),
+                project.getImg(),
+                project.getGallery(),
+                project.getContent(),
+                project.getSummary(),
+                project.getRaisedMoney(),
+                project.getTargetMoney(),
+                project.getStartTime(),
+                project.getEndTime(),
+                project.getBumoAddress(),
+                project.getDonorCount(),
+                project.getAuthor(),
+                project.getCategory(),
+                project.getProjectSchedules(),
                 followed
         );
     }

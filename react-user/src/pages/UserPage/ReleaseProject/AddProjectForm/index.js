@@ -20,8 +20,8 @@ export default class AddProjectForm extends Component {
         categoryId: '',
         content: '',
         targetMoney: '',
-        startTime: moment(),
-        endTime: moment(),
+        startTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+        endTime: moment().format('YYYY-MM-DD HH:mm:ss'),
       },
       fileList: [],
       imgList: [],
@@ -60,12 +60,6 @@ export default class AddProjectForm extends Component {
     this.setState({form})
   }
 
-  handleTimeChange(value, key) {
-    let form = {...this.state.form}
-    form[key] = value
-    this.state({form})
-  }
-
   handleSubmit = () => {
     const data = {
       id: this.props.id,
@@ -73,6 +67,7 @@ export default class AddProjectForm extends Component {
       img: this.state.imgList[0].response.data,
       gallery: this.state.fileList.map(f => f.response.data)
     }
+    console.log(data)
 
     
     this.props.releaseStore.saveProject(data)

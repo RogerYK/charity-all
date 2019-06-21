@@ -5,6 +5,8 @@ public interface ErrorCodes {
 
     int OPTIMISTIC_CONFLICT = 102; //乐观锁冲突
 
+    int UNLOGIN = 103;
+
     int FILE_ERROR = 300; //文件保存失败
 
     int USER_EXIST = 350; // 用户已存在

@@ -26,5 +26,4 @@ public class ProjectVO {
     private Integer donorCount;
     private User author;
     private Category category;
-
 }

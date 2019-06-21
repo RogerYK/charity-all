@@ -45,7 +45,7 @@ public class NewsService {
         return PageData.of(newsRepository.findByAuthor_Id(userId, pageable));
     }
 
-    public void save(NewsForm form, User user) {
+    public void save(NewsForm form, Long userId) {
         News news;
         if (form.getId() == null) {
             news = new News();
@@ -53,6 +53,10 @@ public class NewsService {
             news = newsRepository.findById(form.getId())
                     .orElseThrow(() -> new ServiceException(ErrorCodes.NEWS_NOT_EXIST, "新闻不存在"));
         }
+
+        User user = new User();
+        user.setId(userId);
+
         news.setTitle(form.getTitle());
         news.setIntroduce(form.getIntroduce());
         news.setContent(form.getContent());

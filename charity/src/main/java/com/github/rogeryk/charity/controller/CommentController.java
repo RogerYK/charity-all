@@ -4,7 +4,6 @@ import com.github.rogeryk.charity.aop.login.LoginedUser;
 import com.github.rogeryk.charity.controller.form.CommentForm;
 import com.github.rogeryk.charity.controller.form.PageParam;
 import com.github.rogeryk.charity.domain.Comment;
-import com.github.rogeryk.charity.domain.User;
 import com.github.rogeryk.charity.service.CommentService;
 import com.github.rogeryk.charity.utils.PageData;
 import com.github.rogeryk.charity.utils.Response;
@@ -31,12 +30,8 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping("/")
-    public Response save(@LoginedUser User user, @Validated @RequestBody CommentForm form) {
-        commentService.save(user,
-                form.getProjectId(),
-                form.getParentId(),
-                form.getReplyId(),
-                form.getContent());
+    public Response save(@LoginedUser Long userId, @Validated @RequestBody CommentForm form) {
+        commentService.save(userId, form);
         return Response.ok();
     }
 
@@ -44,6 +39,6 @@ public class CommentController {
     public Response byProjectId(@NotNull Long projectId, PageParam pageParam) {
         PageData<Comment> commentPageData = commentService.findRootCommentByProjectId(projectId,
                 pageParam.toPageable());
-        return Response.ok(commentService.findRootCommentByProjectId(projectId, pageParam.toPageable()));
+        return Response.ok(commentPageData);
     }
 }

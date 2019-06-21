@@ -6,8 +6,10 @@ import com.github.rogeryk.charity.controller.form.PageParam;
 import com.github.rogeryk.charity.controller.form.RechargeForm;
 import com.github.rogeryk.charity.domain.Transaction;
 import com.github.rogeryk.charity.domain.User;
+import com.github.rogeryk.charity.exception.ServiceException;
 import com.github.rogeryk.charity.service.TransactionService;
 import com.github.rogeryk.charity.service.UserService;
+import com.github.rogeryk.charity.utils.ErrorCodes;
 import com.github.rogeryk.charity.utils.PageData;
 import com.github.rogeryk.charity.utils.Response;
 
@@ -45,17 +47,16 @@ public class TransactionController {
     }
 
     @PostMapping("/donation")
-    public Response donate(@NotNull @LoginedUser User user, @Valid @RequestBody DonateForm form) {
+    public Response donate( @LoginedUser Long userId, @Valid @RequestBody DonateForm form) {
         log.debug(form.toString());
-
-        transactionService.donate(user.getId(), form.getProjectId(), form.getAmount());
-
+        if (userId == null) throw ServiceException.of(ErrorCodes.UNLOGIN, "用户未登录");
+        transactionService.donate(userId, form.getProjectId(), form.getAmount());
         return Response.ok(null);
     }
 
     @PostMapping("/recharge")
-    public Response recharge(@NotNull @LoginedUser User user, RechargeForm form) {
-        transactionService.recharge(user.getId(), form.getAmount());
+    public Response recharge(@LoginedUser Long userId, RechargeForm form) {
+        transactionService.recharge(userId, form.getAmount());
         return Response.ok();
     }
 

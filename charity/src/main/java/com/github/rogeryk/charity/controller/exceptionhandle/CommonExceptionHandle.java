@@ -3,13 +3,17 @@ package com.github.rogeryk.charity.controller.exceptionhandle;
 import com.github.rogeryk.charity.exception.ServiceException;
 import com.github.rogeryk.charity.utils.ErrorCodes;
 import com.github.rogeryk.charity.utils.Response;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 @RestControllerAdvice
@@ -36,6 +40,7 @@ public class CommonExceptionHandle {
         return Response.error(ErrorCodes.OPTIMISTIC_CONFLICT, "服务器繁忙，请稍后重试");
     }
 
+    //TODO 解决ErrorCodes.UNLOGIN 状态码为UNAUTHORIZED;
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(ServiceException.class)
     public Response serviceExceptionHandle(ServiceException e) {

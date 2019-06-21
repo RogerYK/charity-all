@@ -42,6 +42,7 @@ public class Transaction {
     public static enum TransactionType {
         Donation,
         Consumption,
-        Recharge
+        Recharge,
+
     }
 }

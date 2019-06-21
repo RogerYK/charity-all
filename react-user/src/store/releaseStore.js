@@ -27,7 +27,7 @@ class ReleaseStore {
 
   @action
   saveProject = (form) => {
-    api.Project.save(form)
+    return api.Project.save(form)
       .then(action(res => {
         this.pullProjects()
         return res

@@ -1,7 +1,7 @@
-package com.github.rogeryk.charity_android.ui
+package com.github.rogeryk.charity_android.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.github.rogeryk.charity_android.App
 import com.github.rogeryk.charity_android.R
 import com.github.rogeryk.charity_android.api.Api

@@ -1,8 +1,9 @@
-package com.github.rogeryk.service;
+package com.github.rogeryk.charity.controller;
 
 import com.github.rogeryk.charity.App;
-import com.github.rogeryk.charity.service.ProjectService;
+import com.github.rogeryk.charity.utils.Response;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = App.class)
-public class ProjectServiceTest {
+public class CategoryControllerTest {
 
     @Autowired
-    private ProjectService service;
+    private CategoryController categoryController;
 
     @Test
-    public void findProjectVo() {
-
+    public void allTest() {
+        Response res = categoryController.all();
+        Assert.assertEquals(0, res.getErrCode());
     }
+
 }

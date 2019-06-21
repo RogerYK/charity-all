@@ -46,7 +46,8 @@ public class TransactionService {
                 .orElseThrow(() -> new ServiceException(ErrorCodes.USER_NOT_EXIST, "用户不存在"));
 
         if (user.getMoney().compareTo(amount) < 0) {
-            throw new ServiceException(ErrorCodes.USER_NO_MONEY, "用户余额不足");
+            recharge(userId, amount.subtract(user.getMoney()).longValue());
+//            throw new ServiceException(ErrorCodes.USER_NO_MONEY, "用户余额不足");
         }
         user.setMoney(user.getMoney().subtract(amount));
         userRepository.save(user);

@@ -1,8 +1,8 @@
 package com.github.rogeryk.charity_android.dagger
 
-import com.github.rogeryk.charity_android.ui.DonationRecordActivity
-import com.github.rogeryk.charity_android.ui.NewsActivity
-import com.github.rogeryk.charity_android.ui.ProjectDetailActivity
+import com.github.rogeryk.charity_android.ui.activity.DonationRecordActivity
+import com.github.rogeryk.charity_android.ui.activity.NewsActivity
+import com.github.rogeryk.charity_android.ui.activity.ProjectDetailActivity
 import com.github.rogeryk.charity_android.ui.fragment.HomeFragment
 import com.github.rogeryk.charity_android.ui.fragment.MyFragment
 import com.github.rogeryk.charity_android.ui.fragment.NewsFragment

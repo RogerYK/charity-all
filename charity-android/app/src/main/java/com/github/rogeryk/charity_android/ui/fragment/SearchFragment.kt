@@ -5,20 +5,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.rogeryk.charity_android.App
-
 import com.github.rogeryk.charity_android.R
 import com.github.rogeryk.charity_android.api.Api
 import com.github.rogeryk.charity_android.data.ProjectBasic
-import com.github.rogeryk.charity_android.ui.ProjectDetailActivity
+import com.github.rogeryk.charity_android.ui.activity.ProjectDetailActivity
 import com.github.rogeryk.charity_android.utils.castTo
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -38,6 +37,8 @@ class SearchFragment : CoroutineFragment() {
     lateinit var  api: Api
         @Inject set
 
+    lateinit var searchHistory: MutableSet<String>
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         activity?.let {  it.application.castTo<App>().appComponent.inject(this)}
@@ -45,10 +46,10 @@ class SearchFragment : CoroutineFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        readSearchHistory()
         val flexLayout = FlexboxLayoutManager(context, FlexDirection.ROW, FlexWrap.WRAP)
         search_history.layoutManager = flexLayout
-        val tagAdapter = TagAdapter(listOf("玉洪"))
+        val tagAdapter = TagAdapter(searchHistory.toList())
         tagAdapter.setOnItemClick(this::historySearch)
         search_history.adapter = tagAdapter
 
@@ -59,8 +60,16 @@ class SearchFragment : CoroutineFragment() {
             search()
             return@setOnEditorActionListener true
         }
-
         search_done_btn.setOnClickListener { search() }
+        search_history_delete.setOnClickListener {
+            searchHistory.clear()
+            search_history.adapter = TagAdapter(listOf())
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        saveSearchHistory()
     }
 
     fun historySearch(name: String) {
@@ -72,6 +81,8 @@ class SearchFragment : CoroutineFragment() {
     fun search()  = launch {
         val text = search_text.text.toString()
         if (text.isEmpty()) return@launch
+        searchHistory.add(text)
+        search_history.adapter = TagAdapter(searchHistory.toList())
         search_history_layout.visibility = View.GONE
 
         val res = api.project.byName(text).await()
@@ -81,6 +92,20 @@ class SearchFragment : CoroutineFragment() {
                 search_result_layout.visibility = View.VISIBLE
             }
         }
+    }
+
+    fun readSearchHistory() {
+        val sf = context!!.getSharedPreferences("search", Context.MODE_PRIVATE)
+        searchHistory = sf.getStringSet("search_history", mutableSetOf())!!
+    }
+
+    fun saveSearchHistory() {
+        val sf = context!!.getSharedPreferences("search", Context.MODE_PRIVATE)
+        sf.edit().apply {
+            putStringSet("search_history", searchHistory)
+            apply()
+        }
+
     }
 
 

@@ -1,6 +1,7 @@
 package com.github.rogeryk.charity.repository;
 
 import com.github.rogeryk.charity.domain.News;
+import com.github.rogeryk.charity.utils.PageData;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,5 +22,18 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     List<News> findLatestNews(@Param("n") int n);
 
     Page<News> findByAuthor_Id(Long id, Pageable pageable);
+
+    @Query(value = "select * from news where match (`name`, content, introduce, title) against (:keyword) limit :page,:size", nativeQuery = true)
+    List<News> searchNewsData(@Param("keyword") String keyword, @Param("page") int page, @Param("size") int size);
+
+    @Query(value = "select count(*) from news where match (`name`, content, introduce, title) against (:keyword)", nativeQuery = true)
+    long searchNewsCount(@Param("keyword") String keyword);
+
+    default PageData<News> searchNews(String keyword, int page, int size) {
+        PageData<News> pageData = new PageData<>();
+        pageData.setContent(searchNewsData(keyword, page, size));
+        pageData.setTotal(searchNewsCount(keyword));
+        return pageData;
+    }
 
 }

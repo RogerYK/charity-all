@@ -11,7 +11,7 @@
         android:layout_height="0dp"
         android:layout_weight="1.0"
         android:orientation="vertical"
-        tools:context="com.github.rogeryk.charity_android.ui.ProjectDetailActivity">
+        tools:context="com.github.rogeryk.charity_android.ui.activity.ProjectDetailActivity">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -291,6 +291,7 @@
             android:paddingBottom="5dp"
             >
             <LinearLayout
+                android:id="@+id/project_follow"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
@@ -314,6 +315,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/background_line" />
             <LinearLayout
+                android:id="@+id/project_bottom_comment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"

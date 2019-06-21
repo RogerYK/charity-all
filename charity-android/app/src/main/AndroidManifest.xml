@@ -15,13 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.DonationRecordActivity"></activity>
+        <activity android:name=".ui.activity.DonationRecordActivity"></activity>
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".ui.NewsActivity" />
+        <activity android:name=".ui.activity.NewsActivity" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.activity.MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.ProjectDetailActivity" />
+        <activity android:name=".ui.activity.ProjectDetailActivity" />
     </application>
 
 </manifest>

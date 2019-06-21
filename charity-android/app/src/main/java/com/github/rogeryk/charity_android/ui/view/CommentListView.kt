@@ -55,7 +55,7 @@ class CommentListView(context: Context, attrs: AttributeSet)
 
 
 
-    private fun pullComments() = launch {
+    fun pullComments() = launch {
         val projectId = projectId ?: return@launch
         api?.let { api ->
             val res = api.comment.byProjectId(projectId, page=page).await()

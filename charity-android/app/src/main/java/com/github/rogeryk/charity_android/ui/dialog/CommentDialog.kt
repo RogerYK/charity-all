@@ -20,6 +20,7 @@ class CommentDialog(context: Context): Dialog(context, R.style.comment_dialog_th
         confirm_btn.setOnClickListener {
             val content = comment_edit.text.toString()
             confirmListener?.invoke(content)
+            this@CommentDialog.hide()
         }
 
     }

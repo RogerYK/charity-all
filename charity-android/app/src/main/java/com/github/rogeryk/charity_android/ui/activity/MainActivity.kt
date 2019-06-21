@@ -1,10 +1,12 @@
-package com.github.rogeryk.charity_android.ui
+package com.github.rogeryk.charity_android.ui.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import com.github.rogeryk.charity_android.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -41,5 +43,18 @@ class MainActivity : AppCompatActivity() {
         actionBar?.hide()
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            RequestCodes.Login.ordinal -> {
+                if (resultCode != Activity.RESULT_OK) {
+                    Navigation.findNavController(this, R.id.nav_host_fragment)
+                            .navigate(R.id.home_fragment)
+                }
+            }
+        }
     }
 }

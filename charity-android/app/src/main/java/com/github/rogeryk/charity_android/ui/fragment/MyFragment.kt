@@ -12,7 +12,7 @@ import com.github.rogeryk.charity_android.App
 import com.github.rogeryk.charity_android.R
 import com.github.rogeryk.charity_android.api.Api
 import com.github.rogeryk.charity_android.modal.UserModal
-import com.github.rogeryk.charity_android.ui.DonationRecordActivity
+import com.github.rogeryk.charity_android.ui.activity.DonationRecordActivity
 import com.github.rogeryk.charity_android.ui.login.LoginActivity
 import com.github.rogeryk.charity_android.utils.BlurTransformation
 import com.github.rogeryk.charity_android.utils.CircleTransform
@@ -46,13 +46,17 @@ class MyFragment : Fragment(), CoroutineScope by CoroutineScope(Dispatchers.Main
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setListeners()
+        userModal.isLogined.observe(this, Observer { userModalListen(it) })
+        pullUserInfo()
+    }
+
+    override fun onStart() {
+        super.onStart()
         if (userModal.isLogined.value != true) {
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
-            userModal.isLogined.observe(this, Observer<Boolean>(this::userModalListen))
         }
-        setListeners()
-        pullUserInfo()
     }
 
     fun userModalListen(isLogined: Boolean) {

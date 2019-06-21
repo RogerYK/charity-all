@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/main_bg"
-    tools:context="com.github.rogeryk.charity_android.ui.DonationRecordActivity">
+    tools:context="com.github.rogeryk.charity_android.ui.activity.DonationRecordActivity">
 
     <TextView
         android:layout_width="match_parent"

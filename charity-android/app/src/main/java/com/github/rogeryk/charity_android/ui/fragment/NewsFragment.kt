@@ -5,19 +5,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.github.rogeryk.charity_android.App
-
 import com.github.rogeryk.charity_android.R
 import com.github.rogeryk.charity_android.api.Api
 import com.github.rogeryk.charity_android.data.NewsBasic
-import com.github.rogeryk.charity_android.ui.NewsActivity
+import com.github.rogeryk.charity_android.ui.activity.NewsActivity
 import com.github.rogeryk.charity_android.utils.CircleTransform
 import com.github.rogeryk.charity_android.utils.castTo
 import com.squareup.picasso.Picasso

@@ -3,7 +3,6 @@ package com.github.rogeryk.charity.controller;
 import com.github.rogeryk.charity.aop.login.LoginedUser;
 import com.github.rogeryk.charity.controller.form.NewsForm;
 import com.github.rogeryk.charity.controller.form.PageParam;
-import com.github.rogeryk.charity.domain.User;
 import com.github.rogeryk.charity.service.NewsService;
 import com.github.rogeryk.charity.utils.Response;
 
@@ -22,7 +21,6 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/api/news")
 @Validated
 public class NewsController {
-
 
     @Autowired
     private NewsService newsService;
@@ -53,8 +51,8 @@ public class NewsController {
     }
 
     @PostMapping("/")
-    public Response save(@LoginedUser User user, @Validated @RequestBody NewsForm form) {
-        newsService.save(form, user);
+    public Response save(@LoginedUser Long userId, @Validated @RequestBody NewsForm form) {
+        newsService.save(form, userId);
         return Response.ok();
     }
 

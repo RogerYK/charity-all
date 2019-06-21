@@ -1,4 +1,4 @@
-package com.github.rogeryk.charity_android.ui
+package com.github.rogeryk.charity_android.ui.activity
 
 import android.content.Context
 import android.os.Bundle

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.github.rogeryk.charity_android.ui.NewsActivity">
+    tools:context="com.github.rogeryk.charity_android.ui.activity.NewsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,6 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
+            android:textColor="@color/txt_black"
+            android:textSize="15sp"
             style="@style/common_textview"
             />
 

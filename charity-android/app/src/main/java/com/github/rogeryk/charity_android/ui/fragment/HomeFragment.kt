@@ -17,7 +17,7 @@ import com.github.rogeryk.charity_android.R
 import com.github.rogeryk.charity_android.api.Api
 import com.github.rogeryk.charity_android.data.Banner
 import com.github.rogeryk.charity_android.data.ProjectBasic
-import com.github.rogeryk.charity_android.ui.ProjectDetailActivity
+import com.github.rogeryk.charity_android.ui.activity.ProjectDetailActivity
 import com.github.rogeryk.charity_android.utils.castTo
 import com.squareup.picasso.Picasso
 import com.zhouwei.mzbanner.MZBannerView

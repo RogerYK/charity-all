@@ -6,11 +6,11 @@ import com.github.rogeryk.charity.domain.Project;
 import com.github.rogeryk.charity.domain.ProjectSchedule;
 import com.github.rogeryk.charity.domain.User;
 import com.github.rogeryk.charity.domain.vo.ProjectDetailVO;
-import com.github.rogeryk.charity.domain.vo.ProjectVO;
 import com.github.rogeryk.charity.exception.ServiceException;
 import com.github.rogeryk.charity.repository.CategoryRepository;
 import com.github.rogeryk.charity.repository.ProjectRepository;
 import com.github.rogeryk.charity.repository.ProjectScheduleRepository;
+import com.github.rogeryk.charity.repository.UserRepository;
 import com.github.rogeryk.charity.utils.ErrorCodes;
 import com.github.rogeryk.charity.utils.PageData;
 
@@ -42,6 +42,9 @@ public class ProjectService {
 
     @Autowired
     private BumoService bumoService;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
     @Cacheable(key = "'hotProject('+#p0+')'")
@@ -88,10 +91,14 @@ public class ProjectService {
 
 
     public ProjectDetailVO findProjectVoByIdAndUserId(Long projectId, Long userId) {
-        ProjectVO vo = projectRepository.findProjectById(projectId)
+        Project project = projectRepository.findById(projectId)
                 .orElseThrow(()->ServiceException.of(ErrorCodes.PROJECT_NOT_EXIST, "项目不存在"));
-        boolean followed = projectRepository.existsByIdEqualsAndFollowedUsersContaining(projectId, userId);
-        return ProjectDetailVO.valueOf(vo, followed);
+        boolean followed = false;
+        if (userId != null) {
+            User user = userRepository.findById(userId).orElseThrow(() -> new ServiceException(ErrorCodes.USER_NOT_EXIST, "用户不存在"));
+            followed = projectRepository.existsByIdEqualsAndFollowedUsersContaining(projectId, user);
+        }
+        return ProjectDetailVO.valueOf(project, followed);
     }
 
     @CacheEvict(allEntries = true)
@@ -107,5 +114,6 @@ public class ProjectService {
     public void deleteProject(Long id) {
         projectRepository.deleteById(id);
     }
+
 
 }

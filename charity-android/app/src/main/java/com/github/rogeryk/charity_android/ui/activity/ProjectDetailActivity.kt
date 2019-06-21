@@ -1,4 +1,4 @@
-package com.github.rogeryk.charity_android.ui
+package com.github.rogeryk.charity_android.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -55,8 +55,14 @@ class ProjectDetailActivity : AppCompatActivity(), CoroutineScope by CoroutineSc
     }
 
     fun initListeners() {
-        btn_support.setOnClickListener {showDonateDialog()}
+        btn_support.setOnClickListener { showDonateDialog() }
         comment_list.commentListener = this::onComment
+        project_bottom_comment.setOnClickListener {
+            onComment(null, null)
+        }
+        project_follow.setOnClickListener {
+            //TODO: 关注项目 }
+        }
     }
 
 
@@ -66,7 +72,7 @@ class ProjectDetailActivity : AppCompatActivity(), CoroutineScope by CoroutineSc
         }
 
         val commentDialog = CommentDialog(this)
-        commentDialog.confirmListener = {content ->
+        commentDialog.confirmListener = { content ->
             val form = CommentForm(
                     projectId = projectId,
                     parentId = parentId,
@@ -82,6 +88,7 @@ class ProjectDetailActivity : AppCompatActivity(), CoroutineScope by CoroutineSc
         val res = api.comment.save(form).await()
         val msg = if (res.errCode != 0) res.msg else "评论成功"
         Toast.makeText(this@ProjectDetailActivity, msg, Toast.LENGTH_LONG).show()
+        comment_list.pullComments()
     }
 
 
@@ -89,7 +96,7 @@ class ProjectDetailActivity : AppCompatActivity(), CoroutineScope by CoroutineSc
         if (userModal.isLogined.value != true) {
             startActivity(Intent(this, LoginActivity::class.java))
         }
-        val builder =  AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this)
         builder.apply {
             title = "捐助金额"
             val inflater = layoutInflater
@@ -100,7 +107,7 @@ class ProjectDetailActivity : AppCompatActivity(), CoroutineScope by CoroutineSc
                 Log.i("donate", "money: ${moneyEdit.text}")
                 donate(BigDecimal(moneyEdit.text.toString()))
             }
-            setNegativeButton("取消") {dialog, _ ->
+            setNegativeButton("取消") { dialog, _ ->
                 dialog.cancel()
             }
         }
@@ -111,13 +118,14 @@ class ProjectDetailActivity : AppCompatActivity(), CoroutineScope by CoroutineSc
 
     fun donate(amount: BigDecimal) = launch {
         val form = DonationForm(projectId = projectId, amount = amount)
-        val res =  api.transaction.donate(form).await()
-        val msg =   if (res.errCode != 0)  res.msg else  "捐款成功"
+        val res = api.transaction.donate(form).await()
+        val msg = if (res.errCode != 0) res.msg else "捐款成功"
         Toast.makeText(this@ProjectDetailActivity, msg, Toast.LENGTH_LONG).show()
+        pullProject(projectId)
     }
 
     fun pullProject(id: Long) = launch {
-        val project =  api.project.detail(id).await().data
+        val project = api.project.detail(id).await().data
 
         Log.i("project", project.toString())
 
@@ -131,7 +139,8 @@ class ProjectDetailActivity : AppCompatActivity(), CoroutineScope by CoroutineSc
                     .into(user_icon)
             project_name.text = project.name
             user_nickname.text = project.author.nickName
-            val percent = project.raisedMoney.divide(project.targetMoney).toFloat()*100
+            var percent = project.raisedMoney.divide(project.targetMoney).toFloat() * 100
+            percent =  ((percent * 100).toInt() / 1).toFloat()/100
             project_progress.progress = percent.toInt()
             project_raised_money.text = "￥${project.raisedMoney.toFloat()}"
             project_raised_money_percent.text = "已筹款 ${percent}%"

@@ -1,11 +1,13 @@
 package com.github.rogeryk.charity.controller;
 
+import com.github.rogeryk.charity.aop.login.LoginedUser;
 import com.github.rogeryk.charity.controller.form.PageParam;
 import com.github.rogeryk.charity.controller.form.ProjectForm;
 import com.github.rogeryk.charity.controller.form.ProjectScheduleForm;
 import com.github.rogeryk.charity.domain.Project;
 import com.github.rogeryk.charity.domain.ProjectSchedule;
 import com.github.rogeryk.charity.domain.User;
+import com.github.rogeryk.charity.domain.vo.ProjectDetailVO;
 import com.github.rogeryk.charity.service.ProjectService;
 import com.github.rogeryk.charity.service.RecommendProjectService;
 import com.github.rogeryk.charity.service.UserService;
@@ -13,7 +15,6 @@ import com.github.rogeryk.charity.utils.PageData;
 import com.github.rogeryk.charity.utils.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,20 +46,16 @@ public class ProjectController {
     private UserService userService;
 
     @GetMapping("/")
-    public Response byId(@NotNull Long id) {
-        Project project = projectService.getProject(id);
+    public Response byId(@LoginedUser Long userId, @NotNull Long id) {
+        ProjectDetailVO project = projectService.findProjectVoByIdAndUserId(id, userId);
         return Response.ok(project);
     }
 
     @PostMapping("/")
-    public Response save(@RequestBody ProjectForm form) {
+    public Response save(@LoginedUser Long userId, @RequestBody ProjectForm form) {
         Project project = null;
         if (form.getId() == null) {
-            String phoneNumber = (String) SecurityContextHolder
-                    .getContext()
-                    .getAuthentication()
-                    .getPrincipal();
-            User user = userService.findUserByPhoneNumber(phoneNumber);
+            User user = userService.findById(userId);
             project = new Project();
             project.setAuthor(user);
         } else {
@@ -123,5 +120,6 @@ public class ProjectController {
         List<Project> projects = recommendProjectService.getRecommendProjectsTop(n);
         return Response.ok(projects);
     }
+
 
 }

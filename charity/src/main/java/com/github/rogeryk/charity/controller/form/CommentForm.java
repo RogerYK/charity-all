@@ -1,15 +1,15 @@
 package com.github.rogeryk.charity.controller.form;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
 @Data
 public class CommentForm {
 
-    @NotNull
     private Long projectId;
+
+    private Long newsId;
 
     private Long parentId;
 

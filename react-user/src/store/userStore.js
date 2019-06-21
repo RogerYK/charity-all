@@ -4,7 +4,7 @@ import commonStore from './commonStore'
 
 class UserStore {
 
-  @observable currentUser;
+  @observable currentUser = {};
 
   @observable pulling = true
 
