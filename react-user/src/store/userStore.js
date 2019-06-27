@@ -8,6 +8,8 @@ class UserStore {
 
   @observable pulling = true
 
+  @observable pulled = false;
+
   constructor() {
     when(
       () => commonStore.logined,
@@ -25,9 +27,11 @@ class UserStore {
     api.User.current()
       .then(action((res) => {
         this.currentUser = res.data
+        this.pulled = true
         this.pulling = false
       })).catch(action(res => {
         commonStore.setToken(null)
+        this.pulled = false
         this.pulling = false
         console.log('获取用户信息失败')
       }))

@@ -1,0 +1,76 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/charity?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    continue-on-error: false
+
+  devtools:
+    restart:
+      enabled: true
+
+  jpa:
+    properties:
+      hibernate.hbm2ddl.auto: update
+    show-sql: true
+
+  resources:
+    static-locations: file:storage/
+
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+  jackson:
+    date-format: 'yyyy-MM-dd HH:mm:ss'
+    time-zone: GMT+8
+
+
+  data:
+    redis:
+      repositories:
+        enabled: false
+
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password:
+    timeout: 50
+
+
+
+  cache:
+    redis:
+      time-to-live: 60000
+
+
+
+    cache-names: server
+    type: redis
+
+
+
+rocketmq:
+  name-server: 192.168.213.132:9876
+  producer:
+    group: my-group
+
+
+storage:
+  active: local
+
+  local:
+    address: http://localhost:8080/
+    storagePath: storage
+
+
+logging:
+  level:
+    root: info
+    com.github.rogeryk.charity: debug
+
+
+
+
