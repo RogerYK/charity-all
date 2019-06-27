@@ -9,7 +9,7 @@ import { inject, observer } from 'mobx-react';
 const Header = inject('userStore', 'uiStore', 'commonStore')(observer((props) => {
     const isShow = props.uiStore.headerShow
     const logined = props.commonStore.logined
-    const {currentUser, pulling} = props.userStore
+    const {currentUser, pulling, pulled} = props.userStore
     return (
       <div className={styles['header-wrap']}>
       <div className={styles['header']} style={{ visibility: isShow ? 'visible' : 'hidden' }}>
@@ -30,7 +30,7 @@ const Header = inject('userStore', 'uiStore', 'commonStore')(observer((props) =>
                 <Menu.Item><Link to="/user/feedback">反馈建议</Link></Menu.Item>
               </Menu>
             }>
-             {pulling ? 
+             {pulling && pulled ? 
              <Avatar className={styles['avatar']} icon="user" />
               :
              <img className={styles['avatar']} src={currentUser.avatar} alt="avatar" />}
