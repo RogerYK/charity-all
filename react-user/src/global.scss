@@ -25,3 +25,11 @@ a {
   border-bottom: 1px solid #dee0e1;
 }
 
+.color-primary {
+  color: $primary-color;
+}
+
+.child-center {
+  display: flex;
+  justify-content: center;
+}

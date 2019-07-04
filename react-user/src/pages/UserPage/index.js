@@ -19,7 +19,6 @@ import ReleaseNews from './ReleaseNews';
 @observer
 export default class UserPage extends Component {
 
-
   render() {
     const logined = this.props.commonStore.logined
     if (!logined) {

@@ -12,6 +12,8 @@ class FavoriteStore {
 
   pageSize = 5
 
+  firstPulled = false;
+
   constructor() {
     
     reaction(
@@ -20,12 +22,19 @@ class FavoriteStore {
     )
   }
 
+  firstPull() {
+    if (!this.firstPulled) {
+      this.pullProjects()
+      this.firstPulled = true;
+    }
+  }
+
   @action
   pullProjects = () => {
     api.Project.favoritedBy(userStore.currentUser.id)
       .then(action(res => {
-        this.projects = res.content
-        this.total = res.total
+        this.projects = res.data.content
+        this.total = res.data.total
       }))
   }
 

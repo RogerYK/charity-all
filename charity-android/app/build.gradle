@@ -61,6 +61,8 @@ dependencies {
     //转换json  挂代理的小心，即使关闭代理可能也会报错。关闭代理后重启AS，估计是AS3.0的bug
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0'
+
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.0'
 
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'

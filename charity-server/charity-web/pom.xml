@@ -9,8 +9,6 @@
     <packaging>jar</packaging>
 
 
-
-
     <parent>
         <groupId>com.github.rogeryk.chairty</groupId>
         <artifactId>charity-server</artifactId>

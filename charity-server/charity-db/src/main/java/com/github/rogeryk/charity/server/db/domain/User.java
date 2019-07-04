@@ -63,7 +63,7 @@ public class User implements UserDetails {
 
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "followedUsers")
+    @ManyToMany()
     private List<Project> followProjects;
 
     @JsonIgnore

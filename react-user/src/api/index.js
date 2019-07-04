@@ -75,12 +75,25 @@ const User = {
   current: () => 
     request.get('/user/current'),
   update: (newUser) =>
-    request.put('/user/', newUser)
+    request.put('/user/update', newUser),
+  followProject: (form) =>
+    request.post('/user/follow/project', form),
+  detail: (id) =>
+    request.get('/user/', {params: {id}}),
 }
 
 const Banner = {
   all: () => 
     request.get('/banner/all')
+}
+
+const Search = {
+  project: (form) =>
+    request.get('/search/project', {params: form}),
+  user: (form) =>
+    request.get('/search/user', {params: form}),
+  news: (form) =>
+    request.get('/search/news', {params: form}),
 }
 
 
@@ -94,4 +107,5 @@ export default {
   Transaction,
   Upload,
   Banner,
+  Search
 };

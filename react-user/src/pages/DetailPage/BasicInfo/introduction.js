@@ -7,7 +7,7 @@ import moment from "moment";
 import { Button } from "antd";
 import IconFont from "../../../components/IconFont";
 
-const Introduction = ({project, onDonate}) => {
+const Introduction = ({project, onDonate, onFollow}) => {
   const author = project.author;
   const category = project.category;
 
@@ -17,7 +17,9 @@ const Introduction = ({project, onDonate}) => {
   const [raisedStr, targetStr] = [raisedMoney, targetMoney].map(
     convertMoneyStr
   );
+
   const timeConent = getTimeCoutent(project);
+
   return (
     <div className={styles["container-wrap"]}>
       <div className={styles["container"]}>
@@ -41,7 +43,6 @@ const Introduction = ({project, onDonate}) => {
           <div className={styles["types"]}>
             <div className={styles["category"]}><IconFont className={styles['icon']} type="icon-fenlei" />{category.name}</div>
           </div>
-
           </div>
           <div className={styles["center-wrap"]}>
             <div className={styles["progress"]}>
@@ -64,7 +65,13 @@ const Introduction = ({project, onDonate}) => {
             </div>
             <div className={styles["action"]}>
               <Button onClick={onDonate} className={styles['btn']} size="large" type="primary">立即支持</Button>
-              <div className={styles["follow"]}><IconFont className={styles['icon']} type="icon-31shoucang" />关注</div>
+              <div className={styles["follow"]}>{
+                project.followed ?
+                <IconFont className={styles['icon']+' color-primary'} type="icon-31shoucangxuanzhong" />
+                :
+                <IconFont onClick={onFollow} className={styles['icon']} type="icon-31shoucang" />
+              }
+                关注</div>
             </div>
             <div className={styles['info']}> 人人都有一颗心,大多是善良的。在别人有难的时候,我们献出一点爱心,也许就能挽救一条生命。 </div>
           </div>

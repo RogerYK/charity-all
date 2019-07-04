@@ -1,0 +1,118 @@
+.container-wrap {
+  background: white;
+}
+
+.container {
+    width: 1080px;
+    margin: 60px auto 40px;
+}
+
+.main-right {
+  margin-left: 340px;
+
+  .header {
+    background: rgba(0, 0, 0, 0.3);
+    height: 140px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+
+    .btn {
+      width: 90px;
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #ffffff;
+    }
+
+    .left {
+      display: flex;
+      margin-left: 30px;
+
+      .avatar {
+        width: 100px;
+        height: 100px;
+        border: solid 3px white;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        height: 80px;
+        justify-content: space-between;
+
+        .name {
+          font-size: 34px;
+          font-weight: 700;
+        }
+        .follow {
+          display: flex;
+          font-size: 16px;
+
+          > * {
+            margin-right: 30px;
+          }
+        }
+      }
+    }
+
+    .right {
+      margin-right: 10px;
+    }
+  }
+}
+
+.title {
+  font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    color: #222c37;
+  padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-bottom: solid 1px #dee0e1;
+}
+
+.content {
+  padding: 16px 0 52px 0;
+  font-size: 16px;
+    line-height: 22px;
+    color: #222c37;
+}
+
+.other {
+ padding: 31px 0 33px 0; 
+ margin: 39px 0 55px 0;
+  background: #f8f8f9;
+  width: 740px;
+  height: auto;
+  overflow: hidden;
+  display: flex;
+
+  .item {
+    width: 184px;
+    height: 50px;
+    border-right: 1px solid #dee0e1;
+    text-align: center;
+    font-size: 16px;
+    line-height: 16px;
+    color: #7a8087;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    .num {
+    font-size: 24px;
+    line-height: 24px;
+    font-weight: 700;
+    color: #bcbfc3
+    }
+  }
+  
+}

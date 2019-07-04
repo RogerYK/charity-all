@@ -24,7 +24,7 @@ import com.zhouwei.mzbanner.MZBannerView
 import com.zhouwei.mzbanner.holder.MZViewHolder
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,7 +33,7 @@ import javax.inject.Inject
  * A simple [Fragment] subclass.
  *
  */
-class HomeFragment : Fragment(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
+class HomeFragment : Fragment(), CoroutineScope by MainScope() {
 
     lateinit var api: Api
         @Inject set
@@ -42,22 +42,16 @@ class HomeFragment : Fragment(), CoroutineScope by CoroutineScope(Dispatchers.Ma
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        activity?.let{it.application.castTo<App>().appComponent.inject(this)}
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        activity?.let{it.application.castTo<App>().appComponent.inject(this)}
 
         bannerView = activity?.findViewById(R.id.banner)!!
         pullBanners()
-//        pullHot()
         pullRecommend()
 
-//        hot_grid_view.setOnItemClickListener { _, _, _, id ->
-//            val intent = Intent(activity, ProjectDetailActivity::class.java)
-//            intent.putExtra("projectId", id)
-//            startActivity(intent)
-//        }
         recommend_project_grid.setOnItemClickListener { _, _, _, id ->
             val intent = Intent(activity, ProjectDetailActivity::class.java)
             intent.putExtra("projectId", id)
@@ -65,7 +59,7 @@ class HomeFragment : Fragment(), CoroutineScope by CoroutineScope(Dispatchers.Ma
         }
     }
 
-    fun pullBanners() = launch {
+    private fun pullBanners() = launch {
             try {
                 val banners = api.banner.all().await().data
                 Log.i("banners", banners.toString())

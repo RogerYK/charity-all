@@ -13,6 +13,7 @@ import UserPage from './pages/UserPage';
 import SearchPage from './pages/SearchPage';
 import DetailPage from './pages/DetailPage';
 import NewsDetail from './pages/NewsDetail';
+import UserDetail from './pages/UserDetail';
 
 class App extends Component {
   render() {
@@ -24,6 +25,7 @@ class App extends Component {
             <Route path="/explore" component={ExplorePage} />
             <Route path="/login" component={LoginPage} />
             <Route path="/sign" component={SignPage} />
+            <Route path="/user/detail/:id" component={UserDetail} />
             <Route path="/user" component={UserPage} />
             <Route path="/search" component={SearchPage} />
             <Route path="/detail/:id" component={DetailPage} />

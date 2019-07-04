@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select * from `user` where match(`nick_name`) against (:keyword) limit :page, :size", nativeQuery = true)
     List<User> searchUserData(@Param("keyword") String keyword, @Param("page") int page, @Param("size") int size);
 
-    @Query(value = "select * from `user` where match(`nick_name`) against (:keyword)", nativeQuery = true)
+    @Query(value = "select count(*) from `user` where match(`nick_name`) against (:keyword)", nativeQuery = true)
     long searchUserTotal(@Param("keyword") String keyword);
 
     default PageData<User> searchUser(String text, int page, int size) {

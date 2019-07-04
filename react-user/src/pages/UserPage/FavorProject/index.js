@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 
-import { Link } from 'react-router-dom'
 import styles from './style.module.scss'
-import { Divider, Row, Col, Pagination, Empty } from 'antd';
-import ProjectCard from '../../../components/ProjectCard';
+import { Pagination, Empty } from 'antd';
 import { inject, observer } from 'mobx-react';
 import ProjectList from '../../../components/ProjectList';
 
@@ -12,8 +10,15 @@ import ProjectList from '../../../components/ProjectList';
 @observer
 export default class FavorProject extends Component {
 
+  componentDidMount() {
+    const favoriteStore = this.props.favoriteStore
+    favoriteStore.firstPull();
+  }
+
   render() {
-    const {projects, total, setPage} = this.props.favoriteStore
+    const favoriteStore = this.props.favoriteStore
+    const {projects, total, setPage} = favoriteStore
+    console.log(projects)
     return (
       <div className={styles['favor-projects']}>
         <div className="title">
@@ -23,7 +28,7 @@ export default class FavorProject extends Component {
         <div className={styles['project-list']}>
           <div className={styles['content']}>
             {projects.length > 0 ?
-              <ProjectList projects={projects} bordered={true} cols={3} />
+            <ProjectList projects={projects} bordered={true} cols={3} />
             :
             <Empty description={<span>还没关注任何项目</span>} />
             }

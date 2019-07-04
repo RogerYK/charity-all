@@ -88,7 +88,7 @@ public class Project {
     private List<ProjectSchedule> projectSchedules;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(mappedBy = "followProjects")
     private List<User> followedUsers;
 
     public static class GalleryConverter implements AttributeConverter<List<String>, String> {

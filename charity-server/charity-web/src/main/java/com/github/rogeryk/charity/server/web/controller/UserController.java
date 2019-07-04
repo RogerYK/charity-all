@@ -47,8 +47,7 @@ public class UserController {
 
     @GetMapping("/")
     public Response getUserInfo(@NotNull Long id) {
-        UserInfo info;
-        info = userService.getUserInfo(id);
+        UserInfo info = userService.getUserInfo(id);
         return Response.ok(info);
     }
 
