@@ -1,9 +1,9 @@
-## 慈善平台
+# 慈善平台
+
 [![Author](https://img.shields.io/badge/author-RogerYK-red.svg?style=flat-square)](https://github.com/Rogeryk)
 [![License](https://img.shields.io/github/license/RogerYK/http-down.svg?style=flat-square)](https://github.com/RogerYK/http-down/blob/master/LICENSE)  
 
 > 该项目是一个依托于区块链实现的慈善平台，致力于使用区块链来实现捐款信息的公开透明，同时利用区块链的智能合约，来规范善款的正确使用。
-
 
 ## 项目演示
 
@@ -37,9 +37,20 @@
 
 ![用户信息](doc/images/android-user.jpg)
 
+## 项目结构
 
-
-## 项目组织
+```
+.
++-- doc 文档信息
++-- charity-android  #android客户端
++-- react-user # 桌面web客户端
++-- charity-server # 服务端
++   +-- charity-db # 数据库实体类以及访问层方法
++   +-- charity-core # 消息类，异常以及一些通用代码
++   +-- charity-web # 前端web层
++   +-- charity-order-consumer # 订单消费者
+.
+```
 
 ## 技术选型
 
@@ -73,7 +84,7 @@ mobx | 状态管理框架 | <https://cn.mobx.js.org/>
 
 ### 系统架构
 
-### 业务架构
+![架构图](doc/images/charity-struct.png)
 
 ## 开发环境
 
@@ -85,5 +96,5 @@ Redis | 3.2.1
 RocketMq | 3.7.14
 
 ## 许可证
-[Apache License 2.0](https://github.com/RogerYK/charity-all/blob/License)
 
+[Apache License 2.0](https://github.com/RogerYK/charity-all/blob/License)
