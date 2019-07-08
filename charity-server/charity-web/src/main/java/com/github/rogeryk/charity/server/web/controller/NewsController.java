@@ -1,10 +1,10 @@
 package com.github.rogeryk.charity.server.web.controller;
 
-import com.github.rogeryk.charity.server.web.aop.login.LoginedUser;
+import com.github.rogeryk.charity.server.core.aop.login.LoginedUser;
+import com.github.rogeryk.charity.server.core.util.Response;
 import com.github.rogeryk.charity.server.web.controller.form.NewsForm;
 import com.github.rogeryk.charity.server.web.controller.form.PageParam;
 import com.github.rogeryk.charity.server.web.service.NewsService;
-import com.github.rogeryk.charity.server.web.utils.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

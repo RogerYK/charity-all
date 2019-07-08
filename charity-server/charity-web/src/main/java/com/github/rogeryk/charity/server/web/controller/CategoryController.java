@@ -1,8 +1,8 @@
 package com.github.rogeryk.charity.server.web.controller;
 
+import com.github.rogeryk.charity.server.core.util.Response;
 import com.github.rogeryk.charity.server.db.domain.Category;
 import com.github.rogeryk.charity.server.web.service.CategoryService;
-import com.github.rogeryk.charity.server.web.utils.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

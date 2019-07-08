@@ -1,9 +1,9 @@
 package com.github.rogeryk.charity.server.web.controller;
 
 import com.github.rogeryk.charity.server.core.exception.ServiceException;
-import com.github.rogeryk.charity.server.web.storage.Storage;
+import com.github.rogeryk.charity.server.core.storage.Storage;
 import com.github.rogeryk.charity.server.core.util.ErrorCodes;
-import com.github.rogeryk.charity.server.web.utils.Response;
+import com.github.rogeryk.charity.server.core.util.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
