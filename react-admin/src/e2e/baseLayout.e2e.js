@@ -1,5 +1,8 @@
-const RouterConfig = require('../../config/config').default.routes;
+/* eslint-disable eslint-comments/disable-enable-pair */
+/* eslint-disable no-console */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { uniq } = require('lodash');
+const RouterConfig = require('../../config/config').default.routes;
 
 const BASE_URL = `http://localhost:${process.env.PORT || 8000}`;
 

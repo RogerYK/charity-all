@@ -9,9 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -26,12 +28,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private static Logger logger = LoggerFactory.getLogger(LoginFilter.class);
 
-    private AuthenticationManager manager;
 
     private RedisTemplate<Object, Object> redisTemplate;
 
-    public LoginFilter(AuthenticationManager manager, RedisTemplate<Object, Object> redisTemplate) {
-        this.manager = manager;
+    public LoginFilter(AuthenticationManager authenticationManager,
+            RedisTemplate<Object, Object> redisTemplate) {
+        setFilterProcessesUrl("/api/auth/login");
+        this.setAuthenticationManager(authenticationManager);
         this.redisTemplate = redisTemplate;
     }
 
@@ -48,7 +51,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             token = new UsernamePasswordAuthenticationToken("", "");
         }
 
-        return manager.authenticate(token);
+        return this.getAuthenticationManager().authenticate(token);
     }
 
     @Override
@@ -57,7 +60,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         redisTemplate.opsForValue().setIfAbsent(token, ((UserDetails)authResult.getPrincipal()).getUsername());
         redisTemplate.expire(token, 2, TimeUnit.HOURS);
         Response msg = Response.ok(token);
-
         String res = new ObjectMapper().writeValueAsString(msg);
         response.getOutputStream().print(res);
     }

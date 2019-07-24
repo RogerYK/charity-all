@@ -3,7 +3,7 @@ package com.github.rogeryk.charity.server.web.controller;
 import com.github.rogeryk.charity.server.core.aop.login.LoginedUser;
 import com.github.rogeryk.charity.server.core.util.Response;
 import com.github.rogeryk.charity.server.web.controller.form.NewsForm;
-import com.github.rogeryk.charity.server.web.controller.form.PageParam;
+import com.github.rogeryk.charity.server.core.util.PageParam;
 import com.github.rogeryk.charity.server.web.service.NewsService;
 
 import org.springframework.beans.factory.annotation.Autowired;

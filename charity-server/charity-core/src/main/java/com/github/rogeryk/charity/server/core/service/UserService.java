@@ -1,8 +1,10 @@
 package com.github.rogeryk.charity.server.core.service;
 
+import com.github.rogeryk.charity.server.core.util.PageParam;
 import com.github.rogeryk.charity.server.db.domain.Project;
 import com.github.rogeryk.charity.server.db.domain.Transaction;
 import com.github.rogeryk.charity.server.db.domain.User;
+import com.github.rogeryk.charity.server.db.domain.vo.PageData;
 import com.github.rogeryk.charity.server.db.domain.vo.UserInfo;
 import com.github.rogeryk.charity.server.db.repository.ProjectRepository;
 import com.github.rogeryk.charity.server.db.repository.TransactionRepository;
@@ -12,6 +14,7 @@ import com.github.rogeryk.charity.server.core.exception.ServiceException;
 import com.github.rogeryk.charity.server.core.util.ErrorCodes;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -114,5 +117,13 @@ public class UserService implements UserDetailsService {
                 findAllByPayer_IdAndType(user.getId(), Transaction.TransactionType.Donation, pageable);
     }
 
+    public PageData<User> list(Long userId, PageParam pageParam) {
+        User user = new User();
+        if (userId != null) {
+            user.setId(userId);
+        }
+        Example<User> example = Example.of(user);
+        return PageData.of(userRepository.findAll(example, pageParam.toPageable()));
+    }
 
 }

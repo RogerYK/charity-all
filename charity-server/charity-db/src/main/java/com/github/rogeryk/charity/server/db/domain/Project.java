@@ -56,7 +56,6 @@ public class Project {
     @Column(nullable = false, columnDefinition = "DECIMAL(10,2)")
     private BigDecimal targetMoney;
 
-
     @CreatedDate
     private Date createdTime = new Date();
 
@@ -72,7 +71,8 @@ public class Project {
     @LastModifiedDate
     private Date updateTime;
 
-    private Integer donorCount = 0;
+    @Column(insertable = false,columnDefinition = "default 0")
+    private Integer donorCount;
 
     @ManyToOne
     private User author;

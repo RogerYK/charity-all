@@ -29,6 +29,7 @@
         <module>charity-web</module>
         <module>charity-order-consumer</module>
         <module>charity-core</module>
+        <module>charity-web-admin</module>
     </modules>
 
     <dependencyManagement>

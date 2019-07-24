@@ -5,7 +5,7 @@ import com.github.rogeryk.charity.server.core.util.Response;
 import com.github.rogeryk.charity.server.db.domain.Comment;
 import com.github.rogeryk.charity.server.db.domain.vo.PageData;
 import com.github.rogeryk.charity.server.web.controller.form.CommentForm;
-import com.github.rogeryk.charity.server.web.controller.form.PageParam;
+import com.github.rogeryk.charity.server.core.util.PageParam;
 import com.github.rogeryk.charity.server.web.service.CommentService;
 
 import org.springframework.beans.factory.annotation.Autowired;

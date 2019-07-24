@@ -44,11 +44,14 @@ public class News {
     @CreatedDate
     private Date createdTime;
 
-    private int watchCount = 0;
+    @Column(insertable = false,columnDefinition = "default 0")
+    private Integer watchCount;
 
-    private int favorCount = 0;
+    @Column(insertable = false, columnDefinition = "default 0")
+    private Integer favorCount;
 
-    private int commentCount = 0;
+    @Column(insertable = false,columnDefinition = "default 0")
+    private Integer commentCount;
 
     @ManyToOne
     private User author;

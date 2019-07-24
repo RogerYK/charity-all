@@ -7,7 +7,7 @@ import com.github.rogeryk.charity.server.db.domain.Transaction;
 import com.github.rogeryk.charity.server.db.domain.User;
 import com.github.rogeryk.charity.server.db.domain.vo.PageData;
 import com.github.rogeryk.charity.server.web.controller.form.DonateForm;
-import com.github.rogeryk.charity.server.web.controller.form.PageParam;
+import com.github.rogeryk.charity.server.core.util.PageParam;
 import com.github.rogeryk.charity.server.web.controller.form.RechargeForm;
 import com.github.rogeryk.charity.server.core.exception.ServiceException;
 import com.github.rogeryk.charity.server.web.service.TransactionService;

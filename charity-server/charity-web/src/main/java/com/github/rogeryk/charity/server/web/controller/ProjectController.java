@@ -8,7 +8,7 @@ import com.github.rogeryk.charity.server.db.domain.ProjectSchedule;
 import com.github.rogeryk.charity.server.db.domain.User;
 import com.github.rogeryk.charity.server.db.domain.vo.PageData;
 import com.github.rogeryk.charity.server.db.domain.vo.ProjectDetailVO;
-import com.github.rogeryk.charity.server.web.controller.form.PageParam;
+import com.github.rogeryk.charity.server.core.util.PageParam;
 import com.github.rogeryk.charity.server.web.controller.form.ProjectForm;
 import com.github.rogeryk.charity.server.web.controller.form.ProjectScheduleForm;
 import com.github.rogeryk.charity.server.web.service.ProjectService;
