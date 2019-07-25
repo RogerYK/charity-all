@@ -1,57 +1,22 @@
-# Ant Design Pro
+# 慈善平台-管理端
 
-This project is initialized with [Ant Design Pro](https://pro.ant.design). Follow is the quick guide for how to use.
+> 使用ant-design-pro构建的管理端
 
-## Environment Prepare
+![](../doc/images/admin-news.png)
+![](../doc/images/admin-transaction.png)
 
-Install `node_modules`:
+## 目前已实现的功能
 
-```bash
-npm install
-```
+- 项目的列表查询
+- 项目评论的列表查询
+- 交易信息的列表查询
+- 新闻信息的列表查询
 
-or
+## TODO 待做的任务
 
-```bash
-yarn
-```
-
-## Provided Scripts
-
-Ant Design Pro provides some useful script to help you quick start and build with web project, code style check and test.
-
-Scripts provided in `package.json`. It's safe to modify or add additional script:
-
-### Start project
-
-```bash
-npm start
-```
-
-### Build project
-
-```bash
-npm run build
-```
-
-### Check code style
-
-```bash
-npm run lint
-```
-
-You can also use script to auto fix some lint error:
-
-```bash
-npm run lint:fix
-```
-
-### Test code
-
-```bash
-npm test
-```
-
-## More
-
-You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in our [github](https://github.com/ant-design/ant-design-pro).
+- 项目的删除，批准操作
+- 新闻的删除操作
+- 评论的删除操作
+- 用户的列表查询，认证操作
+- 管理的授权、添加操作
+- 分析页的分析数据

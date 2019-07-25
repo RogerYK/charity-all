@@ -6,11 +6,11 @@ import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { SorterResult } from 'antd/es/table';
 import { connect } from 'dva';
+import { ColumnProps } from 'antd/lib/table';
 import { StateType } from './model';
 import { TableListItem, TableListPagination, TableListParams } from './data.d';
 
 import styles from './style.less';
-import { ColumnProps } from 'antd/lib/table';
 
 const FormItem = Form.Item;
 const getValue = (obj: { [x: string]: string[] }) =>
