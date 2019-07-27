@@ -1,5 +1,7 @@
 package com.github.rogeryk.charity.server.core.service;
 
+import com.github.rogeryk.charity.server.core.search.index.UserDocument;
+import com.github.rogeryk.charity.server.core.search.repository.UserDocumentRepository;
 import com.github.rogeryk.charity.server.core.util.PageParam;
 import com.github.rogeryk.charity.server.db.domain.Project;
 import com.github.rogeryk.charity.server.db.domain.Transaction;
@@ -37,18 +39,16 @@ public class UserService implements UserDetailsService {
 //    private BubiService bubiService;
 
     private static PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private ProjectRepository projectRepository;
-
     @Autowired
     private TransactionRepository transactionRepository;
-
     @Autowired
     private BumoService bumoService;
+    @Autowired
+    private UserDocumentRepository userDocumentRepository;
 
     public void registerUser(String phoneNumber, String password){
         User user = new User();
@@ -62,8 +62,10 @@ public class UserService implements UserDetailsService {
         AccountCreateResult account = bumoService.createActiveAccount();
         user.setBumoAddress(account.getAddress());
         user.setBumoPrivateKey(account.getPrivateKey());
+        user = userRepository.saveAndFlush(user);
 
-        userRepository.save(user);
+        UserDocument document = UserDocument.create(user);
+        userDocumentRepository.save(document);
     }
 
     public User findUserByPhoneNumber(String phoneNumber) {

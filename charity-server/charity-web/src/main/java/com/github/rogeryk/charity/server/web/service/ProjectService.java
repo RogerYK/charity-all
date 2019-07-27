@@ -1,5 +1,7 @@
 package com.github.rogeryk.charity.server.web.service;
 
+import com.github.rogeryk.charity.server.core.search.index.ProjectDocument;
+import com.github.rogeryk.charity.server.core.search.repository.ProjectDocumentRepository;
 import com.github.rogeryk.charity.server.db.domain.Category;
 import com.github.rogeryk.charity.server.db.domain.Project;
 import com.github.rogeryk.charity.server.db.domain.ProjectSchedule;
@@ -15,6 +17,7 @@ import com.github.rogeryk.charity.server.core.exception.ServiceException;
 import com.github.rogeryk.charity.server.core.util.ErrorCodes;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -26,25 +29,26 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import io.bumo.model.response.result.AccountCreateResult;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @CacheConfig(cacheNames = "project")
+@Slf4j
 public class ProjectService {
 
     @Autowired
     private ProjectRepository projectRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private ProjectScheduleRepository projectScheduleRepository;
-
     @Autowired
     private BumoService bumoService;
-
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ProjectDocumentRepository projectDocumentRepository;
+
 
 
     @Cacheable(key = "'hotProject('+#p0+')'")
@@ -108,7 +112,9 @@ public class ProjectService {
             project.setBumoAddress(account.getAddress());
             project.setBumoPrivateKey(account.getPrivateKey());
         }
-        projectRepository.save(project);
+        project = projectRepository.saveAndFlush(project);
+        ProjectDocument document = ProjectDocument.create(project);
+        projectDocumentRepository.save(document);
     }
 
     public void deleteProject(Long id) {

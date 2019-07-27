@@ -58,11 +58,13 @@ public class ProjectController {
             User user = userService.findById(userId);
             project = new Project();
             project.setAuthor(user);
+
         } else {
             project = projectService.getProject(form.getId());
         }
 
         form.merge(project);
+        log.info("save project" + form.toString());
 
         projectService.save(project);
 

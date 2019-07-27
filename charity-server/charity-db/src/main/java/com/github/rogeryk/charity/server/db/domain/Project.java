@@ -50,14 +50,14 @@ public class Project {
     @Column(columnDefinition = "text")
     private String summary;
 
-    @Column(nullable = false,columnDefinition = "DECIMAL(10,2) default 0")
+    @Column(insertable = false,nullable = false,columnDefinition = "DECIMAL(10,2) default 0")
     private BigDecimal raisedMoney;
 
     @Column(nullable = false, columnDefinition = "DECIMAL(10,2)")
     private BigDecimal targetMoney;
 
     @CreatedDate
-    private Date createdTime = new Date();
+    private Date createdTime;
 
     private Date startTime;
 

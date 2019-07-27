@@ -1,11 +1,14 @@
 package com.github.rogeryk.charity.server.web.controller;
 
+import com.github.rogeryk.charity.server.core.search.SearchService;
+import com.github.rogeryk.charity.server.core.search.index.NewsDocument;
+import com.github.rogeryk.charity.server.core.search.index.ProjectDocument;
+import com.github.rogeryk.charity.server.core.search.index.UserDocument;
 import com.github.rogeryk.charity.server.core.util.Response;
 import com.github.rogeryk.charity.server.db.domain.News;
 import com.github.rogeryk.charity.server.db.domain.Project;
 import com.github.rogeryk.charity.server.db.domain.User;
 import com.github.rogeryk.charity.server.db.domain.vo.PageData;
-import com.github.rogeryk.charity.server.web.service.SearchService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -28,7 +31,7 @@ public class SearchController {
     public Response searchProject(@NotBlank String keyword,
                                   @RequestParam(defaultValue = "0") int page,
                                   @RequestParam(defaultValue = "5") int size) {
-        PageData<Project> pageData = searchService.searchProject(keyword, page, size);
+        PageData<ProjectDocument> pageData = searchService.searchProject(keyword, page, size);
         return Response.ok(pageData);
     }
 
@@ -36,7 +39,7 @@ public class SearchController {
     public Response searchUser(@NotBlank String keyword,
                                @RequestParam(defaultValue = "0") int page,
                                @RequestParam(defaultValue = "5") int size) {
-        PageData<User> pageData = searchService.searchUser(keyword, page, size);
+        PageData<UserDocument> pageData = searchService.searchUser(keyword, page, size);
         return Response.ok(pageData);
     }
 
@@ -44,7 +47,7 @@ public class SearchController {
     public Response searchNews(@NotBlank String keyword,
                                @RequestParam(defaultValue = "0") int page,
                                @RequestParam(defaultValue = "5") int size) {
-        PageData<News> pageData = searchService.searchNews(keyword, page, size);
+        PageData<NewsDocument> pageData = searchService.searchNews(keyword, page, size);
         return Response.ok(pageData);
     }
 }

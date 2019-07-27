@@ -20,6 +20,9 @@ public class ProjectForm {
     @NotBlank
     private String img;
 
+    @NotBlank
+    private String name;
+
     private List<String> gallery;
 
     @NotNull
@@ -38,10 +41,12 @@ public class ProjectForm {
         project.setId(id);
         project.setImg(img);
         project.setGallery(gallery);
+        project.setName(name);
 
         if (categoryId != null) {
             Category category = new Category();
             category.setId(categoryId);
+            project.setCategory(category);
         }
 
         project.setTargetMoney(targetMoney);
