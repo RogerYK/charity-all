@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/charity?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://db:3306/charity?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -36,11 +36,11 @@ spring:
       repositories:
         enabled: true
       cluster-name: docker-cluster
-      cluster-nodes: 192.168.213.132:9300
+      cluster-nodes: elasticsearch:9300
 
   redis:
     database: 0
-    host: localhost
+    host: redis
     port: 6379
     password:
     timeout: 50
@@ -53,10 +53,8 @@ spring:
 #    cache-names: server
 #    type: redis
 
-
-
 rocketmq:
-  name-server: 192.168.213.132:9876
+  name-server: rocketmq:9876
   producer:
     group: my-group
 
@@ -65,15 +63,13 @@ storage:
   active: local
 
   local:
-    address: http://localhost:8080/
+    address: http://192.168.213.132:8080/
     storagePath: storage
 
 
 logging:
   level:
     root: info
-    com.github.rogeryk.charity: debug
-
 
 
 

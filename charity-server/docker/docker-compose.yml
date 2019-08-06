@@ -1,0 +1,39 @@
+version: "3"
+services:
+  web:
+    image: charity-server/charity-web:0.1.0
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "80:8080"
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+
+  db:
+    image: mysql
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+    volumes:
+      - "mysql-data:/var/lib/mysql"
+
+  redis:
+    image: redis
+
+  elasticsearch:
+    image: elasticsearch:6.4.3
+    environment:
+      - "discovery.type=single-node"
+    volumes:
+      - "es-data:/usr/share/elasticsearch/data"
+
+volumes:
+  mysql-data:
+    external: true
+  es-data:
+
+
+
