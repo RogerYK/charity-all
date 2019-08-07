@@ -11,10 +11,10 @@
 
 .title {
   color: #222c37;
-    font-size: 34px;
-    line-height: 51px;
-    padding: 32px 0 12px 0;
-    font-weight: 700;
+  font-size: 34px;
+  line-height: 51px;
+  padding: 32px 0 12px 0;
+  font-weight: 700;
 }
 
 .author {
@@ -22,6 +22,7 @@
   height: 40px;
   line-height: 40px;
   font-size: 16px;
+  color: #7a8087;
 }
 
 .avatar {
@@ -29,7 +30,9 @@
   height: 40px;
   border-radius: 50%;
 }
-.name,.time {
+.name,
+.time,
+.watch-count {
   margin-left: 10px;
 }
 
@@ -39,10 +42,10 @@
 
 .news-content {
   padding: 34px 0;
-    font-size: 16px;
-    line-height: 28px;
-    color: #222c37;
-    word-wrap: break-word;
+  font-size: 16px;
+  line-height: 28px;
+  color: #222c37;
+  word-wrap: break-word;
 }
 
 .error-msg {
