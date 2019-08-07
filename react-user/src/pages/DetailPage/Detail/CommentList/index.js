@@ -6,11 +6,10 @@ import { observer, inject } from "mobx-react";
 import moment from "moment";
 import { CommentStore } from "../../../../store/commentStore";
 import { Editor, EditorLine } from "./Editor";
-import {withRouter} from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 import IconFont from "../../../../components/IconFont";
 
-
-@inject("userStore")
+@inject("userStore", "commonStore")
 @observer
 class CommentList extends Component {
   constructor(props) {
@@ -18,59 +17,91 @@ class CommentList extends Component {
     this.commentStore = new CommentStore(props.projectId);
   }
 
-  replyComment = (parentId, replyId) => {
-    if (!this.props.userStore.logined) {
-      this.props.history.push('/login')
+  favorComment = commentId => {
+    if (!this.props.commonStore.logined) {
+      this.props.history.push("/login");
+    } else {
+      this.commentStore.favorComment(commentId);
     }
-    const setParentAndReply = this.commentStore.setParentAndReply;
-    setParentAndReply(parentId, replyId);
+  };
+
+  replyComment = (parentId, replyId) => {
+    if (!this.props.commonStore.logined) {
+      this.props.history.push("/login");
+    } else {
+      const setParentAndReply = this.commentStore.setParentAndReply;
+      setParentAndReply(parentId, replyId);
+    }
   };
 
   getCommentList(comments, parentId, showAll, onShowAll) {
-    if (!comments || comments.length === 0) return null
+    if (!comments || comments.length === 0) return null;
     if (!showAll) {
-      comments = comments.slice(0, 3)
+      comments = comments.slice(0, 3);
     }
-    const {
-      submitting,
-      handleSubmit,
-      replyId
-    } = this.commentStore;
+    const { favorComment } = this;
+    const { submitting, handleSubmit, replyId } = this.commentStore;
     return (
-        <List
-          className={styles['sub-comment-list']}
-          itemLayout="horizontal"
-          loadMore={showAll ? null : <div className={styles['load-more-wrap']}><span className={styles['load-more']} onClick={onShowAll}>全部评论<IconFont type="icon-sanjiao1" /></span></div>}
-          dataSource={comments}
-          renderItem={comment => (
-            <Comment
-              actions={[
-                <span className={styles['comment-action']}>
-                  <IconFont type="icon-zan" />
-                </span>,
-                <span className={styles['comment-action']} onClick={() => this.replyComment(parentId, comment.id)}>
-                  <IconFont type="icon-pinglun" />
+      <List
+        className={styles["sub-comment-list"]}
+        itemLayout="horizontal"
+        loadMore={
+          showAll ? null : (
+            <div className={styles["load-more-wrap"]}>
+              <span className={styles["load-more"]} onClick={onShowAll}>
+                全部评论
+                <IconFont type="icon-sanjiao1" />
+              </span>
+            </div>
+          )
+        }
+        dataSource={comments}
+        renderItem={comment => (
+          <Comment
+            actions={[
+              <span className={styles["comment-action"]}>
+                {comment.favored ? (
+                  <IconFont
+                    className="color-primary"
+                    type="icon-zanxuanzhong"
+                  />
+                ) : (
+                  <IconFont
+                    onClick={() => favorComment(comment.id)}
+                    type="icon-zan"
+                  />
+                )}
+              </span>,
+              <span
+                className={styles["comment-action"]}
+                onClick={() => this.replyComment(parentId, comment.id)}
+              >
+                <IconFont type="icon-pinglun" />
+              </span>
+            ]}
+            author={comment.commenter.nickName}
+            avatar={comment.commenter.avatar}
+            content={comment.content}
+            datetime={
+              <Tooltip title={comment.createdTime}>
+                <span>
+                  {moment(comment.createdTime, "YYYY-MM-DD HH:mm:ss").fromNow()}
                 </span>
-              ]}
-              author={comment.commenter.nickName}
-              avatar={comment.commenter.avatar}
-              content={comment.content}
-              datetime={
-                <Tooltip title={comment.createdTime}>
-                  <span>{moment(comment.createdTime, 'YYYY-MM-DD HH:mm:ss').fromNow()}</span>
-                </Tooltip>
-              }
-            >
-              {replyId === comment.id ? <EditorLine submitting={submitting} onSubmit={handleSubmit} /> : null}
-            </Comment>
-          )}
-        />
-    )
+              </Tooltip>
+            }
+          >
+            {replyId === comment.id ? (
+              <EditorLine submitting={submitting} onSubmit={handleSubmit} />
+            ) : null}
+          </Comment>
+        )}
+      />
+    );
   }
 
   render() {
     let user = this.props.userStore.currentUser;
-    const logined = this.props.userStore.logined;
+    const logined = this.props.commonStore.logined;
     const {
       comments,
       subShowFlags,
@@ -82,7 +113,9 @@ class CommentList extends Component {
       replyId
     } = this.commentStore;
 
-    console.log(`subShowFlags:${subShowFlags}`)
+    const { favorComment } = this;
+
+    console.log(`subShowFlags:${subShowFlags}`);
 
     return (
       <div>
@@ -100,20 +133,33 @@ class CommentList extends Component {
               logined={logined}
               submitting={submitting}
               onSubmit={handleSubmit}
-            /> 
+            />
           }
         />
         <List
           itemLayout="horizontal"
           dataSource={comments}
-          locale={{emptyText: "没有评论"}}
+          locale={{ emptyText: "没有评论" }}
           renderItem={(comment, i) => (
             <Comment
               actions={[
-                <span className={styles['comment-action']}>
-                  <IconFont type="icon-zan" />
+                <span className={styles["comment-action"]}>
+                  {comment.favored ? (
+                    <IconFont
+                      className="color-primary"
+                      type="icon-zanxuanzhong"
+                    />
+                  ) : (
+                    <IconFont
+                      onClick={() => favorComment(comment.id)}
+                      type="icon-zan"
+                    />
+                  )}
                 </span>,
-                <span className={styles['comment-action']} onClick={() => this.replyComment(comment.id, comment.id)}>
+                <span
+                  className={styles["comment-action"]}
+                  onClick={() => this.replyComment(comment.id, comment.id)}
+                >
                   <IconFont type="icon-pinglun" />
                 </span>
               ]}
@@ -122,28 +168,42 @@ class CommentList extends Component {
               content={comment.content}
               datetime={
                 <Tooltip title={comment.createdTime}>
-                  <span>{moment(comment.createdTime, 'YYYY-MM-DD HH:mm:ss').fromNow()}</span>
+                  <span>
+                    {moment(
+                      comment.createdTime,
+                      "YYYY-MM-DD HH:mm:ss"
+                    ).fromNow()}
+                  </span>
                 </Tooltip>
               }
             >
-              {replyId === comment.id ? <EditorLine submitting={submitting} onSubmit={handleSubmit} /> : null}
-              {this.getCommentList(comment.subComments, comment.id, subShowFlags[i], ()=> {
-                subShowFlags[i] = true
-              })}
+              {replyId === comment.id ? (
+                <EditorLine submitting={submitting} onSubmit={handleSubmit} />
+              ) : null}
+              {this.getCommentList(
+                comment.subComments,
+                comment.id,
+                subShowFlags[i],
+                () => {
+                  subShowFlags[i] = true;
+                }
+              )}
             </Comment>
           )}
         />
-        {total > 10 ? <Pagination
-          className={styles["pagination"]}
-          current={page + 1}
-          onChange={page => setPage(page - 1)}
-          defaultCurrent={1}
-          pageSize={10}
-          total={total}
-        /> : null}
+        {total > 10 ? (
+          <Pagination
+            className={styles["pagination"]}
+            current={page + 1}
+            onChange={page => setPage(page - 1)}
+            defaultCurrent={1}
+            pageSize={10}
+            total={total}
+          />
+        ) : null}
       </div>
     );
   }
 }
 
-export default withRouter(CommentList)
+export default withRouter(CommentList);

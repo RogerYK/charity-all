@@ -94,7 +94,7 @@ public class ProjectService {
     }
 
 
-    public ProjectDetailVO findProjectVoByIdAndUserId(Long projectId, Long userId) {
+    public ProjectDetailVO detail(Long projectId, Long userId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(()->ServiceException.of(ErrorCodes.PROJECT_NOT_EXIST, "项目不存在"));
         boolean followed = false;
@@ -102,6 +102,7 @@ public class ProjectService {
             User user = userRepository.findById(userId).orElseThrow(() -> new ServiceException(ErrorCodes.USER_NOT_EXIST, "用户不存在"));
             followed = projectRepository.existsByIdEqualsAndFollowedUsersContaining(projectId, user);
         }
+        projectRepository.incrementNewsWatchCount(projectId);
         return ProjectDetailVO.valueOf(project, followed);
     }
 

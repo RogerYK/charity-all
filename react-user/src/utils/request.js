@@ -1,36 +1,38 @@
-import axios from 'axios'
-import commonStore from '../store/commonStore'
+import axios from "axios";
+import commonStore from "../store/commonStore";
+import { message } from "antd";
 
 const service = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: "http://localhost:8080/api",
   timeout: 5000
-})
+});
 
 service.interceptors.request.use(
   config => {
     if (commonStore.accessToken) {
-      config.headers['access_token'] = commonStore.accessToken
+      config.headers["access_token"] = commonStore.accessToken;
     }
-    return config
+    return config;
   },
   error => {
-    console.log(error)
-    Promise.reject(error)
+    console.log(error);
+    Promise.reject(error);
   }
-)
+);
 
 service.interceptors.response.use(
   response => {
-    const data = response.data
+    const data = response.data;
     if (data.errCode !== 0) {
-      return Promise.reject(data)
+      message.error(data.msg);
+      return Promise.reject(data);
     }
-    return data
+    return data;
   },
   error => {
-    console.log(error)
-    return Promise.reject(error)
+    console.log(error);
+    return Promise.reject(error);
   }
-)
+);
 
-export default service
+export default service;

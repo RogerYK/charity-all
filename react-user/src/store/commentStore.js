@@ -1,73 +1,83 @@
-import { observable, action, autorun } from 'mobx';
-import api from '../api'
-import { message } from 'antd';
+import { observable, action, autorun } from "mobx";
+import api from "../api";
+import { message } from "antd";
 
 export class CommentStore {
+  @observable projectId;
 
-  @observable projectId
+  @observable page = 0;
 
-  @observable page = 0
+  size = 10;
 
-  size = 10
+  @observable comments = [];
 
-  @observable comments = []
+  @observable subShowFlags = [];
 
-  @observable subShowFlags = []
+  @observable total = 0;
 
-  @observable total = 0
+  @observable parentId;
 
-  @observable parentId
+  @observable replyId;
 
-  @observable replyId
-
-  @observable submiting = false
+  @observable submiting = false;
 
   constructor(projectId) {
-    this.projectId = projectId
-    autorun(() =>
-      this.pullComments()
-    )
+    this.projectId = projectId;
+    autorun(() => this.pullComments());
   }
 
   @action
-  setPage = (page) => {
-    console.log(`set page ${page}`)
-    this.page = page
-  }
+  setPage = page => {
+    console.log(`set page ${page}`);
+    this.page = page;
+  };
 
   @action
-  handleSubmit = (content) => {
+  handleSubmit = content => {
     if (!this.submiting) {
-      this.submiting = true
+      this.submiting = true;
       api.Comment.comment(this.projectId, this.parentId, this.replyId, content)
-        .then(action(res => {
-          this.submiting = false
-          message.success('评论成功')
-          this.parentId = null
-          this.replyId = null
-          this.pullComments()
-        })).catch(action(res => {
-          this.submit = false
-          message.error(res.msg)
-        }))
+        .then(
+          action(res => {
+            this.submiting = false;
+            message.success("评论成功");
+            this.parentId = null;
+            this.replyId = null;
+            this.pullComments();
+          })
+        )
+        .catch(
+          action(res => {
+            this.submit = false;
+            message.error(res.msg);
+          })
+        );
     }
-  }
+  };
 
-  @action 
+  @action
   setParentAndReply = (parentId, replyId) => {
-    this.parentId = parentId
-    this.replyId = replyId
-  }
+    this.parentId = parentId;
+    this.replyId = replyId;
+  };
+
+  @action
+  favorComment = commentId => {
+    api.Comment.favor(commentId).then(
+      action(res => {
+        this.pullComments();
+      })
+    );
+  };
 
   pullComments = () => {
-    api.Comment.byProjectId(this.projectId, this.page, this.size)
-      .then(action(res => {
-        console.log(res)
-        this.comments = res.data.content
-        this.total = res.data.total
-        this.subShowFlags = new Array(this.comments.length).fill(false)
-      }))
-  }
-
+    api.Comment.byProjectId(this.projectId, this.page, this.size).then(
+      action(res => {
+        console.log(res);
+        this.comments = observable(res.data.content);
+        this.total = res.data.total;
+        this.subShowFlags = new Array(this.comments.length).fill(false);
+      })
+    );
+  };
 }
-

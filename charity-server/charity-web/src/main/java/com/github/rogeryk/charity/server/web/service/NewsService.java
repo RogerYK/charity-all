@@ -12,7 +12,9 @@ import com.github.rogeryk.charity.server.core.util.ErrorCodes;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,9 +26,12 @@ public class NewsService {
     @Autowired
     private NewsDocumentRepository newsDocumentRepository;
 
-    public News byId(Long id) {
-        return newsRepository.findById(id)
+    @Transactional
+    public News detail(Long id) {
+        News news = newsRepository.findById(id)
                 .orElseThrow(() -> new ServiceException(ErrorCodes.NEWS_NOT_EXIST, "新闻不存在"));
+       newsRepository.incrementNewsWatchCount(news.getId());
+       return news;
     }
 
     public List<News> allNews() {

@@ -59,5 +59,4 @@ public class News {
     @JsonIgnore
     @OneToMany(mappedBy = "news")
     private List<Comment> comments;
-
 }

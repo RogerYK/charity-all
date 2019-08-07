@@ -47,7 +47,7 @@ public class ProjectController {
 
     @GetMapping("/")
     public Response byId(@LoginedUser Long userId, @NotNull Long id) {
-        ProjectDetailVO project = projectService.findProjectVoByIdAndUserId(id, userId);
+        ProjectDetailVO project = projectService.detail(id, userId);
         return Response.ok(project);
     }
 

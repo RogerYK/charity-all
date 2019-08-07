@@ -9,6 +9,7 @@ import com.github.rogeryk.charity.server.db.domain.vo.ProjectVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -32,6 +33,10 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     Optional<ProjectVO> findProjectById(Long id);
 
     boolean existsByIdEqualsAndFollowedUsersContaining(Long id, User user);
+
+    @Modifying
+    @Query(value = "update news set watch_count=watch_count+1  where id=:id", nativeQuery = true)
+    int incrementNewsWatchCount(@Param("id") Long id);
 
 //    @Query(value = "select  id, `name`, img, gallery, content, summary, raised_money, target_money, start_time, end_time, bumo_address, donor_count, author_id, category_id from project where match(`name`, summary, content) against(:keyword) limit :page,:size", nativeQuery = true)
     @Query(value = "select * from project where match(`name`, summary, content) against(:keyword) limit :page,:size",

@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -51,6 +52,9 @@ public class Comment {
 
     @CreatedDate
     private Date createdTime;
+
+    @ManyToMany
+    private List<User> favorUsers;
 
     @Override
     public String toString() {

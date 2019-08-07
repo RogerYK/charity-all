@@ -16,6 +16,7 @@ public interface ErrorCodes {
     int CATEGORY_NOT_EXIST = 400; //分类不存在
     int PROJECT_NOT_EXIST = 401; //项目不存在
     int NEWS_NOT_EXIST = 402;
+    int COMMENT_NOT_EXIST = 403;
 
 
 }

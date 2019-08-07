@@ -1,5 +1,6 @@
 package com.github.rogeryk.charity.server.web.service;
 
+import com.github.rogeryk.charity.server.core.aop.login.LoginedUser;
 import com.github.rogeryk.charity.server.db.domain.Comment;
 import com.github.rogeryk.charity.server.db.domain.News;
 import com.github.rogeryk.charity.server.db.domain.Project;
@@ -11,10 +12,14 @@ import com.github.rogeryk.charity.server.db.repository.UserRepository;
 import com.github.rogeryk.charity.server.web.controller.form.CommentForm;
 import com.github.rogeryk.charity.server.core.exception.ServiceException;
 import com.github.rogeryk.charity.server.core.util.ErrorCodes;
+import com.github.rogeryk.charity.server.web.service.vo.CommentVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -63,8 +68,21 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public PageData<Comment> findRootCommentByProjectId(Long projectId, Pageable pageable) {
-        return PageData.of(commentRepository.findByProjectIdAndParentCommentId(projectId, null, pageable));
+
+
+    public PageData<CommentVO> findRootCommentByProjectId(Long userId, Long projectId, Pageable pageable) {
+        Page<Comment> page = commentRepository.findByProjectIdAndParentCommentId(projectId, null, pageable);
+        List<CommentVO> data = CommentVO.from(page.getContent(), userId);
+        Long total = page.getTotalElements();
+        return PageData.of(total, data);
     }
 
+    public void favor(Long userId, Long commentId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> ServiceException.of(ErrorCodes.COMMENT_NOT_EXIST, "项目不存在"));
+        List<User> favorUsers = comment.getFavorUsers();
+        if (favorUsers.stream().anyMatch(u -> u.getId().equals(userId))) return;
+        User user = userRepository.findById(userId).orElseThrow(() -> ServiceException.of(ErrorCodes.USER_NOT_EXIST, "用户不存在"));
+        favorUsers.add(user);
+        commentRepository.save(comment);
+    }
 }

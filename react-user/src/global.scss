@@ -1,4 +1,4 @@
-@import 'config.scss';
+@import "config.scss";
 
 .header {
   height: 64px;
@@ -8,7 +8,8 @@
   color: $text-color;
 }
 
-html, body {
+html,
+body {
   color: $text-color;
 }
 

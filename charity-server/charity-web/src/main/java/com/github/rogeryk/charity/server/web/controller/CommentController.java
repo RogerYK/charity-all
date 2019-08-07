@@ -6,7 +6,9 @@ import com.github.rogeryk.charity.server.db.domain.Comment;
 import com.github.rogeryk.charity.server.db.domain.vo.PageData;
 import com.github.rogeryk.charity.server.web.controller.form.CommentForm;
 import com.github.rogeryk.charity.server.core.util.PageParam;
+import com.github.rogeryk.charity.server.web.controller.form.CommentIdForm;
 import com.github.rogeryk.charity.server.web.service.CommentService;
+import com.github.rogeryk.charity.server.web.service.vo.CommentVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -35,10 +37,17 @@ public class CommentController {
         return Response.ok();
     }
 
+    @PostMapping("/favor")
+    public Response favor(@LoginedUser Long userId, @Validated @RequestBody CommentIdForm form) {
+        commentService.favor(userId, form.getCommentId());
+        return Response.ok();
+    }
+
     @GetMapping("/byProjectId")
-    public Response byProjectId(@NotNull Long projectId, PageParam pageParam) {
-        PageData<Comment> commentPageData = commentService.findRootCommentByProjectId(projectId,
+    public Response byProjectId(@LoginedUser Long userId , @NotNull Long projectId, PageParam pageParam) {
+        PageData<CommentVO> commentPageData = commentService.findRootCommentByProjectId(userId ,projectId,
                 pageParam.toPageable());
         return Response.ok(commentPageData);
     }
+
 }

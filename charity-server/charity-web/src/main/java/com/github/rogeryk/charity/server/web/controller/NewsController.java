@@ -27,7 +27,7 @@ public class NewsController {
 
     @GetMapping("/")
     public Response detail(@NotNull Long id) {
-        return Response.ok(newsService.byId(id));
+        return Response.ok(newsService.detail(id));
     }
 
     @GetMapping("/hot")

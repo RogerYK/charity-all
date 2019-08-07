@@ -1,34 +1,34 @@
-import {observable, action, autorun, computed, get} from 'mobx'
+import { observable, action, autorun, computed, get } from "mobx";
 
 class CommonStore {
-
-  @observable accessToken = window.localStorage.getItem('token');
+  @observable accessToken = window.localStorage.getItem("token");
 
   @computed get logined() {
-    return Boolean(this.accessToken)
+    return Boolean(this.accessToken !== null && this.accessToken !== undefined);
   }
-
 
   constructor() {
     autorun(() => {
       if (this.logined) {
-        window.localStorage.setItem('token', this.accessToken)
+        window.localStorage.setItem("token", this.accessToken);
       }
-    })
+    });
   }
 
   @action setToken(token) {
-    console.log(token)
-    this.accessToken = token
-    console.log(this.accessToken)
+    console.log(token);
+    this.accessToken = token;
+    console.log(this.accessToken);
+    if (!token) {
+      this.removeToken();
+    }
   }
 
   @action
   removeToken() {
-    this.accessToken = null
-    window.localStorage.removeItem('token')
+    this.accessToken = null;
+    window.localStorage.removeItem("token");
   }
-
 }
 
 export default new CommonStore();

@@ -91,6 +91,9 @@ public class Project {
     @ManyToMany(mappedBy = "followProjects")
     private List<User> followedUsers;
 
+    @Column(insertable = false, columnDefinition = "default 0")
+    private Integer watchCount;
+
     public static class GalleryConverter implements AttributeConverter<List<String>, String> {
 
         @Override

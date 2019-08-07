@@ -6,6 +6,7 @@ import com.github.rogeryk.charity.server.db.domain.vo.PageData;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -25,6 +26,10 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 
     @Query(value = "select * from news where match (`name`, content, introduce, title) against (:keyword) limit :page,:size", nativeQuery = true)
     List<News> searchNewsData(@Param("keyword") String keyword, @Param("page") int page, @Param("size") int size);
+
+    @Modifying
+    @Query(value = "update news set watch_count=watch_count+1  where id=:id", nativeQuery = true)
+    int incrementNewsWatchCount(@Param("id") Long id);
 
     @Query(value = "select count(*) from news where match (`name`, content, introduce, title) against (:keyword)", nativeQuery = true)
     long searchNewsCount(@Param("keyword") String keyword);
