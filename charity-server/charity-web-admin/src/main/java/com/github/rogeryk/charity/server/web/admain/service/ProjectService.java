@@ -1,5 +1,7 @@
 package com.github.rogeryk.charity.server.web.admain.service;
 
+import com.github.rogeryk.charity.server.core.exception.ServiceException;
+import com.github.rogeryk.charity.server.core.util.ErrorCodes;
 import com.github.rogeryk.charity.server.core.util.PageParam;
 import com.github.rogeryk.charity.server.db.domain.Category;
 import com.github.rogeryk.charity.server.db.domain.Project;
@@ -41,9 +43,23 @@ public class ProjectService {
         return PageData.of(projectRepository.findAll(example, pageable));
     }
 
+    //项目通过检查上线
+    public void allow(Long id) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() ->ServiceException.of(ErrorCodes.PROJECT_NOT_EXIST, "项目不存在"));
+        if (project.getStatus().equals(Project.ProjectStatus.APPLY)) {
+            project.setStatus(Project.ProjectStatus.EXAMINATION);
+            projectRepository.save(project);
+        }
+    }
 
+
+    //只是将项目设为删除状态，使得项目不可见
     public void delete(Long id) {
-        projectRepository.deleteById(id);
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> ServiceException.of(ErrorCodes.PROJECT_NOT_EXIST, "项目不能存在"));
+        project.setStatus(Project.ProjectStatus.DELETE);
+        projectRepository.save(project);
     }
 }
 

@@ -15,3 +15,12 @@ export async function removeProject(id: number) {
     },
   });
 }
+
+export async function allowProject(id: number) {
+  return request('/project/allow', {
+    method: 'POST',
+    data: {
+      id,
+    },
+  });
+}

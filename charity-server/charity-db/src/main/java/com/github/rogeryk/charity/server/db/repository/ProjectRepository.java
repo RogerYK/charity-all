@@ -20,7 +20,9 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    Page<Project> findByCategory(Category category, Pageable pageable);
+    Page<Project> findAllByStatusIn(List<Integer> status, Pageable pageable);
+
+    Page<Project> findByCategoryAndStatusIn(Category category, List<Integer> statusList, Pageable pageable);
 
     int countProjectByAuthor(User user);
 

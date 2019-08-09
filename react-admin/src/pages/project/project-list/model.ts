@@ -1,6 +1,6 @@
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
-import { removeProject, queryProject } from './service';
+import { removeProject, queryProject, allowProject } from './service';
 
 import { TableListData } from './data.d';
 
@@ -19,10 +19,10 @@ export interface ModelType {
   effects: {
     fetch: Effect;
     remove: Effect;
+    allow: Effect;
   };
   reducers: {
     save: Reducer<StateType>;
-    remove: Reducer<StateType>;
   };
 }
 
@@ -60,10 +60,19 @@ const Model: ModelType = {
       const response = yield call(removeProject, payload);
       if (response.errCode === 0) {
         yield put({
-          type: 'remove',
+          type: 'fetch',
           payload,
         });
         if (callback) callback();
+      }
+    },
+    *allow({ payload }, { call, put }) {
+      const response = yield call(allowProject, payload);
+      if (response.errCode === 0) {
+        yield put({
+          type: 'fetch',
+          payload: {},
+        });
       }
     },
   },
@@ -73,15 +82,6 @@ const Model: ModelType = {
       return {
         ...state,
         data: action.payload,
-      };
-    },
-    remove(state, action) {
-      const data = (state as StateType).data;
-      return {
-        data: {
-          list: data.list.filter(p => p.id !== action.payload),
-          pagination: data.pagination,
-        },
       };
     },
   },

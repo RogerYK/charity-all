@@ -40,6 +40,9 @@ public class Project {
 
     private String img; //项目封面地址
 
+    @Column(insertable = false, columnDefinition = "default 0")
+    private Integer status;
+
     @JsonIgnore
     @Convert(converter = GalleryConverter.class)
     private List<String> gallery;
@@ -94,6 +97,19 @@ public class Project {
     @Column(insertable = false, columnDefinition = "default 0")
     private Integer watchCount;
 
+    @Override
+    public String toString() {
+        return "Project:{id:"+id+",name:"+name+",img:"+img
+                + "status:"+status+",gallery"+gallery.toString()
+                +",content:"+content+",summary:"+summary+",raisedMoney:"+raisedMoney
+                +",targetMoney:"+targetMoney+",createdTime:"+createdTime
+                +",startTime:"+startTime+",endTime:"+endTime+",bumoAddress:"+bumoAddress
+                +",bumoPrivateKey:"+bumoPrivateKey+",updateTime:"+updateTime
+                +",donorCount:"+donorCount+"author:"+author.getId()
+                +",category:"+category.getId()+
+                ",watchCount:"+watchCount;
+    }
+
     public static class GalleryConverter implements AttributeConverter<List<String>, String> {
 
         @Override
@@ -109,5 +125,16 @@ public class Project {
 
             return new ArrayList<>(Arrays.asList(s.split(";")));
         }
+    }
+
+    public static class ProjectStatus {
+        public static final int APPLY = 0; //申请状态，项目不会展现
+        public static final int EXAMINATION = 1; //审查后，项目显现，可以捐款
+        public static final int SUCCESS = 2; //众筹成功
+        public static final int FAIL = 3; //众筹失败
+        public static final int DELETE = 4; //已被删除
+
+        public static final List<Integer> userViewStatus = Arrays.asList(EXAMINATION, SUCCESS); //用户可见的状态
+
     }
 }

@@ -28,6 +28,18 @@ interface TableListState {
   formValues: { [key: string]: string };
 }
 
+const statusLabels = {
+  0: '申请中',
+  1: '已上线',
+  2: '众筹成功',
+  3: '众筹失败',
+  4: '已删除',
+};
+
+function getStatusLabel(status: number) {
+  return statusLabels[status];
+}
+
 /* eslint react/no-multi-comp:0 */
 @connect(
   ({
@@ -65,6 +77,11 @@ class TableList extends Component<TableListProps, TableListState> {
       render: val => <img style={{ width: 100 }} src={val} alt="封面" />,
     },
     {
+      title: '状态',
+      dataIndex: 'status',
+      render: status => getStatusLabel(status),
+    },
+    {
       title: '详情',
       dataIndex: 'content',
       render: content => <Button>查看</Button>,
@@ -92,13 +109,43 @@ class TableList extends Component<TableListProps, TableListState> {
     },
     {
       title: '操作',
-      render: (text, record) => (
+      dataIndex: 'id',
+      render: (id, record) => (
         <Fragment>
-          <a>删除</a>
+          {record.status === 0 ? (
+            <Button
+              onClick={() => this.handleAllow(id)}
+              style={{ marginRight: '20px' }}
+              type="primary"
+            >
+              通过
+            </Button>
+          ) : (
+            <></>
+          )}
+          <Button onClick={() => this.handleDelete(id)} type="danger">
+            删除
+          </Button>
         </Fragment>
       ),
     },
   ];
+
+  handleAllow = (id: number) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'projectList/allow',
+      payload: id,
+    });
+  };
+
+  handleDelete = (id: number) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'projectList/remove',
+      payload: id,
+    });
+  };
 
   componentDidMount() {
     const { dispatch } = this.props;

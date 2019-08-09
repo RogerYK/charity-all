@@ -22,6 +22,7 @@ public class NewsService {
     public PageData<News> list(Long newsId, PageParam pageParam) {
         News news = new News();
         news.setCreatedTime(null);
+        news.setDeleted(false);
         if (newsId != null) {
             news.setId(newsId);
         }
@@ -34,4 +35,10 @@ public class NewsService {
     }
 
 
+    public void delete(Long id) {
+        News news = newsRepository.findById(id)
+                .orElseThrow(() -> ServiceException.of(ErrorCodes.NEWS_NOT_EXIST, "新闻不存在"));
+        news.setDeleted(true);
+        newsRepository.save(news);
+    }
 }

@@ -33,6 +33,12 @@ spring:
       repositories:
         enabled: false
 
+    elasticsearch:
+      repositories:
+        enabled: true
+      cluster-name: docker-cluster
+      cluster-nodes: 192.168.213.132:9300
+
   redis:
     database: 0
     host: localhost
@@ -40,16 +46,6 @@ spring:
     password:
     timeout: 50
 
-
-
-  cache:
-    redis:
-      time-to-live: 60000
-
-
-
-    cache-names: server
-    type: redis
 
 
 storage:

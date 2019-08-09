@@ -53,6 +53,9 @@ public class News {
     @Column(insertable = false,columnDefinition = "default 0")
     private Integer commentCount;
 
+    @Column(insertable = false, columnDefinition = "default 0")
+    private Boolean deleted;
+
     @ManyToOne
     private User author;
 

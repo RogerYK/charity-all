@@ -104,14 +104,6 @@ class TableList extends Component<TableListProps, TableListState> {
       dataIndex: 'createdTime',
       align: 'right',
     },
-    {
-      title: '操作',
-      render: (text, record) => (
-        <Fragment>
-          <a>删除</a>
-        </Fragment>
-      ),
-    },
   ];
 
   componentDidMount() {

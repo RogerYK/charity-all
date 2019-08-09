@@ -1,7 +1,5 @@
 package com.github.rogeryk.charity.server.web.service;
 
-import com.github.rogeryk.charity.server.core.search.index.ProjectDocument;
-import com.github.rogeryk.charity.server.core.search.repository.ProjectDocumentRepository;
 import com.github.rogeryk.charity.server.db.domain.Category;
 import com.github.rogeryk.charity.server.db.domain.Project;
 import com.github.rogeryk.charity.server.db.domain.ProjectSchedule;
@@ -17,14 +15,12 @@ import com.github.rogeryk.charity.server.core.exception.ServiceException;
 import com.github.rogeryk.charity.server.core.util.ErrorCodes;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,7 +28,6 @@ import io.bumo.model.response.result.AccountCreateResult;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@CacheConfig(cacheNames = "project")
 @Slf4j
 public class ProjectService {
 
@@ -46,34 +41,25 @@ public class ProjectService {
     private BumoService bumoService;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private ProjectDocumentRepository projectDocumentRepository;
 
-
-
-    @Cacheable(key = "'hotProject('+#p0+')'")
     public List<Project> getTopHotProjects(int n) {
         Pageable pageable = PageRequest.of(0, n,
-                Sort.by(Sort.Direction.DESC, "donorCount"));
-        return projectRepository.findAll(pageable).getContent();
+                Sort.by(Sort.Direction.DESC, "donorCount", "watchCount"));
+        return projectRepository.findAllByStatusIn(
+                    Project.ProjectStatus.userViewStatus,
+                    pageable
+            ).getContent();
     }
 
-    @Cacheable
     public PageData<Project> getProjectByCategory(Long id, Pageable pageable) {
         Category category = categoryRepository
                 .findById(id)
                 .orElseThrow(() -> new ServiceException(ErrorCodes.CATEGORY_NOT_EXIST, "分类不存在"));
-        return PageData.of(projectRepository.findByCategory(category, pageable));
+        return PageData.of(projectRepository.findByCategoryAndStatusIn(category,
+                Project.ProjectStatus.userViewStatus,
+                pageable));
     }
 
-    @Cacheable
-    public PageData<Project> findProjectByNameLike(String name, Pageable pageable) {
-        name = "%" + name + "%";
-        return PageData.of(projectRepository.findAllByNameLike(name, pageable));
-
-    }
-
-    @Cacheable
     public Project getProject(Long id) {
         return projectRepository
                 .findById(id)
@@ -94,6 +80,7 @@ public class ProjectService {
     }
 
 
+    @Transactional
     public ProjectDetailVO detail(Long projectId, Long userId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(()->ServiceException.of(ErrorCodes.PROJECT_NOT_EXIST, "项目不存在"));
@@ -113,14 +100,11 @@ public class ProjectService {
             project.setBumoAddress(account.getAddress());
             project.setBumoPrivateKey(account.getPrivateKey());
         }
-        project = projectRepository.saveAndFlush(project);
-        ProjectDocument document = ProjectDocument.create(project);
-        projectDocumentRepository.save(document);
+        projectRepository.saveAndFlush(project);
     }
 
     public void deleteProject(Long id) {
         projectRepository.deleteById(id);
     }
-
 
 }

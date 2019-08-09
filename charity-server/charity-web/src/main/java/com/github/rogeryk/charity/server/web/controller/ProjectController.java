@@ -85,11 +85,6 @@ public class ProjectController {
     }
 
 
-    @GetMapping("/byName")
-    public Response searchByName(@NotBlank String name, PageParam pageParam) {
-        PageData<Project> projects = projectService.findProjectByNameLike(name, pageParam.toPageable());
-        return Response.ok(projects);
-    }
 
     @GetMapping("/byCategory")
     public Response getProjectByCategory(@NotNull Long categoryId, PageParam pageParam) {

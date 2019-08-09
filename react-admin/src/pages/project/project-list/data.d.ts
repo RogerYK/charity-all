@@ -24,6 +24,7 @@ export interface TableListItem {
   bumoAddress: string;
   updateTime: string;
   donorCount: number;
+  status: number;
   author: Author;
   category: Category;
 }
