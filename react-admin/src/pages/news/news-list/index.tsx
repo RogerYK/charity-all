@@ -94,7 +94,9 @@ class TableList extends Component<TableListProps, TableListState> {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          <a>删除</a>
+          <Button onClick={() => this.handleRemove(record.id)} type="danger">
+            删除
+          </Button>
         </Fragment>
       ),
     },
@@ -106,6 +108,14 @@ class TableList extends Component<TableListProps, TableListState> {
       type: 'newsList/fetch',
     });
   }
+
+  handleRemove = (id: number) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'newsList/remove',
+      payload: id,
+    });
+  };
 
   handleStandardTableChange: TableProps<TableListItem>['onChange'] = (
     pagination,

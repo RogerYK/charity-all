@@ -131,6 +131,13 @@ class TableList extends Component<TableListProps, TableListState> {
     },
   ];
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'projectList/fetch',
+    });
+  }
+
   handleAllow = (id: number) => {
     const { dispatch } = this.props;
     dispatch({
@@ -146,13 +153,6 @@ class TableList extends Component<TableListProps, TableListState> {
       payload: id,
     });
   };
-
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'projectList/fetch',
-    });
-  }
 
   handleStandardTableChange: TableProps<TableListItem>['onChange'] = (
     pagination,
