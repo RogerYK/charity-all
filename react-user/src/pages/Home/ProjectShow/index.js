@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {Icon, Card, Avatar} from 'antd'
+import { UserOutlined } from '@ant-design/icons';
+import { Card, Avatar } from 'antd';
 
 
 
@@ -57,7 +58,7 @@ export default class ProjectShow extends Component {
                         cover={<img alt='img' src={p.img} />}
                     >
                         <div className='project-author-info'>
-                            <Avatar icon='user' />
+                            <Avatar icon={<UserOutlined />} />
                             <div className='project-type'>{p.projectType}</div>
                         </div>
                         <div className='project-name'>{p.name}</div>
@@ -76,7 +77,7 @@ export default class ProjectShow extends Component {
                             </div>
                         </div>
                     </Card>
-            )
+            );
     }
 
     render() {

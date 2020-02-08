@@ -87,7 +87,8 @@ const User = {
   current: () => request.get("/user/current"),
   update: newUser => request.put("/user/update", newUser),
   followProject: form => request.post("/user/follow/project", form),
-  detail: id => request.get("/user/", { params: { id } })
+  detail: id => request.get("/user/", { params: { id } }),
+  identify: form => request.post("/user/identify", form),
 };
 
 const Banner = {

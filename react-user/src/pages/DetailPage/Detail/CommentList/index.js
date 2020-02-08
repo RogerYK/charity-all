@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import styles from "./style.module.scss";
+import { UserOutlined } from '@ant-design/icons';
 import { Comment, Avatar, List, Tooltip, Pagination } from "antd";
 import { observer, inject } from "mobx-react";
 import moment from "moment";
@@ -124,7 +125,7 @@ class CommentList extends Component {
             user ? (
               <Avatar src={user.avatar} alt={user.nickName} />
             ) : (
-              <Avatar icon="user" />
+              <Avatar icon={<UserOutlined />} />
             )
           }
           content={

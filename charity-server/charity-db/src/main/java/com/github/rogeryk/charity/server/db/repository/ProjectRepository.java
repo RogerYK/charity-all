@@ -22,7 +22,12 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     Page<Project> findAllByStatusIn(List<Integer> status, Pageable pageable);
 
+    List<Project> findAllByStatusIn(List<Integer> status);
+
     Page<Project> findByCategoryAndStatusIn(Category category, List<Integer> statusList, Pageable pageable);
+
+    @Query(value = "select * from project where status = 2 and now() > end_time and id > :id order by id asc limit :len", nativeQuery = true)
+    List<Project> findOverdueProjects(@Param("id") Long id, @Param("len") int len);
 
     int countProjectByAuthor(User user);
 

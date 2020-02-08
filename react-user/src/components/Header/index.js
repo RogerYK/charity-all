@@ -3,6 +3,7 @@ import { NavLink, Link, withRouter } from "react-router-dom";
 
 import styles from "./style.module.scss";
 import logo from "./charity.png";
+import { UserOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Avatar, Input } from "antd";
 import { inject, observer } from "mobx-react";
 
@@ -61,7 +62,7 @@ const Header = withRouter(
                     }
                   >
                     {pulling && pulled ? (
-                      <Avatar className={styles["avatar"]} icon="user" />
+                      <Avatar className={styles["avatar"]} icon={<UserOutlined />} />
                     ) : (
                       <img
                         className={styles["avatar"]}

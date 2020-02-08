@@ -14,6 +14,7 @@ import SearchPage from "./pages/SearchPage";
 import DetailPage from "./pages/DetailPage";
 import NewsDetail from "./pages/NewsDetail";
 import UserDetail from "./pages/UserDetail";
+import ResortPage from "./pages/RsortPage";
 
 class App extends Component {
   render() {
@@ -30,6 +31,7 @@ class App extends Component {
           <Route path="/search" component={SearchPage} />
           <Route path="/detail/:id" component={DetailPage} />
           <Route path="/news/detail/:id" component={NewsDetail} />
+          <Route path="/resort" component={ResortPage} />
         </Switch>
         <Footer />
       </div>

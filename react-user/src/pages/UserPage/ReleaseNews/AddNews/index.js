@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { Form, Input, Upload, Button, Icon, message } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Upload, Button, message } from 'antd';
 import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 import ReactQuill from 'react-quill';
@@ -77,7 +80,7 @@ export default class AddNewsForm extends Component {
             disabled={imgList.length !== 0}
           >
             <Button>
-              <Icon type="upload" />点击上传图片
+              <UploadOutlined />点击上传图片
             </Button>
           </Upload>
         </Item>
@@ -95,6 +98,6 @@ export default class AddNewsForm extends Component {
           <Button className={styles['action-btn']} onClick={this.props.onCancel} >取消</Button>
         </Item>
       </Form>
-    )
+    );
   }
 }

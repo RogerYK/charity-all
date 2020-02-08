@@ -7,19 +7,16 @@ import com.github.rogeryk.charity.server.db.domain.Project;
 import com.github.rogeryk.charity.server.db.domain.User;
 import com.github.rogeryk.charity.server.db.domain.vo.UserInfo;
 import com.github.rogeryk.charity.server.web.controller.form.FollowProjectForm;
+import com.github.rogeryk.charity.server.web.controller.form.IdentificationForm;
 import com.github.rogeryk.charity.server.web.controller.form.SignForm;
 import com.github.rogeryk.charity.server.web.controller.form.UserForm;
 import com.github.rogeryk.charity.server.core.exception.ServiceException;
 import com.github.rogeryk.charity.server.core.util.ErrorCodes;
 
+import com.github.rogeryk.charity.server.web.service.IdentificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 
@@ -34,6 +31,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private IdentificationService identificationService;
 
     @PostMapping("/sign")
     public Response sign(@RequestBody @Validated SignForm form) {
@@ -76,4 +75,10 @@ public class UserController {
         return Response.ok();
     }
 
+    @PostMapping("/identify")
+    public Response submitIdentification(@LoginedUser @NotNull Long userId, @RequestBody IdentificationForm form) {
+        log.info("submit identification {} {}", userId, form);
+        identificationService.saveIdentification(userId, form);
+        return Response.ok();
+    }
 }

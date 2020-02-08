@@ -44,6 +44,7 @@ public class OrderService {
         return old.isPresent();
     }
 
+    //TODO 并发修改问题
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void donate(OrderEvent event) {
         Project project = projectRepository.findById(event.getAnotherId()).orElseThrow(RuntimeException::new);

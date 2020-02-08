@@ -29,10 +29,10 @@ export default class DonationPage extends Component {
 
     return (
       <div>
-            {banners? <Banner banners={banners} />: null}
-            <RankShow hotProjects={hotProjects} hotNews={hotNews} />
-            <RecommendProjects projects={recommendProjects} />
-            <LatestNews newsList={latestNews} />
+        {banners? <Banner banners={banners} />: null}
+        <RankShow hotProjects={hotProjects} hotNews={hotNews} />
+        <RecommendProjects projects={recommendProjects} />
+        <LatestNews newsList={latestNews} />
       </div>
     )
   }
@@ -42,12 +42,12 @@ function Banner(props) {
   const banners = props.banners
 
   return (
-  <Carousel>
-    {banners.map(b => 
-      <Link key="b.id" to="/" className={styles.banner}>
-        <img src={b.img} alt="banner" />
-      </Link>
-    )}
-  </Carousel>
+    <Carousel>
+      {banners.map(b => 
+        <Link key="b.id" to="/" className={styles.banner}>
+          <img src={b.img} alt="banner" />
+        </Link>
+      )}
+    </Carousel>
   )
 }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import {Form, Input, Button} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Button } from 'antd';
 import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 

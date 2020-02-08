@@ -7,9 +7,9 @@ import styles from './style.module.scss'
 
 const ProjectList = ({projects, bordered, cols, itemRender, itemWidth}) => {
   itemRender = itemRender || ((p, i) => (
-      <Link key={i} to={`/detail/${p.id}`}>
-        <ProjectCard bordered={bordered} project={p} />
-      </Link>))
+    <Link key={i} to={`/detail/${p.id}`}>
+      <ProjectCard bordered={bordered} project={p} />
+    </Link>))
   const rows = []
   let row = []
 

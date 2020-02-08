@@ -13,17 +13,17 @@ const bgImgs = [b1, b2, b3]
 
 export default class SignPage extends Component {
 
-    constructor(props) {
-      super(props)
-      this.state = {
-        phoneNumber: {value: ''},
-        password: {value: ''},
-      }
+  constructor(props) {
+    super(props)
+    this.state = {
+      phoneNumber: {value: ''},
+      password: {value: ''},
     }
+  }
 
-    componentDidMount() {
-        window.scrollTo(0, 0)
-    }
+  componentDidMount() {
+    window.scrollTo(0, 0)
+  }
 
     handleChange = (changedFields) => {
       console.log(changedFields)
@@ -50,17 +50,17 @@ export default class SignPage extends Component {
     }
 
     render() {
-        return (
-                <div className={styles['sign-container']}>
-                    <div className={styles["background-wrap"]}>
-                        <Carousel effect="fade" dots={false} autoplay={true}>
-                            {bgImgs.map((img, i) => <img key={i} className={styles["bg-img"]} src={img} alt="im" />)}
-                        </Carousel>
-                    </div>
-                    <SignForm fields={this.state} onChange={this.handleChange} 
-                      onSubmit={this.onSubmit}
-                    />
-                </div>
-        )
+      return (
+        <div className={styles['sign-container']}>
+          <div className={styles["background-wrap"]}>
+            <Carousel effect="fade" dots={false} autoplay={true}>
+              {bgImgs.map((img, i) => <img key={i} className={styles["bg-img"]} src={img} alt="im" />)}
+            </Carousel>
+          </div>
+          <SignForm fields={this.state} onChange={this.handleChange} 
+            onSubmit={this.onSubmit}
+          />
+        </div>
+      )
     }
 }

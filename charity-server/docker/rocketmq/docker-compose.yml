@@ -1,0 +1,34 @@
+version: '3'
+services:
+  namesrv:
+    image: rocketmqinc/rocketmq
+    ports:
+      - 9876:9876
+    environment:
+      JAVA_HOME: /usr/lib/jvm/jre
+      JAVA_OPT_EXT: "-Xms1g -Xmx1g -Xmn512m"
+    command: sh mqnamesrv
+  broker:
+    image: rocketmqinc/rocketmq
+    ports:
+      - 10909:10909
+      - 10911:10911
+      - 10912:10912
+    volumes:
+      - ./conf/broker.conf:/etc/rocketmq/conf/broker.conf
+    #command: sh mqbroker -n namesrv:9876
+    command: sh mqbroker -n namesrv:9876 -c /etc/rocketmq/conf/broker.conf
+    depends_on:
+      - namesrv
+    environment:
+      JAVA_HOME: /usr/lib/jvm/jre
+      JAVA_OPT_EXT: "-Xms1g -Xmx1g -Xmn512m"
+  console:
+    image: styletang/rocketmq-console-ng
+    ports:
+      - 8087:8080
+    depends_on:
+      - namesrv
+    environment:
+      - JAVA_OPTS= -Dlogging.level.root=info   -Drocketmq.namesrv.addr=namesrv:9876
+      - Dcom.rocketmq.sendMessageWithVIPChannel=false

@@ -66,6 +66,10 @@ public class Project {
 
     private Date endTime;
 
+    private String transactionHash;
+
+    private Integer transactionNumber = 0;
+
     private String bumoAddress;
 
     @JsonIgnore
@@ -103,8 +107,8 @@ public class Project {
                 + "status:"+status+",gallery"+gallery.toString()
                 +",content:"+content+",summary:"+summary+",raisedMoney:"+raisedMoney
                 +",targetMoney:"+targetMoney+",createdTime:"+createdTime
-                +",startTime:"+startTime+",endTime:"+endTime+",bumoAddress:"+bumoAddress
-                +",bumoPrivateKey:"+bumoPrivateKey+",updateTime:"+updateTime
+                +",startTime:"+startTime+",endTime:"+endTime+",transactionHash:"+transactionHash
+                +",bumoAddress:"+bumoAddress +",bumoPrivateKey:"+bumoPrivateKey+",updateTime:"+updateTime
                 +",donorCount:"+donorCount+"author:"+author.getId()
                 +",category:"+category.getId()+
                 ",watchCount:"+watchCount;
@@ -128,11 +132,12 @@ public class Project {
     }
 
     public static class ProjectStatus {
-        public static final int APPLY = 0; //申请状态，项目不会展现
-        public static final int EXAMINATION = 1; //审查后，项目显现，可以捐款
-        public static final int SUCCESS = 2; //众筹成功
-        public static final int FAIL = 3; //众筹失败
-        public static final int DELETE = 4; //已被删除
+        public static final int Creating = 0;  //创建中
+        public static final int APPLY = 1; //申请状态，项目不会展现
+        public static final int EXAMINATION = 2; //审查后，项目显现，可以捐款
+        public static final int SUCCESS = 3; //众筹成功
+        public static final int FAIL = 4; //众筹失败
+        public static final int DELETE = 5; //已被删除
 
         public static final List<Integer> userViewStatus = Arrays.asList(EXAMINATION, SUCCESS); //用户可见的状态
 

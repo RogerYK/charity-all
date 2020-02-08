@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import ReactQuill from 'react-quill'
 import moment from 'moment'
-import { Form, Input, Upload, Icon, Button, DatePicker, InputNumber, message, Select } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Upload, Button, DatePicker, InputNumber, message, Select } from 'antd';
 import config from '../../../../utils/config';
 import { inject, observer } from 'mobx-react';
 import api from '../../../../api';
@@ -34,7 +37,7 @@ export default class AddProjectForm extends Component {
       .then(res => {
         this.setState({categories: res.data})
       }).catch(res => {
-      message.error('获取分类出错')
+        message.error('获取分类出错')
       })
   }
 
@@ -100,7 +103,7 @@ export default class AddProjectForm extends Component {
             fileList={this.state.imgList}
             onChange={e => this.handleImgListChange(e)}
           >
-            <Button><Icon type="upload" /> 点击上传图片</Button>
+            <Button><UploadOutlined /> 点击上传图片</Button>
           </Upload>
         </Item>
         <Item {...formItemLayout} label="项目图片">
@@ -110,7 +113,7 @@ export default class AddProjectForm extends Component {
             onChange={this.handleFileListChange}
           >
             <Button>
-              <Icon type="upload" /> 点击上传图片
+              <UploadOutlined /> 点击上传图片
             </Button>
           </Upload>
         </Item>
@@ -119,10 +122,10 @@ export default class AddProjectForm extends Component {
             value={form.categoryId}
             onChange={v => this.handleValueChange(v, 'categoryId')}
           >
-          {this.state.categories.map(c => (
-          <Select.Option value={c.id} key={c.id}>
-          {c.name}
-          </Select.Option>))}
+            {this.state.categories.map(c => (
+              <Select.Option value={c.id} key={c.id}>
+                {c.name}
+              </Select.Option>))}
           </Select>
         </Item>
         <Item {...formItemLayout} label="目标金额">
@@ -150,6 +153,6 @@ export default class AddProjectForm extends Component {
           <Button onClick={this.handleSubmit}>提交</Button>
         </Item>
       </Form>
-    )
+    );
   }
 }

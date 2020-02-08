@@ -17,6 +17,5 @@ public interface ErrorCodes {
     int PROJECT_NOT_EXIST = 401; //项目不存在
     int NEWS_NOT_EXIST = 402;
     int COMMENT_NOT_EXIST = 403;
-
-
+    int UNKNOWN_ERROR = 999; //未知错误
 }

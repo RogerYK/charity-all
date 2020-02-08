@@ -1,28 +1,23 @@
 package com.github.rogeryk.charity.server.core.bumo;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.rogeryk.charity.server.core.bumo.util.ResponseUtil;
 
+import io.bumo.model.request.*;
+import io.bumo.model.request.operation.*;
+import io.bumo.model.response.*;
+import io.bumo.model.response.result.TransactionGetInfoResult;
+import io.bumo.model.response.result.data.ContractAddressInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
-import io.bumo.model.request.AccountGetNonceRequest;
-import io.bumo.model.request.TransactionBuildBlobRequest;
-import io.bumo.model.request.TransactionSignRequest;
-import io.bumo.model.request.TransactionSubmitRequest;
-import io.bumo.model.request.operation.AccountActivateOperation;
-import io.bumo.model.request.operation.AssetSendOperation;
-import io.bumo.model.request.operation.BUSendOperation;
-import io.bumo.model.request.operation.BaseOperation;
-import io.bumo.model.response.AccountCreateResponse;
-import io.bumo.model.response.AccountGetNonceResponse;
-import io.bumo.model.response.TransactionBuildBlobResponse;
-import io.bumo.model.response.TransactionSignResponse;
-import io.bumo.model.response.TransactionSubmitResponse;
 import io.bumo.model.response.result.AccountCreateResult;
 import io.bumo.model.response.result.TransactionSubmitResult;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -45,6 +40,54 @@ public class BumoService {
         activeAccount(createResult.getAddress());
         log.info("active account address:" + createResult.getAddress());
         return createResult;
+    }
+
+    //deadline 为16位的微妙时间戳
+    public String createContract(String helpSeekerAddress, long target ,long deadline) {
+        String createContractAddress = config.getFeeAccountAddress();
+        Long initBalance = ToBaseUnit.BU2MO("0.01");
+        String privateKey = config.getFeeAccountPrivateKey();
+
+        JSONObject initInput = new JSONObject();
+        initInput.put("helpSeekerAddress", helpSeekerAddress);
+        initInput.put("deadline", String.valueOf(deadline));
+        initInput.put("donationTarget", String.valueOf(target));
+        String initInputStr = initInput.toJSONString();
+        log.info("[create contract] init input:{}", initInputStr);
+
+        ContractCreateOperation contractCreateOperation = new ContractCreateOperation();
+        contractCreateOperation.setSourceAddress(createContractAddress);
+        contractCreateOperation.setInitBalance(initBalance);
+        contractCreateOperation.setInitInput(initInputStr);
+        contractCreateOperation.setMetadata("create charity contract");
+        contractCreateOperation.setPayload(config.getCrowdFundingContract());
+
+        BlobAndSignatures blobAndSignatures = getBlobAndSignatures(contractCreateOperation,
+                1000L,
+                ToBaseUnit.BU2MO("10.08"),
+                createContractAddress,
+                getAccountNonce(createContractAddress)+1,
+                privateKey
+        );
+
+        TransactionSubmitRequest submitRequest = new TransactionSubmitRequest();
+        submitRequest.setTransactionBlob(blobAndSignatures.getBlob());
+        submitRequest.setSignatures(blobAndSignatures.getSignatures());
+
+        TransactionSubmitResponse submitResponse = ResponseUtil.check(
+                bumoSdk.getTransactionService().submit(submitRequest)
+        );
+
+        log.info("[hash={}] create contract transaction success", submitResponse.getResult().getHash());
+
+        return submitResponse.getResult().getHash();
+    }
+
+    public TransactionGetInfoResult getTransaction(String hash) {
+        TransactionGetInfoRequest request = new TransactionGetInfoRequest();
+        request.setHash(hash);
+        TransactionGetInfoResponse response = ResponseUtil.check(bumoSdk.getTransactionService().getInfo(request));
+        return response.getResult();
     }
 
 
@@ -214,5 +257,12 @@ public class BumoService {
             throw new BumoException(signResponse.getErrorCode(), signResponse.getErrorDesc());
         }
         return new BlobAndSignatures(blob, signResponse.getResult().getSignatures());
+    }
+
+    public List<ContractAddressInfo> getContractAddress(String hash) {
+        ContractGetAddressRequest request = new ContractGetAddressRequest();
+        request.setHash(hash);
+        ContractGetAddressResponse response = ResponseUtil.check(bumoSdk.getContractService().getAddress(request));
+        return response.getResult().getContractAddressInfos();
     }
 }

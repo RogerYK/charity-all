@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 import {convertMoneyStr} from '../../../utils/format'
 
 import styles from './style.module.scss'
@@ -31,8 +32,8 @@ export default class RankShow extends Component {
               ))}
             </div>
             <div className={styles['project-wrap']}>
-            {hotProjects.map((p, i) => (
-                <div key={i} className={`${styles['project']} ${i===curProject?styles['active']:''}`}>
+              {hotProjects.map((p, i) => (
+                <Link to={`/detail/${p.id}`} key={i} className={`${styles['project']} ${i===curProject?styles['active']:''}`}>
                   <img src={p.img} alt="img"/>
                   <div className={styles['body']}>
                     <div className={styles['name']}>{p.name}</div>
@@ -48,8 +49,8 @@ export default class RankShow extends Component {
                     <Progress value={p.raisedMoney/p.targetMoney*100} />
                     <div className={styles["people"]}>{p.donorCount} 支持者</div>
                   </div>
-                </div>
-            ))}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

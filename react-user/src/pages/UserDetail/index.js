@@ -25,34 +25,34 @@ export default class UserDetail extends Component {
       <div className="container-wrap">
         <div className={styles['container']}>
           <div className={styles['main-right']}>
-          <div className={styles['header']}>
-            <div className={styles['left']}>
-              <img src={user.avatar} className={styles['avatar']} alt="avatar" />
-              <div className={styles['info']}>
-                <div className={styles['name']}>{user.nickname}</div>
-                <div className={styles['follow']}>
-                  <div>0 粉丝</div>
-                  <div>{user.favorUserCount} 关注</div>
+            <div className={styles['header']}>
+              <div className={styles['left']}>
+                <img src={user.avatar} className={styles['avatar']} alt="avatar" />
+                <div className={styles['info']}>
+                  <div className={styles['name']}>{user.nickname}</div>
+                  <div className={styles['follow']}>
+                    <div>0 粉丝</div>
+                    <div>{user.favorUserCount} 关注</div>
+                  </div>
                 </div>
               </div>
+              <div className={styles['right']}>
+                <div className={styles['btn']}>关注</div>
+              </div>
             </div>
-            <div className={styles['right']}>
-              <div className={styles['btn']}>关注</div>
+            <div className={styles['title']}>个人简介</div>
+            <div className={styles['content']}>{user.presentation}</div>
+            <div className={styles['title']}>其他信息</div>
+            <div className={styles['other']}>
+              <div className={styles['item']}>
+                <div className={styles['num']}>{user.donatedCount}</div>
+                <div>支持的项目</div>
+              </div>
+              <div className={styles['item']}>
+                <div className={styles['num']}>0</div>
+                <div>发布的动态</div>
+              </div>
             </div>
-          </div>
-          <div className={styles['title']}>个人简介</div>
-          <div className={styles['content']}>{user.presentation}</div>
-          <div className={styles['title']}>其他信息</div>
-          <div className={styles['other']}>
-            <div className={styles['item']}>
-              <div className={styles['num']}>{user.donatedCount}</div>
-              <div>支持的项目</div>
-            </div>
-            <div className={styles['item']}>
-              <div className={styles['num']}>0</div>
-              <div>发布的动态</div>
-            </div>
-          </div>
 
           </div>
         </div>

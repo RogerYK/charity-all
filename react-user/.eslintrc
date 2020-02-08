@@ -1,8 +1,12 @@
 {
+  "env": {"browser": true, "es6": true},
   "extends": "react-app",
   "parserOptions": {
     "ecmaFeatures": {
       "legacyDecorators": true
     }
+  },
+  "rules": {
+    "indent": ["warn", 2]
   }
 }

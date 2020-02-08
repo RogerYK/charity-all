@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { Card, Form, Input, Button, Icon, Checkbox} from 'antd'
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Card, Input, Button, Checkbox } from 'antd';
 
 
 const FormItem = Form.Item
@@ -31,11 +34,10 @@ class RowLoginForm extends Component {
                   message: '手机号11位'
                 }]
               })(
-              <Input
-                prefix={<Icon type='user'
-                  style={{ color: 'rgba(0,0,.25)' }} />}
-                placeholder='手机号'
-              />)}
+                <Input
+                  prefix={<UserOutlined style={{ color: 'rgba(0,0,.25)' }} />}
+                  placeholder='手机号'
+                />)}
             </FormItem>
             <FormItem>
               {getFieldDecorator('password',{
@@ -50,8 +52,7 @@ class RowLoginForm extends Component {
                   message: '密码最长30位'
                 }]
               })(<Input.Password
-                prefix={<Icon type='lock'
-                  style={{ color: 'rgba(0,0,.25)' }} />}
+                prefix={<LockOutlined style={{ color: 'rgba(0,0,.25)' }} />}
                 placeholder='密码'
               >
               </Input.Password>
@@ -64,7 +65,7 @@ class RowLoginForm extends Component {
           </Form>
         </Card>
       </div>
-    )
+    );
   }
 }
 

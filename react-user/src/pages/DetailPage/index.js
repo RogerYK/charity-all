@@ -7,7 +7,6 @@ import Introduction from "./BasicInfo/introduction";
 import Detail from "./Detail/detail";
 import { observable, action } from "mobx";
 import DonationModal from "./DonationModal";
-import userStore from "../../store/userStore";
 import api from "../../api";
 
 
@@ -46,11 +45,11 @@ export default class DetailPage extends Component {
   handleFollow = () => {
     const project = this.props.detailStore.project;
     api.User.followProject({projectId: project.id})
-    .then(res => {
-      project.followed = true
-      this.props.detailStore.pullProject(project.id);
-      message.success('关注成功')
-    })
+      .then(res => {
+        project.followed = true
+        this.props.detailStore.pullProject(project.id);
+        message.success('关注成功')
+      })
   }
 
 
@@ -60,9 +59,8 @@ export default class DetailPage extends Component {
 
     return (
       <div className="content-container">
-      {!project ? 
-        <Skeleton />
-        :
+        {!project ? 
+          <Skeleton /> :
         <>
         <Introduction project={project} onDonate={handleDonate}
           onFollow={handleFollow} />
@@ -73,8 +71,9 @@ export default class DetailPage extends Component {
           onCancel={handleCancel}
         />
         </>
-      }
+        }
       </div>
     );
   }
 }
+        

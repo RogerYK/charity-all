@@ -19,9 +19,12 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 import io.bumo.model.response.result.AccountCreateResult;
@@ -79,7 +82,6 @@ public class ProjectService {
         projectScheduleRepository.save(schedule);
     }
 
-
     @Transactional
     public ProjectDetailVO detail(Long projectId, Long userId) {
         Project project = projectRepository.findById(projectId)
@@ -96,9 +98,14 @@ public class ProjectService {
     @CacheEvict(allEntries = true)
     public void save(Project project) {
         if (project.getId() == null) {
-            AccountCreateResult account = bumoService.createActiveAccount();
-            project.setBumoAddress(account.getAddress());
-            project.setBumoPrivateKey(account.getPrivateKey());
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Date endTime = project.getEndTime();
+            long deadline = endTime.getTime() * 1000;           //转为16位的微秒时间戳
+            long target = project.getTargetMoney().longValue();
+            String hash = bumoService.createContract(user.getBumoAddress(), target, deadline);
+            project.setTransactionHash(hash);
+            project.setTransactionNumber(0);
+            project.setStatus(Project.ProjectStatus.Creating);
         }
         projectRepository.saveAndFlush(project);
     }

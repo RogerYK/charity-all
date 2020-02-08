@@ -84,8 +84,6 @@ public class ProjectController {
         return Response.ok();
     }
 
-
-
     @GetMapping("/byCategory")
     public Response getProjectByCategory(@NotNull Long categoryId, PageParam pageParam) {
         PageData<Project> projectPage = projectService.getProjectByCategory(categoryId, pageParam.toPageable());

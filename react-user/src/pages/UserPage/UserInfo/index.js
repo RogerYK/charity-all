@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 
 import styles from './style.module.scss'
-import { Divider, Form, Upload, Button, Input, Radio, DatePicker, Cascader, message } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Divider, Upload, Button, Input, Radio, DatePicker, Cascader, message } from 'antd';
 
 import default_icon from './default_profile@3x.png'
 import RadioGroup from 'antd/lib/radio/group';

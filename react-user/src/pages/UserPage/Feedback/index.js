@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 
 import styles from './style.module.scss'
-import { Form, Input, Select, Button, Divider } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Select, Button, Divider } from 'antd';
 
 export default class FeedBack extends Component {
 
