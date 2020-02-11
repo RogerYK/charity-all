@@ -32,25 +32,25 @@ export default class DonationModal extends Component {
         title="捐款"
         footer={null}
       >
-      <div className={styles['content']}>
-        <div className={styles['item']}>
-          <div className={styles['label']}>捐款金额:</div>
-          <div className={styles['field']}>
-            <InputNumber 
-              className={styles['input']}
-              value={amount}
-              min={1}
-              onChange={handleAmountChange}
-              precision={0}
-            />
-            <span>元</span>
+        <div className={styles['content']}>
+          <div className={styles['item']}>
+            <div className={styles['label']}>捐款金额:</div>
+            <div className={styles['field']}>
+              <InputNumber 
+                className={styles['input']}
+                value={amount}
+                min={1}
+                onChange={handleAmountChange}
+                precision={0}
+              />
+              <span>元</span>
+            </div>
+          </div>
+          <div className={styles['tail']}>
+            <Button onClick={donate} type="primary">确认</Button>
+            <Button onClick={onCancel} type="danger">取消</Button>
           </div>
         </div>
-        <div className={styles['tail']}>
-          <Button onClick={donate} type="primary">确认</Button>
-          <Button onClick={onCancel} type="danger">取消</Button>
-        </div>
-      </div>
       </Modal>
     )
   }

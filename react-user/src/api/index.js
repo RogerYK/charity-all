@@ -65,7 +65,9 @@ const Transaction = {
   donate: (projectId, amount) =>
     request.post("/transaction/donation", { projectId, amount }),
   donation: (userId, page, size) =>
-    request.get("/transaction/donation", { params: { userId, page, size } })
+    request.get("/transaction/donation", { params: { userId, page, size } }),
+  recharge: (amount) =>
+    request.post("/transaction/recharge", {amount})
 };
 
 const Auth = {

@@ -55,7 +55,7 @@ public class TransactionController {
     }
 
     @PostMapping("/recharge")
-    public Response recharge(@LoginedUser Long userId, RechargeForm form) {
+    public Response recharge(@LoginedUser Long userId, @Valid @RequestBody RechargeForm form) {
         transactionService.recharge(userId, form.getAmount());
         return Response.ok();
     }

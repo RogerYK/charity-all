@@ -109,8 +109,8 @@ function main(input) {
     const issuer = Chain.msg.asset.key.issuer;
     if (code === assetCode && issuer === assetIssuer) {
         recordDonation();
-        checkCondition();
     }
+    checkCondition();
 }
 
 function query(input) {

@@ -69,8 +69,5 @@ logging:
     root: info
     com.github.rogeryk.charity: debug
 
-
-
-
-
-
+server:
+  port: 8088

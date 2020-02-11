@@ -25,7 +25,7 @@ public class OrderConsumer implements RocketMQListener<OrderEvent> {
 
     @Override
     public void onMessage(OrderEvent orderEvent) {
-        log.info("接受到消息", orderEvent);
+        log.info("接受到消息 {}", orderEvent);
 
         //消息已经处理过直接返回
         if (orderService.isProcessed(orderEvent)) return;

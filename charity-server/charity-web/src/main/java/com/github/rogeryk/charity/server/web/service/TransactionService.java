@@ -55,6 +55,7 @@ public class TransactionService {
         orderEvent.setUserId(userId);
         orderEvent.setAmount(amount);
         orderEvent.setUniqueId(idWorker.nextId());
+        log.info("send recharge event {}", orderEvent);
         rocketMQTemplate.syncSend("order-event", orderEvent);
     }
 
