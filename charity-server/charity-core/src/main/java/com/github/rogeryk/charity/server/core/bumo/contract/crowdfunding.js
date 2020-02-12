@@ -5,6 +5,7 @@ const assetIssuer = 'buQYzuZW8XoeAGqsh7TKqAXYUWfswhPDocjA';
 const donateCountKey = 'donated_count';
 const donationPrefix = 'donation_';
 const globalAttributeKey = 'global_attribute';
+const raisedMoneyKey = 'raised_money';
 
 function getMetadataOrDefault(key, defaultVal) {
     let val = Chain.load(key);
@@ -28,10 +29,13 @@ function recordDonation() {
     Utils.log('record donation');
 
     let count = Number(getMetadataOrDefault(donateCountKey, '0'));
+    let raisedMoney = Number(getMetadataOrDefault(raisedMoneyKey, '0'));
     const msg = Chain.msg;
     const key = donationPrefix + String(count);
+    raisedMoney = Utils.int64Add(raisedMoney, msg.asset.amount);
     setObjectMetadata(key, msg);
     Chain.store(donateCountKey, String(count+1));
+    Chain.store(raisedMoneyKey, String(raisedMoney));
 
     Utils.log('record donation ' + count + ' success');
 }
@@ -45,7 +49,7 @@ function raiseSuccess() {
         'issuer': assetIssuer
     };
 
-    const curAmount = Chain.getAccountAsset(globalAttribute.helpSeekerAddress, assetKey);
+    const curAmount = Chain.getAccountAsset(Chain.thisAddress, assetKey);
     Chain.payAsset(globalAttribute.helpSeekerAddress, assetIssuer, assetCode, curAmount, "", "raise success");
 
     Utils.log('pay asset to helper seeker success');
@@ -79,7 +83,7 @@ function checkCondition() {
         'issuer': assetIssuer,
         'code': assetCode
     };
-    const curAmount = Chain.getAccountAsset(Chain.thisAddress, assetKey);
+    const curAmount = getMetadataOrDefault(raisedMoneyKey, '0');
     const f = Utils.int64Compare(curAmount, globalAttribute.donationTarget);
     if (f >= 0) {
         raiseSuccess();

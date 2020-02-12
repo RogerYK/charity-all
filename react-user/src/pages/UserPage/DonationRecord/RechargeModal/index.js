@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Modal, Form, InputNumber, Button, message } from 'antd'
 import api from '../../../../api'
 
-
 class RechargeModal extends Component {
 
   handleSubmit = ({amount}) => {

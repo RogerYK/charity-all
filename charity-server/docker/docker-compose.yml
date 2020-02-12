@@ -48,6 +48,7 @@ services:
       - 10912:10912
     volumes:
       - ./rocketmq/conf/broker.conf:/etc/rocketmq/conf/broker.conf
+      - ./rocketmq/.data:/root
     #command: sh mqbroker -n namesrv:9876
     command: sh mqbroker -n namesrv:9876 -c /etc/rocketmq/conf/broker.conf
     depends_on:
