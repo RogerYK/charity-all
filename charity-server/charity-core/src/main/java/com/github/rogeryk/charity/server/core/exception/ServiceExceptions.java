@@ -13,4 +13,5 @@ public class ServiceExceptions {
     public final static ServiceException NEWS_NOT_EXIST = new ServiceException(ErrorCodes.NEWS_NOT_EXIST, "news not exist");
     public final static ServiceException COMMENT_NOT_EXIST = new ServiceException(ErrorCodes.COMMENT_NOT_EXIST, "comment not exist");
     public final static ServiceException UNKNOWN_ERROR = new ServiceException(ErrorCodes.UNKNOWN_ERROR, "unknown error");
+    public final static ServiceException USER_NO_IDENTIFIED = new ServiceException(ErrorCodes.USER_NO_IDENTIFIED, "no identified");
 }

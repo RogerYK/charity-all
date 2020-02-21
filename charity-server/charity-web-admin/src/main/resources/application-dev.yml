@@ -37,7 +37,7 @@ spring:
       repositories:
         enabled: true
       cluster-name: docker-cluster
-      cluster-nodes: 192.168.213.132:9300
+      cluster-nodes: 127.0.0.1:9300
 
   redis:
     database: 0

@@ -3,9 +3,8 @@ import React, { Component } from 'react'
 import './style.scss'
 import { Steps, Button, message } from 'antd';
 
-import {UserProtocol, IdentifyType, IdentifyInfo} from './ResortSteps'
+import {UserProtocol, IdentifyType, IdentifyInfo, WaitingInfo} from './ResortSteps'
 import api from '../../api';
-import { ApiFilled } from '@ant-design/icons';
 
 
 const Step = Steps.Step
@@ -14,7 +13,7 @@ const Step = Steps.Step
 export default class ResortPage extends Component {
 
   state = {
-    current: 0,
+    current: 3,
     completed: [false, false],
     form: {
       identificationType: '',
@@ -114,11 +113,7 @@ export default class ResortPage extends Component {
       content: <IdentifyInfo values={form} onChange={handleIdentifyInfoChange} onSubmit={handleSubmit} />,
     }, {
       title: '等待审核',
-      content: (
-        <div className="verify-timeline steps-form">
-          <div className="title">信息已上传，请等待审核通过!</div>
-        </div>
-      ),
+      content: <WaitingInfo />,
     }, {
       title: '完成认证',
       content: <div></div>,

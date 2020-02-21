@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class PageParam {
 
-    private int page = 0;
+    private int page = 1;
 
     private int size = 12;
 
@@ -18,7 +18,7 @@ public class PageParam {
     private String field = "createdTime";
 
     public Pageable toPageable() {
-       return PageRequest.of(page, size,
+       return PageRequest.of(page-1, size,
                 Sort.by(Sort.Direction.fromString(direction), field));
     }
 }

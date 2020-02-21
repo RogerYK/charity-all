@@ -2,18 +2,20 @@ package com.github.rogeryk.charity.server.web.admain.service;
 
 import com.github.rogeryk.charity.server.core.exception.ServiceException;
 import com.github.rogeryk.charity.server.core.util.ErrorCodes;
-import com.github.rogeryk.charity.server.core.util.PageParam;
-import com.github.rogeryk.charity.server.db.domain.Category;
 import com.github.rogeryk.charity.server.db.domain.Project;
-import com.github.rogeryk.charity.server.db.domain.User;
 import com.github.rogeryk.charity.server.db.domain.vo.PageData;
 import com.github.rogeryk.charity.server.db.repository.ProjectRepository;
 
+import com.github.rogeryk.charity.server.web.admain.controller.form.ProjectListForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -22,25 +24,26 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public PageData<Project> list(Long projectId, Long authorId, Long categoryId, PageParam pageParam) {
-        Pageable pageable = pageParam.toPageable();
-        Project project = new Project();
-        project.setCreatedTime(null); //
-        if (projectId != null) {
-            project.setId(projectId);
-        }
-        if (authorId != null) {
-            User user = new User();
-            user.setId(authorId);
-            project.setAuthor(user);
-        }
-        if (categoryId != null) {
-            Category category = new Category();
-            category.setId(categoryId);
-            project.setCategory(category);
-        }
-        Example<Project> example = Example.of(project);
-        return PageData.of(projectRepository.findAll(example, pageable));
+    public PageData<Project> list(ProjectListForm form) {
+        Specification<Project> specification = (Specification<Project>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicateList = new ArrayList<>();
+            if (form.getId() != null) {
+                predicateList.add(criteriaBuilder.equal(root.get("id"), form.getId()));
+            }
+            if (!StringUtils.isEmpty(form.getName())) {
+                predicateList.add(criteriaBuilder.equal(root.get("name"), form.getName()));
+            }
+            List<String> states = form.getStatusList();
+            if (states != null && !states.isEmpty()) {
+                CriteriaBuilder.In<Integer> in = criteriaBuilder.in(root.get("status"));
+                states.forEach(s -> in.value(Integer.valueOf(s)));
+                predicateList.add(in);
+            }
+            Predicate[] predicates = new Predicate[predicateList.size()];
+            predicateList.toArray(predicates);
+            return criteriaBuilder.and(predicates);
+        };
+        return PageData.of(projectRepository.findAll(specification, form.getPageParam().toPageable()));
     }
 
     //项目通过检查上线
@@ -54,12 +57,8 @@ public class ProjectService {
     }
 
 
-    //只是将项目设为删除状态，使得项目不可见
-    public void delete(Long id) {
-        Project project = projectRepository.findById(id)
-                .orElseThrow(() -> ServiceException.of(ErrorCodes.PROJECT_NOT_EXIST, "项目不能存在"));
-        project.setStatus(Project.ProjectStatus.DELETE);
-        projectRepository.save(project);
+    public void deleteAll(List<Long> ids) {
+        projectRepository.deleteAll(ids);
     }
 }
 

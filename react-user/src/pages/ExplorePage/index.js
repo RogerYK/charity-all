@@ -66,9 +66,9 @@ export default class ExplorePage extends Component {
             <ProjectList itemWidth={255} cols={4} projects={projects} />
             <div className={styles['pagination-wrap']}>
               <Pagination 
-                current={page+1} 
+                current={page} 
                 pageSize={12} 
-                onChange={(p) => store.setPage(p-1)}
+                onChange={(p) => store.setPage(p)}
                 total={total} />
             </div>
           </div>

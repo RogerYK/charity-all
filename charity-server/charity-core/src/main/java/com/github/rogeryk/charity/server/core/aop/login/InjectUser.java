@@ -3,9 +3,11 @@ package com.github.rogeryk.charity.server.core.aop.login;
 import com.github.rogeryk.charity.server.db.domain.User;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -22,15 +24,19 @@ public class InjectUser {
 
     @Around("point()")
     public Object injectUser(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        System.out.println("inject");
         Object user =  SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MethodSignature s = (MethodSignature) proceedingJoinPoint.getSignature();
+        Class<?>[] paramTypes = s.getMethod().getParameterTypes();
         Object[] args = proceedingJoinPoint.getArgs();
         if (user instanceof User) {
-            args[0] = ((User) user).getId();
+            if (paramTypes[0].equals(User.class)) {
+                args[0] = user;
+            } else if (paramTypes[0].equals(Long.class)) {
+                args[0] = ((User) user).getId();
+            }
         } else {
             args[0] = null;
         }
-        log.info("aspect"+"potion");
         return proceedingJoinPoint.proceed(args);
     }
 }

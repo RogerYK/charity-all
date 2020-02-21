@@ -5,20 +5,22 @@ import com.github.rogeryk.charity.server.db.domain.Project;
 import com.github.rogeryk.charity.server.db.domain.User;
 import com.github.rogeryk.charity.server.db.domain.vo.PageData;
 import com.github.rogeryk.charity.server.db.domain.vo.ProjectVO;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public interface ProjectRepository extends JpaRepository<Project, Long> {
+public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpecificationExecutor<Project> {
 
     Page<Project> findAllByStatusIn(List<Integer> status, Pageable pageable);
 
@@ -42,6 +44,10 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     boolean existsByIdEqualsAndFollowedUsersContaining(Long id, User user);
 
     @Modifying
+    @Query(value = "update project set deleted_time = now() where id in (:ids)", nativeQuery = true)
+    int deleteAll(@Param("ids") List<Long> ids);
+
+    @Modifying
     @Query(value = "update news set watch_count=watch_count+1  where id=:id", nativeQuery = true)
     int incrementNewsWatchCount(@Param("id") Long id);
 
@@ -57,6 +63,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 //    @Query(value = "select FOUND_ROWS() as `total`", nativeQuery = true)
 //    List<BigInteger> searchFoundRows();
 
+    @Query(value = "select date_format(created_time, '%Y-%m-%d') as `date`, count(*) as `count` from project where created_time >= :startTime and created_time < :endTime group by date_format(created_time, '%Y-%m-%d')", nativeQuery = true)
+    List<Map<String, Object>> scanCountData(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
     default PageData<Project> searchProject(String text, int page, int size) {
         PageData<Project> pageData = new PageData<>();

@@ -36,8 +36,6 @@ class RowUserForm extends Component {
   }
 
   handleAvatarChange = (info) => {
-    console.log(info)
-
     if (info.fileList.length === 0) {
       this.setState({avatarLoaded: false})
       return
@@ -79,7 +77,7 @@ class RowUserForm extends Component {
                   onChange={this.handleAvatarChange}
                   multiple={false}
                 >
-                {avatarLoaded ? null : <img className={styles['avatar-img']} src={default_icon} alt="avatar" />}
+                  {avatarLoaded ? null : <img className={styles['avatar-img']} src={default_icon} alt="avatar" />}
                 </Upload>
               )}
               <div className={styles['describe']}>点击左侧上传，比例1:1, 格式jpg、png、gif, 不大于100kb</div>

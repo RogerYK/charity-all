@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import {Link} from 'react-router-dom'
+
 import { PlusOutlined } from '@ant-design/icons';
 
 import config from '../../../utils/config'
@@ -17,6 +19,8 @@ import {
   Upload,
   Button,
 } from 'antd';
+
+import styles from './style.module.scss'
 
 const FormItem = Form.Item
 const Panel = Collapse.Panel
@@ -312,4 +316,12 @@ class IdentifyInfo extends Component {
 }
 
 
-export { UserProtocol, IdentifyType, IdentifyInfo } 
+const WaitingInfo = props => (
+  <div className={styles.waitingInfo}>
+    <div className={styles.title}>信息已上传，请等待审核通过!</div>
+    <div className={styles.actions}><Link to="/" ><Button>返回首页</Button></Link></div>
+  </div>
+)
+
+
+export { UserProtocol, IdentifyType, IdentifyInfo, WaitingInfo} 

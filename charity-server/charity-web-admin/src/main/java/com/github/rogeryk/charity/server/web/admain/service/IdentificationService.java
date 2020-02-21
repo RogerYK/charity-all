@@ -25,9 +25,11 @@ public class IdentificationService {
     public PageData<Identification> list(IdentificationParams params) {
         Specification<Identification> specification = (Specification<Identification>) (root, criteriaQuery, builder) -> {
             List<Predicate> predicateList = new ArrayList<>();
-            CriteriaBuilder.In<Identification.IdentificationState> in = builder.in(root.get("identificationStates"));
-            params.getStates().forEach(s -> in.value(Identification.IdentificationState.valueOf(s)));
-            predicateList.add(in);
+            if (params.getStates() != null && !params.getStates().isEmpty()) {
+                CriteriaBuilder.In<Identification.IdentificationState> in = builder.in(root.get("identificationStates"));
+                params.getStates().forEach(s -> in.value(Identification.IdentificationState.valueOf(s)));
+                predicateList.add(in);
+            }
             if (params.getBeginTime() != null) {
                 Date beginTime = new Date(params.getBeginTime());
                 predicateList.add(builder.greaterThan(root.get("createdTime"), beginTime));

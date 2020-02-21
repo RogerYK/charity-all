@@ -15,6 +15,7 @@ import DetailPage from "./pages/DetailPage";
 import NewsDetail from "./pages/NewsDetail";
 import UserDetail from "./pages/UserDetail";
 import ResortPage from "./pages/RsortPage";
+import AddProjectPage from './pages/AddProjectPage'
 
 class App extends Component {
   render() {
@@ -32,6 +33,7 @@ class App extends Component {
           <Route path="/detail/:id" component={DetailPage} />
           <Route path="/news/detail/:id" component={NewsDetail} />
           <Route path="/resort" component={ResortPage} />
+          <Route path="/addProject" component={AddProjectPage} />
         </Switch>
         <Footer />
       </div>

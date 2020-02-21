@@ -1,20 +1,16 @@
 package com.github.rogeryk.charity.server.db.domain;
 
+import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-import lombok.Data;
-
 @Data
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Transaction {
 
     @Id

@@ -3,31 +3,32 @@ package com.github.rogeryk.charity.server.web.admain.controller;
 import com.github.rogeryk.charity.server.core.util.PageParam;
 import com.github.rogeryk.charity.server.core.util.Response;
 import com.github.rogeryk.charity.server.db.domain.vo.PageData;
+import com.github.rogeryk.charity.server.web.admain.controller.form.ProjectDeleteParams;
 import com.github.rogeryk.charity.server.web.admain.controller.form.ProjectIdForm;
+import com.github.rogeryk.charity.server.web.admain.controller.form.ProjectListForm;
 import com.github.rogeryk.charity.server.web.admain.service.ProjectService;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
+@Slf4j
 @RestController
-@RequestMapping("/api/admin/project")
+@RequestMapping("/api/admin/projects")
 @Validated
 public class ProjectController {
 
     @Autowired
     ProjectService projectService;
 
-    @GetMapping("/list")
-    public Response list(Long projectId, Long authorId, Long categoryId,
-                         PageParam pageParam) {
-        return Response.ok(projectService.list(projectId, authorId, categoryId, pageParam));
+    @PostMapping("/list")
+    public Response list(@Validated @RequestBody ProjectListForm form) {
+        log.debug("project list params {}", form);
+        return Response.ok(projectService.list(form));
     }
 
     @PostMapping("/allow")
@@ -37,8 +38,8 @@ public class ProjectController {
     }
 
     @PostMapping("/delete")
-    public Response delete(@Validated @RequestBody ProjectIdForm form) {
-        projectService.delete(form.getId());
+    public Response delete(@RequestBody ProjectDeleteParams params) {
+        projectService.deleteAll(params.getIds());
         return Response.ok();
     }
 

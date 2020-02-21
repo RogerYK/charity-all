@@ -2,29 +2,17 @@ package com.github.rogeryk.charity.server.db.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.AttributeConverter;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import lombok.Data;
 
 @Entity
 @Data
@@ -62,6 +50,11 @@ public class Project {
     @CreatedDate
     private Date createdTime;
 
+    @LastModifiedDate
+    private Date updatedTime;
+
+    private Date deletedTime;
+
     private Date startTime;
 
     private Date endTime;
@@ -74,9 +67,6 @@ public class Project {
 
     @JsonIgnore
     private String bumoPrivateKey;
-
-    @LastModifiedDate
-    private Date updateTime;
 
     @Column(insertable = false,columnDefinition = "default 0")
     private Integer donorCount;
@@ -108,7 +98,7 @@ public class Project {
                 +",content:"+content+",summary:"+summary+",raisedMoney:"+raisedMoney
                 +",targetMoney:"+targetMoney+",createdTime:"+createdTime
                 +",startTime:"+startTime+",endTime:"+endTime+",transactionHash:"+transactionHash
-                +",bumoAddress:"+bumoAddress +",bumoPrivateKey:"+bumoPrivateKey+",updateTime:"+updateTime
+                +",bumoAddress:"+bumoAddress +",bumoPrivateKey:"+bumoPrivateKey+",updateTime:"+updatedTime
                 +",donorCount:"+donorCount+"author:"+author.getId()
                 +",category:"+category.getId()+
                 ",watchCount:"+watchCount;

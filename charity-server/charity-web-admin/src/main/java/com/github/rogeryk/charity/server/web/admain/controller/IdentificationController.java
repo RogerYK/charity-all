@@ -1,17 +1,16 @@
 package com.github.rogeryk.charity.server.web.admain.controller;
 
 import com.github.rogeryk.charity.server.core.util.Response;
-import com.github.rogeryk.charity.server.db.domain.Identification;
-import com.github.rogeryk.charity.server.db.domain.vo.PageData;
+import com.github.rogeryk.charity.server.web.admain.controller.form.IdParams;
 import com.github.rogeryk.charity.server.web.admain.controller.form.IdentificationParams;
 import com.github.rogeryk.charity.server.web.admain.service.IdentificationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@Slf4j
+@RestController
 @RequestMapping("/api/admin/identifications")
 public class IdentificationController {
 
@@ -19,20 +18,20 @@ public class IdentificationController {
     private IdentificationService identificationService;
 
     @PostMapping("/list")
-    public Response list(IdentificationParams params) {
+    public Response list(@Validated @RequestBody IdentificationParams params) {
+        log.debug("identification list params:{}", params);
         return Response.ok(identificationService.list(params));
     }
 
-    @PostMapping("/{id}/pass")
-    public Response pass(@PathVariable("id") Long id) {
-        identificationService.pass(id);
+    @PostMapping("/pass")
+    public Response pass(@Validated @RequestBody IdParams params) {
+        identificationService.pass(params.getId());
         return Response.ok();
     }
 
-
-    @PostMapping("/{id}/reject")
-    public Response reject(@PathVariable("id") Long id) {
-        identificationService.reject(id);
+    @PostMapping("/reject")
+    public Response reject(@Validated @RequestBody IdParams params) {
+        identificationService.reject(params.getId());
         return Response.ok();
     }
 }

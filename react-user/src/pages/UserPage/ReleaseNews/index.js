@@ -63,7 +63,7 @@ export default class ReleaseNews extends Component {
             current={page}
             pageSize={9}
             total={total}
-            onChange={page => setPage(page-1)}
+            onChange={page => setPage(page)}
           /> : null}
         </div>
 

@@ -3,7 +3,7 @@ import api from '../api'
 
 class ExploreStore {
 
-  @observable page = 0
+  @observable page = 1
 
   @observable total = 0
 
@@ -22,10 +22,10 @@ class ExploreStore {
   constructor() {
     reaction(
       () => ({curCategoryId: this.curCategoryId, 
-              page: this.page,
-              size: this.pageSize,
-              direction: this.direction,
-              field: this.field
+        page: this.page,
+        size: this.pageSize,
+        direction: this.direction,
+        field: this.field
       }),
       () => this.pullProjects()
     )
@@ -42,7 +42,7 @@ class ExploreStore {
 
   pullProjects = flow(function* () {
     const res = yield api.Project.byCategory(this.curCategoryId,
-       this.page, this.pageSize, this.direction, this.field)
+      this.page, this.pageSize, this.direction, this.field)
     this.total = res.data.total
     this.projects = res.data.content
   })

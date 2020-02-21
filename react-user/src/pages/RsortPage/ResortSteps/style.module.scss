@@ -1,0 +1,17 @@
+@import "../../../config.scss";
+
+.waitingInfo {
+  margin-top: 50px;
+  .title {
+    color: #222c37;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .actions {
+    text-align: center;
+  }
+}

@@ -89,18 +89,12 @@ const Header = withRouter(
                 >
                   发现项目
                 </NavLink>
-                <NavLink to="/resort" className={styles["navbar-item"]} key="3">
-                  求助
-                </NavLink>
                 <NavLink
-                  to="/aboutus"
+                  to="/addProject"
                   className={styles["navbar-item"]}
                   key="4"
                 >
-                  关于我们
-                </NavLink>
-                <NavLink to="/user" className={styles["navbar-item"]} key="5">
-                  在线咨询
+                  发布项目
                 </NavLink>
               </div>
               <div className={styles["search-wrap"]}>

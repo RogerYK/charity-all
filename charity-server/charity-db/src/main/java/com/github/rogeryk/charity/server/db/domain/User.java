@@ -2,32 +2,35 @@ package com.github.rogeryk.charity.server.db.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Version;
-
-import lombok.Data;
-
 @Data
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue
     private Long id;
+
+    @CreatedDate
+    private Date createdTime;
+
+    @LastModifiedDate
+    private Date updatedTime;
+
+    private Date deletedTime;
 
     @Column(length = 11)
     private String phoneNumber;
@@ -55,12 +58,13 @@ public class User implements UserDetails {
     @Version
     private Long version;
 
-    @JsonIgnore
     private String bumoAddress;
 
     @JsonIgnore
     private String bumoPrivateKey;
 
+    @Column(columnDefinition = "int default 0")
+    private IdentifyStatus identifyStatus = IdentifyStatus.UnIdentify;
 
     @JsonIgnore
     @ManyToMany()
@@ -120,5 +124,11 @@ public class User implements UserDetails {
     @JsonIgnore
     public boolean isEnabled() {
         return true;
+    }
+
+    public static enum IdentifyStatus {
+        UnIdentify,
+        Identifying,
+        Identified;
     }
 }

@@ -1,7 +1,9 @@
 package com.github.rogeryk.charity.server.web.controller;
 
 import com.github.rogeryk.charity.server.core.aop.login.LoginedUser;
+import com.github.rogeryk.charity.server.core.exception.ServiceException;
 import com.github.rogeryk.charity.server.core.service.UserService;
+import com.github.rogeryk.charity.server.core.util.ErrorCodes;
 import com.github.rogeryk.charity.server.core.util.Response;
 import com.github.rogeryk.charity.server.db.domain.Project;
 import com.github.rogeryk.charity.server.db.domain.User;
@@ -10,17 +12,13 @@ import com.github.rogeryk.charity.server.web.controller.form.FollowProjectForm;
 import com.github.rogeryk.charity.server.web.controller.form.IdentificationForm;
 import com.github.rogeryk.charity.server.web.controller.form.SignForm;
 import com.github.rogeryk.charity.server.web.controller.form.UserForm;
-import com.github.rogeryk.charity.server.core.exception.ServiceException;
-import com.github.rogeryk.charity.server.core.util.ErrorCodes;
-
 import com.github.rogeryk.charity.server.web.service.IdentificationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/user")
@@ -77,7 +75,6 @@ public class UserController {
 
     @PostMapping("/identify")
     public Response submitIdentification(@LoginedUser @NotNull Long userId, @RequestBody IdentificationForm form) {
-        log.info("submit identification {} {}", userId, form);
         identificationService.saveIdentification(userId, form);
         return Response.ok();
     }

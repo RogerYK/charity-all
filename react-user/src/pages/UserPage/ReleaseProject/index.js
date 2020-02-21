@@ -4,17 +4,16 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './style.module.scss'
 import 'react-quill/dist/quill.snow.css'; // ES6
-import { Divider, Button, Pagination, Modal, Empty } from 'antd';
+import { Button, Pagination, Modal, Empty } from 'antd';
 import ProjectCard from '../../../components/ProjectCard';
 
-import AddProjectForm from './AddProjectForm';
 import { observer, inject } from 'mobx-react';
 import { observable } from 'mobx';
 import ProjectList from '../../../components/ProjectList';
 import ScheduleForm from './AddScheduleForm';
 
 
-@inject('releaseStore')
+@inject('releaseStore', 'userStore')
 @observer
 export default class ReleaseProject extends Component {
 
@@ -45,10 +44,9 @@ export default class ReleaseProject extends Component {
     this.scheduleModalVisible = false
   }
 
-
   render() {
     const {total, projects, setPage} = this.props.releaseStore
-    console.log(projects.length)
+    const {currentUser} = this.props.userStore
     const {
       selectProjectId,
       projectModalVisible,
@@ -63,12 +61,12 @@ export default class ReleaseProject extends Component {
         <div className="title">
           <span className={styles['title']}>我发布的项目</span>
           <span className={styles['total']}>共{total}个项目</span>
-          <div onClick={showProjectModal} className={styles['add-project']}>发布项目</div>
+          { currentUser.identifyStatus === 'Identified' && <div onClick={showProjectModal} className={styles['add-project']}>发布项目</div>}
         </div>
         <div className={styles['project-list']}>
           <div className={styles['content']}>
-          { projects.length > 0 ?
-            <ProjectList 
+            { projects.length > 0 ?
+              <ProjectList 
                 projects={projects}
                 bordered={true}
                 cols={3} 
@@ -81,23 +79,23 @@ export default class ReleaseProject extends Component {
                       <Link to={`/detail/${p.id}`}><Button>查看详情</Button></Link>
                     </div>
                   </div>
-                  )
+                )
                 }
               />
-            :
-            <Empty description="未发布项目" />
-          }
+              :
+              <Empty description="未发布项目" />
+            }
             
           </div>
-            <div className={styles['pagination-wrap']}>
-              { total > 9 ?
+          <div className={styles['pagination-wrap']}>
+            { total > 9 ?
               <Pagination defaultCurrent={1} pageSize={9} total={this.state.total}
-                onChange={(page) => setPage(page-1)}
-               />
-               :
-               null
-              }
-            </div>
+                onChange={(page) => setPage(page)}
+              />
+              :
+              null
+            }
+          </div>
         </div>
 
         <Modal
@@ -120,7 +118,7 @@ export default class ReleaseProject extends Component {
           title="添加项目"
         >
           <div className={styles['project-modal']}>
-            <AddProjectForm onCancel={projectModalCancel} />
+            {/* <AddProjectForm onCancel={projectModalCancel} /> */}
           </div>
         </Modal>
       </div>
