@@ -2,6 +2,7 @@ package com.github.rogeryk.charity.server.db.domain;
 
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -17,6 +18,14 @@ public class Transaction {
     @GeneratedValue
     private Long id;
 
+    @CreatedDate
+    private Date createdTime;
+
+    @LastModifiedDate
+    private Date updatedTime;
+
+    private Date deletedTime;
+
     @Column(unique = true, nullable = false)
     private Long uniqueId;
 
@@ -24,13 +33,9 @@ public class Transaction {
 
     private TransactionType type;
 
-    @ManyToOne
-    private Project project;
+    private TransactionStatus status;
 
     private BigDecimal money;
-
-    @CreatedDate
-    private Date createdTime;
 
     @ManyToOne
     private User payer; //付款者
@@ -38,10 +43,20 @@ public class Transaction {
     @ManyToOne
     private User payee; //收款者
 
+    @ManyToOne
+    private Project project;
+
     public static enum TransactionType {
         Donation,
         Consumption,
         Recharge,
 
+    }
+
+    public enum TransactionStatus {
+        UnPay,
+        Paying,
+        Success,
+        Failed;
     }
 }

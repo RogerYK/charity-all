@@ -37,6 +37,9 @@ public class OrderConsumer implements RocketMQListener<OrderEvent> {
             case OrderEvent.DONATION:
                 orderService.donate(orderEvent);
                 break;
+            case OrderEvent.CHECK:
+                orderService.check(orderEvent);
+                break;
             default:
                 log.error("无法处理类型", orderEvent);
                 throw new RuntimeException("无法处理消息");

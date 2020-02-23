@@ -1,5 +1,8 @@
 package com.github.rogeryk.charity.server.web.service;
 
+import com.github.rogeryk.charity.server.core.bumo.BumoService;
+import com.github.rogeryk.charity.server.core.exception.ServiceException;
+import com.github.rogeryk.charity.server.core.util.ErrorCodes;
 import com.github.rogeryk.charity.server.db.domain.Category;
 import com.github.rogeryk.charity.server.db.domain.Project;
 import com.github.rogeryk.charity.server.db.domain.ProjectSchedule;
@@ -10,25 +13,17 @@ import com.github.rogeryk.charity.server.db.repository.CategoryRepository;
 import com.github.rogeryk.charity.server.db.repository.ProjectRepository;
 import com.github.rogeryk.charity.server.db.repository.ProjectScheduleRepository;
 import com.github.rogeryk.charity.server.db.repository.UserRepository;
-import com.github.rogeryk.charity.server.core.bumo.BumoService;
-import com.github.rogeryk.charity.server.core.exception.ServiceException;
-import com.github.rogeryk.charity.server.core.util.ErrorCodes;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-
-import io.bumo.model.response.result.AccountCreateResult;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
@@ -82,7 +77,6 @@ public class ProjectService {
         projectScheduleRepository.save(schedule);
     }
 
-    @Transactional
     public ProjectDetailVO detail(Long projectId, Long userId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(()->ServiceException.of(ErrorCodes.PROJECT_NOT_EXIST, "项目不存在"));
@@ -95,19 +89,22 @@ public class ProjectService {
         return ProjectDetailVO.valueOf(project, followed);
     }
 
-    @CacheEvict(allEntries = true)
+    @Transactional
     public void save(Project project) {
-        if (project.getId() == null) {
+        boolean isNew = project.getId() == null;
+        project = projectRepository.saveAndFlush(project);
+        if (isNew) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Date endTime = project.getEndTime();
             long deadline = endTime.getTime() * 1000;           //转为16位的微秒时间戳
             long target = project.getTargetMoney().longValue();
             String hash = bumoService.createContract(user.getBumoAddress(), target, deadline);
+
             project.setTransactionHash(hash);
             project.setTransactionNumber(0);
             project.setStatus(Project.ProjectStatus.Creating);
+            projectRepository.saveAndFlush(project);
         }
-        projectRepository.saveAndFlush(project);
     }
 
     public void deleteProject(Long id) {

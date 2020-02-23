@@ -6,6 +6,10 @@ const donateCountKey = 'donated_count';
 const donationPrefix = 'donation_';
 const globalAttributeKey = 'global_attribute';
 const raisedMoneyKey = 'raised_money';
+const donationStatusKey = 'donation_status';
+const Raise = 'raise';
+const Success = 'success';
+const Fail = 'fail';
 
 function getMetadataOrDefault(key, defaultVal) {
     let val = Chain.load(key);
@@ -36,8 +40,14 @@ function recordDonation() {
     setObjectMetadata(key, msg);
     Chain.store(donateCountKey, String(count+1));
     Chain.store(raisedMoneyKey, String(raisedMoney));
-
     Utils.log('record donation ' + count + ' success');
+
+    const status = Chain.load(donationStatusKey);
+    if (status === Success) {
+        raiseSuccess();
+    } else if (status === Fail) {
+        Chain.payAsset(msg.sender, assetIssuer, assetCode, msg.asset.amount, "", "project raise has failed");
+    }
 }
 
 function raiseSuccess() {
@@ -50,9 +60,12 @@ function raiseSuccess() {
     };
 
     const curAmount = Chain.getAccountAsset(Chain.thisAddress, assetKey);
-    Chain.payAsset(globalAttribute.helpSeekerAddress, assetIssuer, assetCode, curAmount, "", "raise success");
-
-    Utils.log('pay asset to helper seeker success');
+    if (Utils.int64Compare(curAmount, 0) > 0) {
+        Chain.payAsset(globalAttribute.helpSeekerAddress, assetIssuer, assetCode, curAmount, "", "raise success");
+        Utils.log('pay asset to helper seeker success');
+    } else {
+        Utils.log('raise success but asset is 0');
+    }
 }
 
 function raiseFail() {
@@ -70,25 +83,23 @@ function raiseFail() {
 }
 
 function checkCondition() {
-    const globalAttribute = getObjectMetadata(globalAttributeKey);
-    Utils.log('checkout donation condition');
-    const time = Chain.block.timestamp;
-    const ft = Utils.int64Compare(time, globalAttribute.deadline);
-    if (ft < 0) {
-        Utils.log('missed deadline');
-        return;
-    }
-
-    const assetKey = {
-        'issuer': assetIssuer,
-        'code': assetCode
-    };
-    const curAmount = getMetadataOrDefault(raisedMoneyKey, '0');
-    const f = Utils.int64Compare(curAmount, globalAttribute.donationTarget);
-    if (f >= 0) {
-        raiseSuccess();
-    } else {
-        raiseFail();
+    const status = Chain.load(donationStatusKey);
+    if (status === Raise) {
+        const globalAttribute = getObjectMetadata(globalAttributeKey);
+        Utils.log('checkout donation condition');
+        const time = Chain.block.timestamp;
+        const ft = Utils.int64Compare(time, globalAttribute.deadline);
+        if (ft < 0) {
+            Utils.log('missed deadline');
+            return;
+        }
+        const curAmount = getMetadataOrDefault(raisedMoneyKey, '0');
+        const f = Utils.int64Compare(curAmount, globalAttribute.donationTarget);
+        if (f >= 0) {
+            raiseSuccess();
+        } else {
+            raiseFail();
+        }
     }
 }
 
@@ -104,6 +115,7 @@ function init(input) {
         'donationTarget': params.donationTarget
     };
     setObjectMetadata(globalAttributeKey, globalAttribute);
+    Chain.store(donationStatusKey, Raise);
 }
 
 function main(input) {

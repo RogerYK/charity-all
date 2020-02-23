@@ -1,6 +1,7 @@
 package com.github.rogeryk.charity.server.core.bumo;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.rogeryk.charity.server.core.bumo.util.AccountResult;
 import com.github.rogeryk.charity.server.core.bumo.util.ResponseUtil;
 
 import io.bumo.model.request.*;
@@ -29,7 +30,7 @@ public class BumoService {
     @Autowired
     SDK bumoSdk;
 
-    public AccountCreateResult createActiveAccount() {
+    public AccountResult createActiveAccount() {
         AccountCreateResponse createResponse = bumoSdk.getAccountService().create();
         if (createResponse.getErrorCode() != 0) {
             throw new BumoException(createResponse.getErrorCode(), createResponse.getErrorDesc());
@@ -37,9 +38,14 @@ public class BumoService {
         AccountCreateResult createResult = createResponse.getResult();
         log.info("create bumo account address:"+createResult.getAddress() +
         ", privateKey:" + createResult.getPrivateKey());
-        activeAccount(createResult.getAddress());
+        String hash = activeAccount(createResult.getAddress());
         log.info("active account address:" + createResult.getAddress());
-        return createResult;
+        AccountResult result = new AccountResult();
+        result.setAddress(createResult.getAddress());
+        result.setPublicKey(createResult.getPublicKey());
+        result.setPrivateKey(createResult.getPrivateKey());
+        result.setHash(hash);
+        return result;
     }
 
     //deadline 为16位的微妙时间戳
@@ -122,7 +128,7 @@ public class BumoService {
         return submitResponse.getResult().getHash();
     }
 
-    public void activeAccount(String destAccountAddress) {
+    public String activeAccount(String destAccountAddress) {
         String sourceAddress = config.getFeeAccountAddress();
 
         long nonce = getAccountNonce(sourceAddress);
@@ -157,6 +163,11 @@ public class BumoService {
         if (submitResponse.getErrorCode() !=0) {
             throw new BumoException(submitResponse.getErrorCode(), submitResponse.getErrorDesc());
         }
+        return submitResponse.getResult().getHash();
+    }
+
+    public void invokeContract(String address) {
+        sendBu(address, ToBaseUnit.BU2MO("0.01"));
     }
 
     public void sendBu(String destAddress, long mo) {

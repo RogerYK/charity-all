@@ -58,6 +58,8 @@ public class User implements UserDetails {
     @Version
     private Long version;
 
+    private String activeHash;
+
     private String bumoAddress;
 
     @JsonIgnore
@@ -65,6 +67,8 @@ public class User implements UserDetails {
 
     @Column(columnDefinition = "int default 0")
     private IdentifyStatus identifyStatus = IdentifyStatus.UnIdentify;
+
+    private UserStatus userStatus;
 
     @JsonIgnore
     @ManyToMany()
@@ -130,5 +134,11 @@ public class User implements UserDetails {
         UnIdentify,
         Identifying,
         Identified;
+    }
+
+    public enum UserStatus {
+        Creating,
+        Created,
+        Freeze;
     }
 }

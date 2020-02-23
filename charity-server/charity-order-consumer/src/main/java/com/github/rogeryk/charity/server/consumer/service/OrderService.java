@@ -10,21 +10,24 @@ import com.github.rogeryk.charity.server.db.domain.User;
 import com.github.rogeryk.charity.server.db.repository.ProjectRepository;
 import com.github.rogeryk.charity.server.db.repository.TransactionRepository;
 import com.github.rogeryk.charity.server.db.repository.UserRepository;
-
+import io.bumo.model.response.result.TransactionGetInfoResult;
+import io.bumo.model.response.result.data.TransactionHistory;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import java.math.BigDecimal;
+import javax.annotation.Resource;
 import java.util.Optional;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class OrderService {
+
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
 
     @Autowired
     private TransactionRepository transactionRepository;
@@ -55,51 +58,79 @@ public class OrderService {
         if (user.getMoney().compareTo(event.getAmount()) < 0) {
             throw new ServiceException(ErrorCodes.USER_NO_MONEY, "用户余额不足");
         }
-        user.setMoney(user.getMoney().subtract(event.getAmount()));
-        userRepository.save(user);
 
-        project.setRaisedMoney(project.getRaisedMoney().add(event.getAmount()));
-        project.setDonorCount(project.getDonorCount()+1);
-        projectRepository.save(project);
-
-        Transaction ts = new Transaction();
-
-        ts.setPayer(user);
-        ts.setMoney(event.getAmount());
-        ts.setProject(project);
-        ts.setType(Transaction.TransactionType.Donation);
-        ts.setUniqueId(event.getUniqueId());
-
-        transactionRepository.save(ts);
+        Transaction ts = transactionRepository.findByUniqueId(event.getUniqueId()).orElseThrow(() -> new RuntimeException("not find transaction "));
 
         String hash = bumoService.assetSend(user.getBumoAddress(), project.getBumoAddress(), user.getBumoPrivateKey(), event.getAmount().longValue());
 
         ts.setHash(hash);
-        transactionRepository.save(ts);
+        transactionRepository.saveAndFlush(ts);
+
+        OrderEvent orderEvent = new OrderEvent();
+        orderEvent.setOrderType(OrderEvent.CHECK);
+        orderEvent.setUniqueId(event.getUniqueId());
+        rocketMQTemplate.syncSend("order-event", orderEvent, 3);
     }
 
     @Transactional
     public void recharge(OrderEvent event) {
-        // 刷新用户数据
-        User user = userRepository
-                .findById(event.getUserId())
-                .orElseThrow(() -> new ServiceException(ErrorCodes.USER_NOT_EXIST, "用户不存在"));
-        user.setMoney(user.getMoney().add(event.getAmount()));
-        userRepository.save(user);
 
-        Transaction transaction = new Transaction();
-        transaction.setPayee(user);
-        transaction.setType(Transaction.TransactionType.Recharge);
-        transaction.setMoney(event.getAmount());
-        transaction.setUniqueId(event.getUniqueId());
-        transactionRepository.save(transaction);
+        Transaction ts = transactionRepository.findByUniqueId(event.getUniqueId()).orElseThrow(() -> new RuntimeException("not find transaction "));
 
-        String hash = bumoService.recharge(user.getBumoAddress(), event.getAmount().longValue());
+        String hash = bumoService.recharge(ts.getPayee().getBumoAddress(), event.getAmount().longValue());
 
-        transaction.setHash(hash);
-        transactionRepository.save(transaction);
+        ts.setHash(hash);
+        transactionRepository.save(ts);
+
+        OrderEvent orderEvent = new OrderEvent();
+        orderEvent.setOrderType(OrderEvent.CHECK);
+        orderEvent.setUniqueId(event.getUniqueId());
+        rocketMQTemplate.syncSend("order-event", orderEvent, 3);
     }
 
 
+    @Transactional
+    public void check(OrderEvent orderEvent) {
+        Transaction transaction = transactionRepository.findByUniqueId(orderEvent.getUniqueId()).orElseThrow(() -> new RuntimeException("not find transaction"));
+        TransactionGetInfoResult result = bumoService.getTransaction(transaction.getHash());
+        if (result.getTotalCount() == 0 || result.getTransactions().length == 0) {
+            log.error("not find transaction in block chain");
+            throw new RuntimeException("not find transaction in block chain");
+        }
+        TransactionHistory[] transactionHistories = result.getTransactions();
+        TransactionHistory transactionHistory = null;
+        for (TransactionHistory history : transactionHistories) {
+            transactionHistory = history;
+            if (transactionHistory.getHash().equals(transaction.getHash())) break;
+        }
+        if (transactionHistory == null) {
+            log.error("not find transaction in block chain");
+            throw new RuntimeException("not find transaction in block chain");
+        }
+
+        if (transactionHistory.getErrorCode() != 0) {
+            log.error("transaction error with  error code:{}, error desc{}", transactionHistory.getErrorCode(), transactionHistory.getErrorDesc());
+            transaction.setStatus(Transaction.TransactionStatus.Failed);
+            return;
+        }
+        transaction.setStatus(Transaction.TransactionStatus.Success);
+        transactionRepository.save(transaction);
+
+        User payer = transaction.getPayer();
+        if (payer != null) {
+            payer.setMoney(payer.getMoney().subtract(transaction.getMoney()));
+            userRepository.save(payer);
+        }
+        User payee = transaction.getPayee();
+        if (payee != null) {
+            payee.setMoney(payee.getMoney().add(transaction.getMoney()));
+            userRepository.save(payee);
+        }
+        Project project = transaction.getProject();
+        if (project != null) {
+            project.setRaisedMoney(project.getRaisedMoney().add(transaction.getMoney()));
+            projectRepository.save(project);
+        }
+    }
 }
 

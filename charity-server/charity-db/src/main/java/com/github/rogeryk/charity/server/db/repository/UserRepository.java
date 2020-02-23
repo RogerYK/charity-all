@@ -26,6 +26,9 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     @Query(value = "select date_format(created_time, '%Y-%m-%d') as `date`, count(*) as `count` from user where created_time >= :startTime and created_time < :endTime group by date_format(created_time, '%Y-%m-%d')", nativeQuery = true)
     List<CountData> scanCountData(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
+    @Query(value = "select * from `user` where user_status = 0 and id > :lastId order by id asc limit :size", nativeQuery = true)
+    List<User> findCreatingUser(@Param("lastId") long lastId, @Param("size") int size);
+
     default PageData<User> searchUser(String text, int page, int size) {
         PageData<User> pageData = new PageData<>();
         pageData.setContent(searchUserData(text, page, size));

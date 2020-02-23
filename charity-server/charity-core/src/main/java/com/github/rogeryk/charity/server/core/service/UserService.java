@@ -1,7 +1,10 @@
 package com.github.rogeryk.charity.server.core.service;
 
-import com.github.rogeryk.charity.server.core.search.index.UserDocument;
+import com.github.rogeryk.charity.server.core.bumo.BumoService;
+import com.github.rogeryk.charity.server.core.bumo.util.AccountResult;
+import com.github.rogeryk.charity.server.core.exception.ServiceException;
 import com.github.rogeryk.charity.server.core.search.repository.UserDocumentRepository;
+import com.github.rogeryk.charity.server.core.util.ErrorCodes;
 import com.github.rogeryk.charity.server.db.domain.Project;
 import com.github.rogeryk.charity.server.db.domain.Transaction;
 import com.github.rogeryk.charity.server.db.domain.User;
@@ -10,10 +13,7 @@ import com.github.rogeryk.charity.server.db.domain.vo.UserInfo;
 import com.github.rogeryk.charity.server.db.repository.ProjectRepository;
 import com.github.rogeryk.charity.server.db.repository.TransactionRepository;
 import com.github.rogeryk.charity.server.db.repository.UserRepository;
-import com.github.rogeryk.charity.server.core.bumo.BumoService;
-import com.github.rogeryk.charity.server.core.exception.ServiceException;
-import com.github.rogeryk.charity.server.core.util.ErrorCodes;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,9 +26,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import io.bumo.model.response.result.AccountCreateResult;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
@@ -54,22 +52,22 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserDocumentRepository userDocumentRepository;
 
+    @Transactional
     public void registerUser(String phoneNumber, String password){
         User user = new User();
         user.setPhoneNumber(phoneNumber);
         password = passwordEncoder.encode(password);
         user.setPassword(password);
+        user.setUserStatus(User.UserStatus.Creating);
         userRepository.save(user);
         user = userRepository.findByPhoneNumber(phoneNumber);
         user.setNickName(String.format("CS_%06d", user.getId()));
 
-        AccountCreateResult account = bumoService.createActiveAccount();
+        AccountResult account = bumoService.createActiveAccount();
         user.setBumoAddress(account.getAddress());
         user.setBumoPrivateKey(account.getPrivateKey());
-        user = userRepository.saveAndFlush(user);
-
-        UserDocument document = UserDocument.create(user);
-        userDocumentRepository.save(document);
+        user.setActiveHash(account.getHash());
+        userRepository.saveAndFlush(user);
     }
 
     public User findUserByPhoneNumber(String phoneNumber) {

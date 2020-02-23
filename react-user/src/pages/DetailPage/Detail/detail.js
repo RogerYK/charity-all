@@ -11,20 +11,20 @@ const Detail = ({project}) => {
       <div className={styles["bottom-left"]}>
         <Tabs defaultActiveKey="1">
           <TabPane className={styles["project-content"]} tab="捐助说明" key="1">
-          <div dangerouslySetInnerHTML={{__html: project.content}} />
+            <div dangerouslySetInnerHTML={{__html: project.content}} />
           </TabPane>
           <TabPane className={styles["project-timeline"]} tab="项目进展" key="2">
             <Timeline className={styles["timeline"]}>
-            {project.projectSchedules.map(s => (
-              <Timeline.Item className={styles["p-t-item"]} >
-              <div className={styles['timeline-right']}>
-                <div 
-                  dangerouslySetInnerHTML={{__html: s.content}}
-                />
-                <div className={styles['time']}>{s.createdTime}</div>
-              </div>
-              </Timeline.Item>
-            ))}
+              {project.projectSchedules.map(s => (
+                <Timeline.Item className={styles["p-t-item"]} >
+                  <div className={styles['timeline-right']}>
+                    <div 
+                      dangerouslySetInnerHTML={{__html: s.content}}
+                    />
+                    <div className={styles['time']}>{s.createdTime}</div>
+                  </div>
+                </Timeline.Item>
+              ))}
             </Timeline>
           </TabPane>
           <TabPane className={styles['project-comments']} tab="评论" key="3">

@@ -3,15 +3,12 @@ package com.github.rogeryk.charity.server.web.job;
 import com.github.rogeryk.charity.server.core.bumo.BumoService;
 import com.github.rogeryk.charity.server.db.domain.Project;
 import com.github.rogeryk.charity.server.db.repository.ProjectRepository;
-import io.bumo.model.response.result.TransactionGetInfoResult;
 import io.bumo.model.response.result.data.ContractAddressInfo;
-import io.bumo.model.response.result.data.TransactionHistory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,25 +25,31 @@ public class CreateProjectJob {
     @Scheduled(fixedRate = 5 * 60 * 1000)   //每五分钟执行一次
     public void checkCreatingProject() {
         log.info("begin check creating project");
-        List<Project> projects = projectRepository.findAllByStatusIn(Arrays.asList(Project.ProjectStatus.Creating));
-        for (Project project : projects) {
-            try {
-                String hash = project.getTransactionHash();
-                int number = project.getTransactionNumber();
-                List<ContractAddressInfo> addressInfos = bumoService.getContractAddress(hash);
-                Optional<ContractAddressInfo> addressInfoOptional = addressInfos.stream().filter(info -> number == info.getOperationIndex()).findFirst();
-                if (addressInfoOptional.isPresent()) {
-                    ContractAddressInfo addressInfo = addressInfoOptional.get();
-                    project.setBumoAddress(addressInfo.getContractAddress());
-                    project.setStatus(Project.ProjectStatus.APPLY);
-                    projectRepository.saveAndFlush(project);
-                } else {
-                    log.error("[project_id={}] project transaction hash can't get a contract address", project.getId());
+        int limit = 50;
+        long lastId = -1;
+        while (true) {
+            List<Project> projects = projectRepository.findCreatingProject(lastId, limit);
+            for (Project project : projects) {
+                try {
+                    lastId = project.getId();
+                    String hash = project.getTransactionHash();
+                    int number = project.getTransactionNumber();
+                    List<ContractAddressInfo> addressInfos = bumoService.getContractAddress(hash);
+                    Optional<ContractAddressInfo> addressInfoOptional = addressInfos.stream().filter(info -> number == info.getOperationIndex()).findFirst();
+                    if (addressInfoOptional.isPresent()) {
+                        ContractAddressInfo addressInfo = addressInfoOptional.get();
+                        project.setBumoAddress(addressInfo.getContractAddress());
+                        project.setStatus(Project.ProjectStatus.APPLY);
+                        projectRepository.saveAndFlush(project);
+                    } else {
+                        log.error("[project_id={}] project transaction hash can't get a contract address", project.getId());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    log.error("check creating project fail {}", e.toString());
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                log.error("check creating project fail {}", e.toString());
             }
+            if (projects.size() < limit) break;
         }
     }
 
@@ -57,7 +60,7 @@ public class CreateProjectJob {
         long start = -1;
         while (true) {
             List<Project> projects = projectRepository.findOverdueProjects(start, limit);
-            for (Project project : projects) {
+            for (Project project : projects) {          //TODO 区块链中的智能合约处理。
                 try {
                     if (project.getRaisedMoney().compareTo(project.getTargetMoney()) >= 0) {
                         log.info("project raise success id={}", project.getId());
@@ -65,6 +68,7 @@ public class CreateProjectJob {
                     } else {
                         log.info("project failed success id={}", project.getId());
                         project.setStatus(Project.ProjectStatus.FAIL);
+                        bumoService.invokeContract(project.getBumoAddress()); //筹款失败需要手动触发合约将筹款退回
                     }
                     projectRepository.save(project);
                 } catch (Exception e) {
