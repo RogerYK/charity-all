@@ -100,8 +100,10 @@ public class OrderService {
         TransactionHistory[] transactionHistories = result.getTransactions();
         TransactionHistory transactionHistory = null;
         for (TransactionHistory history : transactionHistories) {
-            transactionHistory = history;
-            if (transactionHistory.getHash().equals(transaction.getHash())) break;
+            if (history.getHash().equals(transaction.getHash())) {
+                transactionHistory = history;
+                break;
+            }
         }
         if (transactionHistory == null) {
             log.error("not find transaction in block chain");
