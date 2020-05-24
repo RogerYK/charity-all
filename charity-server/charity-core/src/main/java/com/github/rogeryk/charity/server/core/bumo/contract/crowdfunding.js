@@ -29,27 +29,6 @@ function getObjectMetadata(key) {
     return JSON.parse(data);
 }
 
-function recordDonation() {
-    Utils.log('record donation');
-
-    let count = Number(getMetadataOrDefault(donateCountKey, '0'));
-    let raisedMoney = Number(getMetadataOrDefault(raisedMoneyKey, '0'));
-    const msg = Chain.msg;
-    const key = donationPrefix + String(count);
-    raisedMoney = Utils.int64Add(raisedMoney, msg.asset.amount);
-    setObjectMetadata(key, msg);
-    Chain.store(donateCountKey, String(count+1));
-    Chain.store(raisedMoneyKey, String(raisedMoney));
-    Utils.log('record donation ' + count + ' success');
-
-    const status = Chain.load(donationStatusKey);
-    if (status === Success) {
-        raiseSuccess();
-    } else if (status === Fail) {
-        Chain.payAsset(msg.sender, assetIssuer, assetCode, msg.asset.amount, "", "project raise has failed");
-    }
-}
-
 function raiseSuccess() {
     const globalAttribute = getObjectMetadata(globalAttributeKey);
     Utils.log('raise success pay asset to help seeker: ' + globalAttribute.helpSeekerAddress);
@@ -81,6 +60,28 @@ function raiseFail() {
 
     Utils.log('back asset success');
 }
+
+function recordDonation() {
+    Utils.log('record donation');
+
+    let count = Number(getMetadataOrDefault(donateCountKey, '0'));
+    let raisedMoney = Number(getMetadataOrDefault(raisedMoneyKey, '0'));
+    const msg = Chain.msg;
+    const key = donationPrefix + String(count);
+    raisedMoney = Utils.int64Add(raisedMoney, msg.asset.amount);
+    setObjectMetadata(key, msg);
+    Chain.store(donateCountKey, String(count+1));
+    Chain.store(raisedMoneyKey, String(raisedMoney));
+    Utils.log('record donation ' + count + ' success');
+
+    const status = Chain.load(donationStatusKey);
+    if (status === Success) {
+        raiseSuccess();
+    } else if (status === Fail) {
+        Chain.payAsset(msg.sender, assetIssuer, assetCode, msg.asset.amount, "", "project raise has failed");
+    }
+}
+
 
 function checkCondition() {
     const status = Chain.load(donationStatusKey);

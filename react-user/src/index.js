@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Router } from "react-router-dom";
+import { createBrowserHistory } from "history"
 
 import { Provider } from "mobx-react";
 import userStore from "./store/userStore";
@@ -30,9 +31,15 @@ const stores = {
   detailStore
 };
 
+const history = createBrowserHistory()
+
+history.listen((location, action) => {
+  window.scrollTo(0, 0)
+})
+
 ReactDOM.render(
   <Provider {...stores}>
-    <Router>
+    <Router history={history}>
       <App />
     </Router>
   </Provider>,

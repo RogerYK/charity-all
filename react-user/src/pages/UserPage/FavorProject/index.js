@@ -28,18 +28,18 @@ export default class FavorProject extends Component {
         <div className={styles['project-list']}>
           <div className={styles['content']}>
             {projects.length > 0 ?
-            <ProjectList projects={projects} bordered={true} cols={3} />
-            :
-            <Empty description={<span>还没关注任何项目</span>} />
+              <ProjectList projects={projects} bordered={true} cols={3} itemWidth={'255px'} />
+              :
+              <Empty description={<span>还没关注任何项目</span>} />
             }
           </div>
-              {total > 9 ? <Pagination 
-                className={styles['pagination']}
-                defaultCurrent={1}
-                pageSize={9}
-                total={total}
-                onChange={(page) => setPage(page-1)}
-                /> : null}
+          {total > 9 ? <Pagination 
+            className={styles['pagination']}
+            defaultCurrent={1}
+            pageSize={9}
+            total={total}
+            onChange={(page) => setPage(page-1)}
+          /> : null}
         </div>
       </div>
     )

@@ -76,9 +76,9 @@ public class TransactionService {
                 findById(userId)
                 .orElseThrow(() -> new ServiceException(ErrorCodes.USER_NOT_EXIST, "用户不存在"));
 
-        if (user.getMoney().compareTo(amount) < 0) {
-            throw new ServiceException(ErrorCodes.USER_NO_MONEY, "用户余额不足");
-        }
+//        if (user.getMoney().compareTo(amount) < 0) {
+//            throw new ServiceException(ErrorCodes.USER_NO_MONEY, "用户余额不足");
+//        }
 
         Transaction transaction = new Transaction();
         transaction.setPayee(user);
@@ -92,7 +92,7 @@ public class TransactionService {
         orderEvent.setOrderType(OrderEvent.RECHARGE);
         orderEvent.setUserId(userId);
         orderEvent.setAmount(amount);
-        orderEvent.setUniqueId(idWorker.nextId());
+        orderEvent.setUniqueId(uniqueId);
         log.info("send recharge event {}", orderEvent);
         rocketMQTemplate.syncSend("order-event", orderEvent);
     }

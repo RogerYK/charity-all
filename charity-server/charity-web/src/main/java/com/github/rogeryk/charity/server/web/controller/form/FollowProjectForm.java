@@ -6,5 +6,5 @@ import lombok.Data;
 public class FollowProjectForm {
 
     private Long projectId;
-
+    private boolean follow;
 }

@@ -16,9 +16,7 @@ class CommonStore {
   }
 
   @action setToken(token) {
-    console.log(token);
     this.accessToken = token;
-    console.log(this.accessToken);
     if (!token) {
       this.removeToken();
     }

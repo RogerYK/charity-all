@@ -13,11 +13,11 @@ export default class Authentication extends Component {
     const {currentUser} = this.props.userStore
     const {identifyStatus} = currentUser
     const currentMap = {
-      'UnIdentify': 0,
-      'Identifying': 1,
-      'Identified': 2,
+      'UnIdentify': {status: 'wait', current: 0},
+      'Identifying': {status: 'process', current: 1},
+      'Identified': {status: 'finish', current: 2},
     }
-    const current = currentMap[identifyStatus]
+    const {current, status} = currentMap[identifyStatus]
     console.log('current', current)
     const steps = [{
       title: '上传资料',
@@ -37,7 +37,7 @@ export default class Authentication extends Component {
 
         <div className={styles['content']}>
           <Steps 
-            status="wait"
+            status={status}
             current={current}>
             {steps.map(s => (
               <Steps.Step key={s.title} title={s.title}></Steps.Step>

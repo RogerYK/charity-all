@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Input, Button } from 'antd';
+import { Input, Button, Form } from 'antd';
 import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 
@@ -31,22 +29,22 @@ class Editor extends Component {
     const {logined, submitting} = this.props
 
     return (
-    <div>
-      <Form.Item>
-        <Input.TextArea
-          placeholder={logined ? "" : "请登陆后评论"}
-          rows={4}
-          onChange={this.handleChange}
-          value={this.value}
-          onFocus={this.handleFocus}
-        />
-      </Form.Item>
-      <Form.Item>
-        <Button disabled={!logined} loading={submitting} onClick={this.handleSubmit}>
+      <div>
+        <Form.Item style={{width: '100%'}}>
+          <Input.TextArea
+            placeholder={logined ? "" : "请登陆后评论"}
+            rows={4}
+            onChange={this.handleChange}
+            value={this.value}
+            onFocus={this.handleFocus}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button disabled={!logined} loading={submitting} onClick={this.handleSubmit}>
           评论
-        </Button>
-      </Form.Item>
-    </div>
+          </Button>
+        </Form.Item>
+      </div>
     )
   }
 }

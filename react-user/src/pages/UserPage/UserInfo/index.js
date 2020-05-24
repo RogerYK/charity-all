@@ -68,18 +68,17 @@ class RowUserForm extends Component {
         <Form.Item {...formItemLayout} label="头像">
           <div className={styles['avatar-field']}>
             <div className={styles['left']}>
-              {getFieldDecorator('avatar')(
-                <Upload
-                  name="file"
-                  headers={{ acess_token: commonStore.accessToken }}
-                  action={config.baseURL + '/upload/'}
-                  listType="picture-card"
-                  onChange={this.handleAvatarChange}
-                  multiple={false}
-                >
-                  {avatarLoaded ? null : <img className={styles['avatar-img']} src={default_icon} alt="avatar" />}
-                </Upload>
-              )}
+              <Upload
+                name="file"
+                headers={{ acess_token: commonStore.accessToken }}
+                action={config.baseURL + '/upload/'}
+                  
+                listType="picture-card"
+                onChange={this.handleAvatarChange}
+                multiple={false}
+              >
+                {avatarLoaded ? null : <img className={styles['avatar-img']} src={default_icon} alt="avatar" />}
+              </Upload>
               <div className={styles['describe']}>点击左侧上传，比例1:1, 格式jpg、png、gif, 不大于100kb</div>
             </div>
           </div>

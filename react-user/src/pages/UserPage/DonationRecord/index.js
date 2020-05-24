@@ -8,7 +8,7 @@ import { observer, inject } from 'mobx-react';
 import RechargeModal from './RechargeModal';
 import { observable, action } from 'mobx';
 
-@inject('recordStore')
+@inject('recordStore', 'userStore')
 @observer
 export default class DonationRecord extends Component {
 
@@ -31,12 +31,18 @@ export default class DonationRecord extends Component {
   render() {
     const {modalVisible, showModal, hideModal} = this
     const {total, records, setPage} = this.props.recordStore
+    const {currentUser} = this.props.userStore
     return (
       <div className={styles['donation-records']}>
         <div className={styles['header']}>
-          <span className={styles['title']}>捐款记录</span>
-          <span className={styles['total']}>共{total}个记录</span>
-          <Button onClick={showModal}>充值</Button>
+          <div>
+            <span className={styles['title']}>捐款记录</span>
+            <span className={styles['total']}>共{total}个记录</span>
+          </div>
+          <div>
+            <span className={styles.money}>余额：{currentUser.remainMoney}元</span>
+            <Button onClick={showModal}>充值</Button>
+          </div>
         </div>
         <Divider />
         <div className={styles['record-list']}>
@@ -52,7 +58,7 @@ export default class DonationRecord extends Component {
           </div>
           <div className={styles['pagination-wrap']}>
             <Pagination defaultCurrent={1} pageSize={9} total={total}
-              onChange={(page) => setPage(page-1)}
+              onChange={(page) => setPage(page)}
             />
           </div>
         </div>

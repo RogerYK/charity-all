@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class App {
 
     public static void main(String[] args) {
+        //spring data elasticsearch 和 spring data redis 冲突
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
         SpringApplication.run(App.class);
     }
 }

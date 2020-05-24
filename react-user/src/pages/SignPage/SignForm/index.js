@@ -7,18 +7,6 @@ import './style.css'
 
 const FormItem = Form.Item
 
-const residences = [{
-  value: 'Jiangxi',
-  label: '江西',
-  children: [{
-    value: 'Nanchang',
-    label: '南昌',
-    children: [{
-      value: 'Qingshanhu',
-      label: '青山湖'
-    }]
-  }]
-}]
 
 class SignForm extends Component {
 
@@ -113,7 +101,7 @@ class SignForm extends Component {
           <FormItem {...tailItemLayout}>
             {getFieldDecorator('agreement', {
               valuePropName: 'checked',
-              rules: [{required: true}]
+              rules: [{required: true, message: '请同意用户协议'}]
             })(
               <Checkbox>我已经阅读<a href="./">用户协议</a></Checkbox>
             )}

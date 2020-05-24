@@ -12,7 +12,12 @@ class DetailStore {
   constructor() {
     reaction(
       () => this.id,
-      (id) => this.pullProject(id)
+      (id) => {
+        if (!this.project || this.project.id !== id) {
+          this.project = null
+          this.pullProject(id)
+        }
+      } 
     )
   }
 

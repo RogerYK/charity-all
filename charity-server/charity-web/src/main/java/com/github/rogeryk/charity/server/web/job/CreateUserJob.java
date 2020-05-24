@@ -34,8 +34,8 @@ public class CreateUserJob {
                     String hash = user.getActiveHash();
                     TransactionGetInfoResult result = bumoService.getTransaction(hash);
                     if (result.getTotalCount() == 0 || result.getTransactions().length == 0) {
-                        log.error("not find transaction in block chain");
-                        throw new RuntimeException("not find transaction in block chain");
+                        log.warn("not find transaction in block chain");
+                        continue;
                     }
                     TransactionHistory[] transactionHistories = result.getTransactions();
                     TransactionHistory transactionHistory = null;
@@ -46,7 +46,7 @@ public class CreateUserJob {
                         }
                     }
                     if (transactionHistory == null) {
-                        log.error("not find transaction user {}", user.getId());
+                        log.warn("not find transaction user {}", user.getId());
                         continue;
                     }
                     if (transactionHistory.getErrorCode() != 0) {

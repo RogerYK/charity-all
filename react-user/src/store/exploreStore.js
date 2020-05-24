@@ -11,7 +11,7 @@ class ExploreStore {
 
   @observable categories = []
 
-  @observable curCategoryId
+  @observable curCategoryId = null
 
   @observable direction = 'desc'
 
@@ -53,7 +53,7 @@ class ExploreStore {
   }
 
   @action
-  setCurProjectId = (id) => {
+  setCurCategoryId = (id) => {
     this.curCategoryId = id
   }
 

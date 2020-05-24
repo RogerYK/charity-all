@@ -45,7 +45,7 @@ const Comment = {
     }),
   comment: (projectId, parentId, replyId, content) =>
     request.post("/comment/", { projectId, parentId, replyId, content }),
-  favor: commentId => request.post("/comment/favor", { commentId })
+  favor: (commentId, favor) => request.post("/comment/favor", { commentId, favor })
 };
 
 const Category = {
@@ -91,6 +91,7 @@ const User = {
   followProject: form => request.post("/user/follow/project", form),
   detail: id => request.get("/user/", { params: { id } }),
   identify: form => request.post("/user/identify", form),
+  followUser: form => request.post("/user/follow/user", form),
 };
 
 const Banner = {

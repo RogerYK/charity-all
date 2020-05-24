@@ -58,7 +58,7 @@ export default class RankShow extends Component {
           <div className={styles['title']}>热门新闻</div>
           <div className={styles['content']}>
             {hotNews.map((n, i) => (
-              <div key={n.id} className={`${styles['activity']} ${i===curNews? styles['active']:''}`}
+              <Link to={`/news/detail/${n.id}`} key={n.id} className={`${styles['activity']} ${i===curNews? styles['active']:''}`}
                 onMouseEnter={() => {
                   this.setState({curNews:i})
                 }}
@@ -67,7 +67,7 @@ export default class RankShow extends Component {
                   <div className={styles['title']}>{n.title}</div>
                 </div>
                 <img src={n.img} className={styles['ico']} alt="ico"/>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

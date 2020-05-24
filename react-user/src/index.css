@@ -11,3 +11,11 @@ body {
 .dis-block {
   display: block;
 }
+
+#root {
+  height: 100%;
+}
+
+#root > div {
+  height: 100%;
+}

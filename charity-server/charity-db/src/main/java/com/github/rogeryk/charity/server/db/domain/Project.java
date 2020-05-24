@@ -42,10 +42,10 @@ public class Project {
     private String summary;
 
     @Column(insertable = false,nullable = false,columnDefinition = "DECIMAL(10,2) default 0")
-    private BigDecimal raisedMoney;
+    private BigDecimal raisedMoney = BigDecimal.ZERO;
 
     @Column(nullable = false, columnDefinition = "DECIMAL(10,2)")
-    private BigDecimal targetMoney;
+    private BigDecimal targetMoney = BigDecimal.ZERO;
 
     @CreatedDate
     private Date createdTime;
@@ -69,7 +69,7 @@ public class Project {
     private String bumoPrivateKey;
 
     @Column(insertable = false,columnDefinition = "default 0")
-    private Integer donorCount;
+    private Integer donorCount = 0;
 
     @ManyToOne
     private User author;
@@ -89,7 +89,7 @@ public class Project {
     private List<User> followedUsers;
 
     @Column(insertable = false, columnDefinition = "default 0")
-    private Integer watchCount;
+    private Integer watchCount = 0;
 
     @Override
     public String toString() {

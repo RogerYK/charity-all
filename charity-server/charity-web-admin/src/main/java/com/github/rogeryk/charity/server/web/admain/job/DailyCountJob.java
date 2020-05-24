@@ -57,7 +57,7 @@ public class DailyCountJob {
 
     public void scanProjectCount(LocalDate startTime, LocalDate endTime) {
         List<Map<String, Object>> sourceData = projectRepository.scanCountData(TimeUtils.localDateToDate(startTime), TimeUtils.localDateToDate(endTime));
-        List<CountData> data = sourceData.stream().map(v -> new CountData((String) v.get("data"), ((BigInteger) v.get("count")).intValue())).collect(Collectors.toList());
+        List<CountData> data = sourceData.stream().map(v -> new CountData((String) v.get("date"), ((BigInteger) v.get("count")).intValue())).collect(Collectors.toList());
         data = fillData(startTime, endTime, data);
         log.info("project data {}", data);
         updateCountAnalysis(data, CountAnalysis.CountType.Project);

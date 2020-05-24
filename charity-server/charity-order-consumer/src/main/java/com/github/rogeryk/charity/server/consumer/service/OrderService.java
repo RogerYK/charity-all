@@ -15,6 +15,7 @@ import io.bumo.model.response.result.data.TransactionHistory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,23 +70,28 @@ public class OrderService {
         OrderEvent orderEvent = new OrderEvent();
         orderEvent.setOrderType(OrderEvent.CHECK);
         orderEvent.setUniqueId(event.getUniqueId());
-        rocketMQTemplate.syncSend("order-event", orderEvent, 3);
+        Message msg = rocketMQTemplate.getMessageConverter().toMessage(orderEvent, null);
+        rocketMQTemplate.syncSend("order-event", msg, Integer.MAX_VALUE, 3);
     }
 
-    @Transactional
     public void recharge(OrderEvent event) {
 
-        Transaction ts = transactionRepository.findByUniqueId(event.getUniqueId()).orElseThrow(() -> new RuntimeException("not find transaction "));
+        try {
+            Transaction ts = transactionRepository.findByUniqueId(event.getUniqueId()).orElseThrow(() -> new RuntimeException("not find transaction "));
 
-        String hash = bumoService.recharge(ts.getPayee().getBumoAddress(), event.getAmount().longValue());
+            String hash = bumoService.recharge(ts.getPayee().getBumoAddress(), event.getAmount().longValue());
 
-        ts.setHash(hash);
-        transactionRepository.save(ts);
+            ts.setHash(hash);
+            transactionRepository.save(ts);
 
-        OrderEvent orderEvent = new OrderEvent();
-        orderEvent.setOrderType(OrderEvent.CHECK);
-        orderEvent.setUniqueId(event.getUniqueId());
-        rocketMQTemplate.syncSend("order-event", orderEvent, 3);
+            OrderEvent orderEvent = new OrderEvent();
+            orderEvent.setOrderType(OrderEvent.CHECK);
+            orderEvent.setUniqueId(event.getUniqueId());
+            Message msg = rocketMQTemplate.getMessageConverter().toMessage(orderEvent, null);
+            rocketMQTemplate.syncSend("order-event", msg, Integer.MAX_VALUE, 3);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

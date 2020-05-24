@@ -28,22 +28,27 @@ public class OrderConsumer implements RocketMQListener<OrderEvent> {
         log.info("接受到消息 {}", orderEvent);
 
         //消息已经处理过直接返回
-        if (orderService.isProcessed(orderEvent)) return;
+//        if (orderService.isProcessed(orderEvent)) return;
 
-        switch (orderEvent.getOrderType()) {
-            case OrderEvent.RECHARGE:
-                orderService.recharge(orderEvent);
-                break;
-            case OrderEvent.DONATION:
-                orderService.donate(orderEvent);
-                break;
-            case OrderEvent.CHECK:
-                orderService.check(orderEvent);
-                break;
-            default:
-                log.error("无法处理类型", orderEvent);
-                throw new RuntimeException("无法处理消息");
-        }
+//        try {
+            switch (orderEvent.getOrderType()) {
+                case OrderEvent.RECHARGE:
+                    orderService.recharge(orderEvent);
+                    break;
+                case OrderEvent.DONATION:
+                    orderService.donate(orderEvent);
+                    break;
+                case OrderEvent.CHECK:
+                    orderService.check(orderEvent);
+                    break;
+                default:
+                    log.error("无法处理类型", orderEvent);
+//                throw new RuntimeException("无法处理消息");
+            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            log.error("encounter {}", e.toString());
+//        }
 
     }
 

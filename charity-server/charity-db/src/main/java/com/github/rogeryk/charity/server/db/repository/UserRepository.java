@@ -29,6 +29,8 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     @Query(value = "select * from `user` where user_status = 0 and id > :lastId order by id asc limit :size", nativeQuery = true)
     List<User> findCreatingUser(@Param("lastId") long lastId, @Param("size") int size);
 
+    int countUserByFollowedUsersContaining(User user);
+
     default PageData<User> searchUser(String text, int page, int size) {
         PageData<User> pageData = new PageData<>();
         pageData.setContent(searchUserData(text, page, size));

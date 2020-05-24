@@ -50,12 +50,16 @@ public class ProjectService {
     }
 
     public PageData<Project> getProjectByCategory(Long id, Pageable pageable) {
-        Category category = categoryRepository
-                .findById(id)
-                .orElseThrow(() -> new ServiceException(ErrorCodes.CATEGORY_NOT_EXIST, "分类不存在"));
-        return PageData.of(projectRepository.findByCategoryAndStatusIn(category,
-                Project.ProjectStatus.userViewStatus,
-                pageable));
+        if (id != null) {
+            Category category = categoryRepository
+                    .findById(id)
+                    .orElseThrow(() -> new ServiceException(ErrorCodes.CATEGORY_NOT_EXIST, "分类不存在"));
+            return PageData.of(projectRepository.findByCategoryAndStatusIn(category,
+                    Project.ProjectStatus.userViewStatus,
+                    pageable));
+        } else {
+            return PageData.of(projectRepository.findAllByStatusIn(Project.ProjectStatus.userViewStatus, pageable));
+        }
     }
 
     public Project getProject(Long id) {
@@ -77,6 +81,7 @@ public class ProjectService {
         projectScheduleRepository.save(schedule);
     }
 
+    @Transactional
     public ProjectDetailVO detail(Long projectId, Long userId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(()->ServiceException.of(ErrorCodes.PROJECT_NOT_EXIST, "项目不存在"));

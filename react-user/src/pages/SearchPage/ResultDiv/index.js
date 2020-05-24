@@ -20,12 +20,12 @@ export class ProjectResult extends Component {
         <Empty description={<span>没有搜索到项目</span>} />
         :
         <>
-        <ProjectList bordered={true} projects={projects} cols={4} />
+        <ProjectList bordered={true} projects={projects} cols={4} itemWidth={255}/>
         <div className={styles['pagination-wrap']}>
           <Pagination defaultCurrent={1} pageSize={12}
             onChange={(page) => setPage(page-1)}
             total={total}
-           />
+          />
         </div>
         </>
       }
@@ -90,7 +90,7 @@ export class NewsResult extends Component {
           <Pagination defaultCurrent={1} pageSize={12}
             onChange={(page) => setPage(page-1)}
             total={total}
-           />
+          />
         </div>
       </>
     )

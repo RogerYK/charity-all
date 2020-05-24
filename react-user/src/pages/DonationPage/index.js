@@ -45,7 +45,7 @@ function Banner(props) {
     <Carousel>
       {banners.map(b => 
         <Link key="b.id" to="/" className={styles.banner}>
-          <img src={b.img} alt="banner" />
+          <img style={{width: '100%', height: '100%'}} src={b.img} alt="banner" />
         </Link>
       )}
     </Carousel>

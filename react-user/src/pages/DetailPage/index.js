@@ -8,6 +8,7 @@ import Detail from "./Detail/detail";
 import { observable, action } from "mobx";
 import DonationModal from "./DonationModal";
 import api from "../../api";
+import styles from "./style.module.scss"
 
 
 @inject('detailStore', 'commonStore', 'userStore')
@@ -44,7 +45,7 @@ export default class DetailPage extends Component {
   @action
   handleFollow = () => {
     const project = this.props.detailStore.project;
-    api.User.followProject({projectId: project.id})
+    api.User.followProject({projectId: project.id, follow: true})
       .then(res => {
         project.followed = true
         this.props.detailStore.pullProject(project.id);
@@ -52,18 +53,38 @@ export default class DetailPage extends Component {
       })
   }
 
+  @action
+  handleUnFollow = () => {
+    const project = this.props.detailStore.project;
+    api.User.followProject({projectId: project.id, follow: false})
+      .then(res => {
+        project.followed = false
+        this.props.detailStore.pullProject(project.id);
+        message.success('取消关注成功')
+      })
+  }
+
 
   render() {
+    const curId = this.props.match.params.id;
     const project = this.props.detailStore.project;
     const {modalVisiable, handleCancel, handleDonate, handleFollow} = this
 
     return (
       <div className="content-container">
-        {!project ? 
-          <Skeleton /> :
+        <Skeleton 
+          // loading={true}
+          loading={!project || curId != project.id}
+          className={styles.skeleton} 
+          paragraph={{rows: 20}}
+        >
+          <Introduction project={project} onDonate={handleDonate}
+            onFollow={handleFollow} 
+            onUnFollow={this.handleUnFollow}
+          />
+        </Skeleton> 
+        {!project || curId != project.id ? null :
         <>
-        <Introduction project={project} onDonate={handleDonate}
-          onFollow={handleFollow} />
         <Detail project={project} />
         <DonationModal
           visiable={modalVisiable}

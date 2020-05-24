@@ -5,15 +5,17 @@ import { Steps, Button, message } from 'antd';
 
 import {UserProtocol, IdentifyType, IdentifyInfo, WaitingInfo} from './ResortSteps'
 import api from '../../api';
+import { inject } from 'mobx-react';
 
 
 const Step = Steps.Step
 
 
+@inject('userStore')
 export default class ResortPage extends Component {
 
   state = {
-    current: 3,
+    current: 0,
     completed: [false, false],
     form: {
       identificationType: '',
@@ -88,7 +90,9 @@ export default class ResortPage extends Component {
 
   handleSubmit = () => {
     console.log('submit', this.state.form)
+    const {userStore} = this.props
     api.User.identify(this.state.form).then(res => {
+      userStore.pullUser()
       this.setState({
         ...this.state,
         current: 3,

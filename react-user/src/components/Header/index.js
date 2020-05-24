@@ -11,15 +11,19 @@ const { Search } = Input;
 
 const Header = withRouter(
   inject("userStore", "uiStore", "commonStore")(
-    observer(props => {
-      const isShow = props.uiStore.headerShow;
-      const logined = props.commonStore.logined;
-      const { currentUser, pulling, pulled } = props.userStore;
-      const { history } = props;
+    observer(({userStore, uiStore, commonStore, history}) => {
+      const isShow = uiStore.headerShow;
+      const logined = commonStore.logined;
+      const { currentUser, pulling, pulled } = userStore;
 
       const handleSearch = value => {
         history.push(`/search?search=${value}`);
       };
+
+      const handleLogout = () => {
+        commonStore.removeToken()
+        history.push('/')
+      }
 
       return (
         <div className={styles["header-wrap"]}>
@@ -58,6 +62,9 @@ const Header = withRouter(
                         <Menu.Item>
                           <Link to="/user/feedback">反馈建议</Link>
                         </Menu.Item>
+                        <Menu.Item>
+                          <span onClick={handleLogout}>登出</span>
+                        </Menu.Item>
                       </Menu>
                     }
                   >
@@ -74,7 +81,7 @@ const Header = withRouter(
                 </div>
               )}
             </div>
-            <div className={styles["header-wrap"]}>
+            <div className={styles["nav-wrap"]}>
               <div className={styles["logo"]}>
                 <img src={logo} alt="慈善" />
               </div>

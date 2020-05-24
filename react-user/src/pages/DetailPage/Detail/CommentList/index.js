@@ -18,11 +18,11 @@ class CommentList extends Component {
     this.commentStore = new CommentStore(props.projectId);
   }
 
-  favorComment = commentId => {
+  favorComment = (commentId, favor) => {
     if (!this.props.commonStore.logined) {
       this.props.history.push("/login");
     } else {
-      this.commentStore.favorComment(commentId);
+      this.commentStore.favorComment(commentId, favor);
     }
   };
 
@@ -63,12 +63,13 @@ class CommentList extends Component {
               <span className={styles["comment-action"]}>
                 {comment.favored ? (
                   <IconFont
+                    onClick={() => favorComment(comment.id, false)}
                     className="color-primary"
                     type="icon-zanxuanzhong"
                   />
                 ) : (
                   <IconFont
-                    onClick={() => favorComment(comment.id)}
+                    onClick={() => favorComment(comment.id, true)}
                     type="icon-zan"
                   />
                 )}
@@ -147,12 +148,13 @@ class CommentList extends Component {
                 <span className={styles["comment-action"]}>
                   {comment.favored ? (
                     <IconFont
+                      onClick={() => favorComment(comment.id, false)}
                       className="color-primary"
                       type="icon-zanxuanzhong"
                     />
                   ) : (
                     <IconFont
-                      onClick={() => favorComment(comment.id)}
+                      onClick={() => favorComment(comment.id, true)}
                       type="icon-zan"
                     />
                   )}
@@ -195,8 +197,8 @@ class CommentList extends Component {
         {total > 10 ? (
           <Pagination
             className={styles["pagination"]}
-            current={page + 1}
-            onChange={page => setPage(page - 1)}
+            current={page}
+            onChange={page => setPage(page)}
             defaultCurrent={1}
             pageSize={10}
             total={total}

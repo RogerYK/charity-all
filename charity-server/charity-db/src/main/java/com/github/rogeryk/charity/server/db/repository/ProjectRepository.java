@@ -51,7 +51,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpec
     int deleteAll(@Param("ids") List<Long> ids);
 
     @Modifying
-    @Query(value = "update news set watch_count=watch_count+1  where id=:id", nativeQuery = true)
+    @Query(value = "update project set watch_count=watch_count+1  where id=:id", nativeQuery = true)
     int incrementNewsWatchCount(@Param("id") Long id);
 
 //    @Query(value = "select  id, `name`, img, gallery, content, summary, raised_money, target_money, start_time, end_time, bumo_address, donor_count, author_id, category_id from project where match(`name`, summary, content) against(:keyword) limit :page,:size", nativeQuery = true)

@@ -43,10 +43,7 @@ export default class SignPage extends Component {
           setTimeout(() => {
             this.props.history.push('/login')
           })
-        }).catch(res => {
-          message.error(res.msg)
         })
-
     }
 
     render() {

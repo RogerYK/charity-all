@@ -75,6 +75,7 @@
           }
 
           > .body {
+            color: #222c37;
             > .name {
               width: 310px;
               height: 54px;
@@ -169,9 +170,11 @@
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+          color: #222c37;
 
           > .title {
-
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
 

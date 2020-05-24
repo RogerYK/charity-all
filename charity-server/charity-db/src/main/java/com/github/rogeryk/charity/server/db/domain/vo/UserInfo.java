@@ -20,8 +20,14 @@ public class UserInfo {
     private Integer favorUserCount = 0;
     private Integer donatedCount = 0;
     private BigDecimal donatedMoney = BigDecimal.ZERO;
+    private boolean followed = false;
+    private BigDecimal remainMoney = BigDecimal.ZERO;
 
-    public static UserInfo from(User user, int donatedCount, int releasedProjectCount) {
+    public static UserInfo from (User user, int donatedCount, int releasedProjectCount, int followByCount) {
+        return from(user, donatedCount, releasedProjectCount, followByCount, false);
+    }
+
+    public static UserInfo from(User user, int donatedCount, int releasedProjectCount, int followByCount, boolean followed) {
         UserInfo userInfo = new UserInfo();
         userInfo.setId(user.getId());
         userInfo.setAvatar(user.getAvatar());
@@ -32,6 +38,9 @@ public class UserInfo {
         userInfo.setReleasedProjectCount(releasedProjectCount);
         userInfo.setBumoAddress(user.getBumoAddress());
         userInfo.setIdentifyStatus(user.getIdentifyStatus());
+        userInfo.setFavorUserCount(followByCount);
+        userInfo.setFollowed(followed);
+        userInfo.setRemainMoney(user.getMoney());
         return userInfo;
     }
 

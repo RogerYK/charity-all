@@ -5,9 +5,10 @@ import Progress from "../../../components/Progress";
 import {convertMoneyStr} from "../../../utils/format";
 import moment from "moment";
 import { Button } from "antd";
+import {Link} from 'react-router-dom'
 import IconFont from "../../../components/IconFont";
 
-const Introduction = ({project, onDonate, onFollow}) => {
+const Introduction = ({project, onDonate, onFollow, onUnFollow}) => {
   const author = project.author;
   const category = project.category;
 
@@ -24,25 +25,34 @@ const Introduction = ({project, onDonate, onFollow}) => {
     <div className={styles["container-wrap"]}>
       <div className={styles["container"]}>
         <div className={styles["left"]}>
-          <div className={styles["title"]}>{project.name}</div>
+          <div className={styles["title"]}>
+            <div>{project.name}</div>
+            <a className={styles.extra_link} 
+              rel="noopener noreferrer"  
+              target="_blank" 
+              href={`https://explorer.bumotest.io/account/${project.bumoAddress}`}
+            >
+              查看区块链账户>>
+            </a>
+          </div>
           <img src={project.img} alt="img" />
           <div className={styles["desc"]}><div>{project.summary}</div></div>
         </div>
         <div className={styles["right"]}>
           <div className={styles['top-wrap']}>
-          <div className={styles["author"]}>
-            <div className={styles["text"]}>
-              <div className={styles["name"]}>{author.nickName}</div>
-              <div className={styles["desc"]} > 发起了该项目 </div>
-              <div className={styles['authen']}><IconFont className={styles['icon']} type="icon-renzheng" />个人认证</div>
+            <div className={styles["author"]}>
+              <div className={styles["text"]}>
+                <Link to={`/user/detail/${author.id}`} className={styles["name"]}>{author.nickName}</Link>
+                <div className={styles["desc"]} > 发起了该项目 </div>
+                <div className={styles['authen']}><IconFont className={styles['icon']} type="icon-renzheng" />个人认证</div>
+              </div>
+              <div className={styles["avatar"]}>
+                <img src={author.avatar} alt="avatar" />
+              </div>
             </div>
-            <div className={styles["avatar"]}>
-              <img src={author.avatar} alt="avatar" />
+            <div className={styles["types"]}>
+              <div className={styles["category"]}><IconFont className={styles['icon']} type="icon-fenlei" />{category.name}</div>
             </div>
-          </div>
-          <div className={styles["types"]}>
-            <div className={styles["category"]}><IconFont className={styles['icon']} type="icon-fenlei" />{category.name}</div>
-          </div>
           </div>
           <div className={styles["center-wrap"]}>
             <div className={styles["progress"]}>
@@ -67,9 +77,9 @@ const Introduction = ({project, onDonate, onFollow}) => {
               <Button onClick={onDonate} className={styles['btn']} size="large" type="primary">立即支持</Button>
               <div className={styles["follow"]}>{
                 project.followed ?
-                <IconFont className={styles['icon']+' color-primary'} type="icon-31shoucangxuanzhong" />
-                :
-                <IconFont onClick={onFollow} className={styles['icon']} type="icon-31shoucang" />
+                  <IconFont onClick={onUnFollow} className={styles['icon']+' color-primary'} type="icon-31shoucangxuanzhong" />
+                  :
+                  <IconFont onClick={onFollow} className={styles['icon']} type="icon-31shoucang" />
               }
                 关注</div>
             </div>
@@ -92,15 +102,24 @@ const Introduction = ({project, onDonate, onFollow}) => {
 function getTimeCoutent(project) {
   const startTime = moment(project.startTime, "YYYY-MM-DD HH:mm:ss");
   const endTime = moment(project.endTime, "YYYY-MM-DD HH:mm:ss");
-  const days = endTime.subtract(startTime).days();
+  const remain = moment.duration(endTime.diff(startTime));
   const now = moment();
   const timeConent = {};
-  if (now.isAfter(startTime)) {
+  if (now.isBefore(startTime)) {
     timeConent.time = `${startTime.format("YYYY-MM-DD")}`;
     timeConent.label = "开始时间";
   } else if (now.isBefore(endTime)) {
-    timeConent.time = `${days}天`;
     timeConent.label = "剩余时间";
+    timeConent.time = '';
+    if (remain.years() !== 0) {
+      timeConent.time += `${remain.years()}年`;
+    } 
+    if (remain.months() !== 0) {
+      timeConent.time += `${remain.months()}月`;
+    }
+    if (remain.days() !== 0) {
+      timeConent.time += `${remain.days()}天`;
+    }
   } else {
     timeConent.time = `${endTime.format("YYYY-MM-DD")}天`;
     timeConent.label = "结束时间";

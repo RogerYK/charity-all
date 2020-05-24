@@ -14,7 +14,7 @@ class SearchDiv extends Component {
   componentDidMount() {
     const { location } = this.props;
     const params = {};
-    const searchText = location.search.slice(1);
+    const searchText = decodeURIComponent(location.search.slice(1));
     searchText
       .split("&")
       .map(text => text.split("="))

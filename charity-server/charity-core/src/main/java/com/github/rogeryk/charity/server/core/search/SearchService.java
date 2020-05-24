@@ -1,5 +1,6 @@
 package com.github.rogeryk.charity.server.core.search;
 
+import com.github.rogeryk.charity.server.core.search.dto.UserDto;
 import com.github.rogeryk.charity.server.core.search.index.NewsDocument;
 import com.github.rogeryk.charity.server.core.search.index.ProjectDocument;
 import com.github.rogeryk.charity.server.core.search.index.UserDocument;
@@ -19,9 +20,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 @Service
 public class SearchService {
@@ -45,13 +47,27 @@ public class SearchService {
         return PageData.of(projectDocumentRepository.searchByKeyword(text, page, size));
     }
 
-    public PageData<UserDocument> searchUser(String text, int page, int size) {
-        return PageData.of(userDocumentRepository.searchByKeyword(text, page, size));
+    public PageData<UserDto> searchUser(String text, int page, int size) {
+        return searchUser(null, text, page, size);
+    }
+
+    public PageData<UserDto> searchUser(Long currentUserId, String text, int page, int size) {
+        Set<Long> followedUserIds = Optional.ofNullable(currentUserId)
+                .flatMap(id -> userRepository.findById(id))
+                .map(user -> user.getFollowedUsers().stream().map(User::getId).collect(Collectors.toSet()))
+                .orElseGet(TreeSet::new);
+        Page<UserDto> users = userDocumentRepository.searchByKeyword(text, page, size)
+                .map(u ->
+                new UserDto(u.getId(), u.getNickName(), u.getAvatar(), u.getPresentation(), followedUserIds.contains(u.getId()))
+        );
+        return PageData.of(users);
     }
 
     public PageData<NewsDocument> searchNews(String text, int page, int size) {
         return PageData.of(newsDocumentRepository.searchByKeyword(text, page, size));
     }
+
+
 
     public void importDocument() {
         executorService.submit(() -> {

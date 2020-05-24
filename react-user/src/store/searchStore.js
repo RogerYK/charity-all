@@ -124,6 +124,14 @@ class UserResultStore {
   setPage = (page) => {
     this.page = page
   }
+
+  @action
+  followUser = (id, follow)  => {
+    api.User.followUser({userId: id, follow})
+      .then(() => {
+        this.pullUsers(this.searchData)
+      })
+  }
 }
 
 

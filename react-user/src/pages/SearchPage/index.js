@@ -12,8 +12,25 @@ const {TabPane} = Tabs
 @observer
 export default class SearchPage extends Component {
 
+  state = {
+    resultPane: '1'
+  }
+
+  handleSwitchPane = (key) => {
+    this.setState({
+      resultPane: key
+    })
+  }
+
+  getTotal = () => {
+    const {projectResult, newsResult, userResult} = this.props.searchStore
+    const index = parseInt(this.state.resultPane) - 1
+    return [projectResult.total, newsResult.total, userResult.total][index]
+  }
+
   render() {
-    const total = this.props.searchStore.projectResult.total
+    const total = this.getTotal()
+    const {resultPane} = this.state
     return (
       <div className={styles['search-container']}>
         <SearchDiv />
@@ -23,7 +40,7 @@ export default class SearchPage extends Component {
             <span className={styles['total']}>共{total}个结果</span>
           </div>
           <div className={styles['content']}>
-            <Tabs defaultActiveKey="1">
+            <Tabs activeKey={resultPane} onChange={this.handleSwitchPane}>
               <TabPane tab="项目" key="1">
                 <ProjectResult />
               </TabPane>

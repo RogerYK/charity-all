@@ -32,6 +32,7 @@ import org.springframework.util.StringUtils;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -81,6 +82,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        log.info("[user] loadUserByUsername:{}", s);
         User user = userRepository.findByPhoneNumber(s);
         if (user == null) throw new UsernameNotFoundException(s);
         return user;
@@ -93,19 +95,21 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public UserInfo getUserInfo(Long id) {
+    public UserInfo getUserInfo(Long id, Long currentUserId) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ServiceException(ErrorCodes.USER_NOT_EXIST, "用户不存在"));
-        int donatedCount =  transactionRepository.countAllByPayer_IdEqualsAndType(user.getId(), Transaction.TransactionType.Donation);
+        boolean followed = Optional.ofNullable(currentUserId).flatMap(currentId -> userRepository.findById(currentId))
+                .map(u -> u.getFollowedUsers().stream().anyMatch(_u -> _u.getId().equals(id)))
+                .orElse(false);
+        int donatedCount =  transactionRepository
+                .countAllByPayer_IdEqualsAndType(user.getId(), Transaction.TransactionType.Donation);
         int releasedProjectCount = projectRepository.countProjectByAuthor(user);
-        return UserInfo.from(user, donatedCount, releasedProjectCount);
+        int followByCount = userRepository.countUserByFollowedUsersContaining(user);
+        return UserInfo.from(user, donatedCount, releasedProjectCount, followByCount, followed);
     }
 
-    public UserInfo getUserInfo(String phoneNumber) {
-        User user = userRepository.findByPhoneNumber(phoneNumber);
-        int donatedCount =  transactionRepository.countAllByPayer_IdEqualsAndType(user.getId(), Transaction.TransactionType.Donation);
-        int releasedProjectCount = projectRepository.countProjectByAuthor(user);
-        return UserInfo.from(user, donatedCount, releasedProjectCount);
+    public UserInfo getUserInfo(Long id) {
+        return getUserInfo(id, null);
     }
 
     public void saveUser(User user) {

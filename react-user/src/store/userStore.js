@@ -18,7 +18,7 @@ class UserStore {
   }
   
   @action
-  pullUser(token) {
+  pullUser() {
     if (!commonStore.accessToken) {
       return
     }

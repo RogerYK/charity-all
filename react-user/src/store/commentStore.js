@@ -5,7 +5,7 @@ import { message } from "antd";
 export class CommentStore {
   @observable projectId;
 
-  @observable page = 0;
+  @observable page = 1;
 
   size = 10;
 
@@ -62,8 +62,8 @@ export class CommentStore {
   };
 
   @action
-  favorComment = commentId => {
-    api.Comment.favor(commentId).then(
+  favorComment = (commentId, favor) => {
+    api.Comment.favor(commentId, favor).then(
       action(res => {
         this.pullComments();
       })

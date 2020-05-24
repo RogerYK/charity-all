@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 
 import styles from './style.module.scss'
-import {Button} from 'antd'
 import api from '../../api';
+import { inject } from 'mobx-react';
 
 
+@inject('commonStore')
 export default class UserDetail extends Component {
 
   state={
@@ -19,8 +20,26 @@ export default class UserDetail extends Component {
       })
   }
 
+  handleFollow = (follow) => {
+    const {commonStore, history} = this.props
+    if (!commonStore.logined) {
+      history.push('/login')
+      return
+    }
+    const {id} = this.state.user;
+    api.User.followUser({
+      userId: id,
+      follow,
+    }).then(res => {
+      return api.User.detail(id)
+    }).then(res => {
+      this.setState({user:res.data})
+    })
+  }
+
   render() {
-    const {user} = this.state
+    const {handleFollow} = this;
+    const {user} = this.state;
     return (
       <div className="container-wrap">
         <div className={styles['container']}>
@@ -31,13 +50,23 @@ export default class UserDetail extends Component {
                 <div className={styles['info']}>
                   <div className={styles['name']}>{user.nickname}</div>
                   <div className={styles['follow']}>
-                    <div>0 粉丝</div>
                     <div>{user.favorUserCount} 关注</div>
+                  </div>
+                  <div>
+                    <a
+                      className={styles.bumo_address}
+                      rel="noopener noreferrer"  
+                      target="_blank" 
+                      href={`https://explorer.bumotest.io/account/${user.bumoAddress}`}
+                    >区块链地址>></a>
                   </div>
                 </div>
               </div>
               <div className={styles['right']}>
-                <div className={styles['btn']}>关注</div>
+                {user.followed? 
+                  <div onClick={() => handleFollow(false)}  className={styles['btn']}>已关注</div>: 
+                  <div onClick={() => handleFollow(true)} className={styles['btn']}>关注</div>
+                }
               </div>
             </div>
             <div className={styles['title']}>个人简介</div>
@@ -53,7 +82,6 @@ export default class UserDetail extends Component {
                 <div>发布的动态</div>
               </div>
             </div>
-
           </div>
         </div>
       </div>

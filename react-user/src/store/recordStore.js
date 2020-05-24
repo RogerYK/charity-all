@@ -6,7 +6,7 @@ class RecordStore {
 
   @observable records = []
 
-  @observable page = 0
+  @observable page = 1
 
   @observable total = 0
 

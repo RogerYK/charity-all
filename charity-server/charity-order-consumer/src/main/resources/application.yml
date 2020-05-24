@@ -46,15 +46,21 @@ spring:
     timeout: 50
 
 
-rocketmq:
-  name-server: 127.0.0.1:9876
-
 
 #  cache:
 #    redis:
 #      time-to-live: 60000
 #    cache-names: server
 #    type: redis
+
+
+
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: my-group
+    send-message-timeout: 5000
+
 
 storage:
   active: local

@@ -24,6 +24,10 @@ public class AdminUserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         log.info("[admin] loadUserByUsername:{}", s);
-        return adminUserRepository.findByUsername(s);
+        AdminUser adminUser = adminUserRepository.findByUsername(s);
+        if (adminUser == null) {
+            throw new UsernameNotFoundException(s);
+        }
+        return adminUser;
     }
 }

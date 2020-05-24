@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.github.rogeryk.charity.server</OriginalElement>
+  <nodes>
+    <node x="3372.795114669087" y="554.0">com.github.rogeryk.charity.server.core.bumo.BumoConfig</node>
+    <node x="21.5" y="554.0">com.github.rogeryk.charity.server.db.domain.Identification.IdentificationType</node>
+    <node x="2123.5706043956043" y="0.0">com.github.rogeryk.charity.server.db.domain.Category</node>
+    <node x="1980.7774443120175" y="952.0">com.github.rogeryk.charity.server.web.controller.ProjectController</node>
+    <node x="1782.9071428571428" y="720.0">com.github.rogeryk.charity.server.core.search.repository.UserDocumentRepository</node>
+    <node x="2823.482614669087" y="282.0">com.github.rogeryk.charity.server.db.domain.CountAnalysis.CountType</node>
+    <node x="2231.6252269355114" y="720.0">com.github.rogeryk.charity.server.db.repository.ProjectRepository</node>
+    <node x="1861.9491897606622" y="136.0">com.github.rogeryk.charity.server.db.domain.Transaction.TransactionType</node>
+    <node x="1338.5380952380951" y="136.0">com.github.rogeryk.charity.server.db.domain.Project</node>
+    <node x="3406.281913919414" y="0.0">com.github.rogeryk.charity.server.db.domain.ProjectSchedule</node>
+    <node x="287.5" y="554.0">com.github.rogeryk.charity.server.db.domain.Identification.IdentificationState</node>
+    <node x="2930.6252269355114" y="720.0">com.github.rogeryk.charity.server.db.domain.Project.ProjectStatus</node>
+    <node x="1239.0380952380951" y="0.0">com.github.rogeryk.charity.server.db.domain.Project.GalleryConverter</node>
+    <node x="760.8991897606616" y="836.0">com.github.rogeryk.charity.server.web.service.RecommendProjectService</node>
+    <node x="2801.482614669087" y="408.0">com.github.rogeryk.charity.server.db.domain.CountAnalysis</node>
+    <node x="2801.482614669087" y="136.0">com.github.rogeryk.charity.server.db.repository.CategoryRepository</node>
+    <node x="1497.1571428571428" y="720.0">com.github.rogeryk.charity.server.db.domain.Comment</node>
+    <node x="3161.795114669087" y="554.0">com.github.rogeryk.charity.server.core.bumo.BumoException</node>
+    <node x="1558.1571428571428" y="554.0">com.github.rogeryk.charity.server.db.domain.News</node>
+    <node x="1657.1991897606622" y="408.0">com.github.rogeryk.charity.server.db.domain.User</node>
+    <node x="2708.6252269355114" y="720.0">com.github.rogeryk.charity.server.db.repository.UserRepository</node>
+    <node x="1187.7260269003154" y="720.0">com.github.rogeryk.charity.server.core.search.index.NewsDocument</node>
+    <node x="2640.2372710622712" y="554.0">com.github.rogeryk.charity.server.db.domain.vo</node>
+    <node x="2578.482614669087" y="282.0">com.github.rogeryk.charity.server.db.domain.User.IdentifyStatus</node>
+    <node x="1837.9071428571428" y="554.0">com.github.rogeryk.charity.server.core.search.index.UserDocument</node>
+    <node x="3253.8574371567256" y="720.0">com.github.rogeryk.charity.server.core.bumo.BumoService</node>
+    <node x="1665.9071428571428" y="836.0">com.github.rogeryk.charity.server.web.service.vo</node>
+    <node x="941.5593602336487" y="554.0">com.github.rogeryk.charity.server.db.domain.RecommendProject</node>
+    <node x="1410.9071428571428" y="836.0">com.github.rogeryk.charity.server.db.repository.CommentRepository</node>
+    <node x="2938.162059696633" y="836.0">com.github.rogeryk.charity.server.web.service.ProjectService</node>
+    <node x="1198.2260269003154" y="554.0">com.github.rogeryk.charity.server.core.search.index.Author</node>
+    <node x="564.5" y="554.0">com.github.rogeryk.charity.server.db.domain.Identification.Sex</node>
+    <node x="0.0" y="1033.0">com.github.rogeryk.charity.server.App</node>
+    <node x="740.5738095238094" y="720.0">com.github.rogeryk.charity.server.db.repository.RecommendProjectRepository</node>
+    <node x="3379.795114669087" y="136.0">com.github.rogeryk.charity.server.db.repository.ProjectScheduleRepository</node>
+    <node x="1401.5593602336487" y="282.0">com.github.rogeryk.charity.server.db.domain.User.UserStatus</node>
+    <node x="1579.5593602336487" y="282.0">com.github.rogeryk.charity.server.db.domain.Transaction</node>
+    <node x="246.81270072227403" y="836.0">com.github.rogeryk.charity.server.web.controller.form</node>
+    <node x="2486.6252269355114" y="720.0">com.github.rogeryk.charity.server.db.repository.NewsRepository</node>
+    <node x="1606.9491897606622" y="136.0">com.github.rogeryk.charity.server.db.domain.Transaction.TransactionStatus</node>
+    <node x="315.0" y="720.0">com.github.rogeryk.charity.server.db.domain.Identification</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.github.rogeryk.charity.server.db.domain.User" target="com.github.rogeryk.charity.server.db.domain.Project">
+      <point x="-5.75" y="-18.0" />
+      <point x="1697.4491897606622" y="348.0" />
+      <point x="1759.0593602336487" y="348.0" />
+      <point x="1759.0593602336487" y="242.0" />
+      <point x="1417.7047619047617" y="242.0" />
+      <point x="16.666666666666515" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.vo" target="com.github.rogeryk.charity.server.db.domain.Project">
+      <point x="-20.28571428571422" y="-18.0" />
+      <point x="2690.951556776557" y="464.0" />
+      <point x="2509.295114669087" y="464.0" />
+      <point x="2509.295114669087" y="192.0" />
+      <point x="1459.3714285714286" y="192.0" />
+      <point x="58.333333333333485" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.vo" target="com.github.rogeryk.charity.server.db.domain.Category">
+      <point x="20.28571428571422" y="-18.0" />
+      <point x="2731.5229853479855" y="514.0" />
+      <point x="2790.982614669087" y="514.0" />
+      <point x="2790.982614669087" y="66.0" />
+      <point x="2234.0706043956043" y="66.0" />
+      <point x="42.5" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.vo" target="com.github.rogeryk.charity.server.db.domain.Comment">
+      <point x="-35.5" y="-18.0" />
+      <point x="1701.4071428571428" y="816.0" />
+      <point x="1590.9071428571428" y="816.0" />
+      <point x="31.25" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.News" target="com.github.rogeryk.charity.server.db.domain.User">
+      <point x="0.0" y="-18.0" />
+      <point x="1604.1571428571428" y="534.0" />
+      <point x="1696.1222666837393" y="534.0" />
+      <point x="-7.076923076922867" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.repository.ProjectScheduleRepository" target="com.github.rogeryk.charity.server.db.domain.ProjectSchedule">
+      <point x="0.0" y="-18.0" />
+      <point x="3541.295114669087" y="116.0" />
+      <point x="3512.781913919414" y="116.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.ProjectService" target="com.github.rogeryk.charity.server.db.domain.ProjectSchedule">
+      <point x="91.81818181818198" y="-18.0" />
+      <point x="3130.980241514815" y="816.0" />
+      <point x="3713.295114669087" y="816.0" />
+      <point x="3713.295114669087" y="106.0" />
+      <point x="3543.2104853479855" y="106.0" />
+      <point x="30.42857142857156" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Comment" target="com.github.rogeryk.charity.server.db.domain.News">
+      <point x="35.71428571428578" y="-18.0" />
+      <point x="1595.3714285714286" y="700.0" />
+      <point x="1592.6571428571428" y="700.0" />
+      <point x="-11.5" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.ProjectService" target="com.github.rogeryk.charity.server.db.domain.Project.ProjectStatus">
+      <point x="0.0" y="-18.0" />
+      <point x="3039.162059696633" y="816.0" />
+      <point x="3026.1252269355114" y="816.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Identification" target="com.github.rogeryk.charity.server.db.domain.Identification.Sex">
+      <point x="67.33333333333337" y="-18.0" />
+      <point x="483.3333333333335" y="700.0" />
+      <point x="584.75" y="700.0" />
+      <point x="-20.25" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.User" target="com.github.rogeryk.charity.server.db.domain.User.IdentifyStatus">
+      <point x="40.25" y="-18.0" />
+      <point x="1743.4491897606622" y="388.0" />
+      <point x="2654.232614669087" y="388.0" />
+      <point x="-25.25" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.repository.ProjectRepository" target="com.github.rogeryk.charity.server.db.domain.User">
+      <point x="-94.0" y="-18.0" />
+      <point x="2255.1252269355114" y="700.0" />
+      <point x="2187.571935870036" y="700.0" />
+      <point x="2187.571935870036" y="504.0" />
+      <point x="1724.4299589914312" y="504.0" />
+      <point x="21.230769230769056" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.vo" target="com.github.rogeryk.charity.server.db.domain.User.IdentifyStatus">
+      <point x="0.0" y="-18.0" />
+      <point x="2711.2372710622712" y="534.0" />
+      <point x="2704.732614669087" y="534.0" />
+      <point x="25.25" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Identification" target="com.github.rogeryk.charity.server.db.domain.Identification.IdentificationState">
+      <point x="0.0" y="-18.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.repository.UserRepository" target="com.github.rogeryk.charity.server.db.domain.User">
+      <point x="-67.33333333333348" y="-18.0" />
+      <point x="2742.291893602178" y="650.0" />
+      <point x="2194.64885894696" y="650.0" />
+      <point x="2194.64885894696" y="494.0" />
+      <point x="1731.5068820683546" y="494.0" />
+      <point x="28.307692307692378" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.core.search.index.NewsDocument" target="com.github.rogeryk.charity.server.core.search.index.Author">
+      <point x="-67.5" y="-18.0" />
+      <point x="1210.2260269003154" y="700.0" />
+      <point x="1217.2260269003154" y="700.0" />
+      <point x="-38.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.ProjectService" target="com.github.rogeryk.charity.server.db.domain.vo">
+      <point x="18.363636363636488" y="-18.0" />
+      <point x="3057.525696060269" y="776.0" />
+      <point x="3132.1252269355114" y="776.0" />
+      <point x="3132.1252269355114" y="620.0" />
+      <point x="2755.6122710622712" y="620.0" />
+      <point x="44.375" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.RecommendProjectService" target="com.github.rogeryk.charity.server.db.repository.RecommendProjectRepository">
+      <point x="4.547473508864641E-13" y="-18.0" />
+      <point x="911.399189760662" y="816.0" />
+      <point x="907.5738095238094" y="816.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.form" target="com.github.rogeryk.charity.server.db.domain.Category">
+      <point x="-46.85714285714289" y="-18.0" />
+      <point x="281.95555786513114" y="806.0" />
+      <point x="11.0" y="806.0" />
+      <point x="11.0" y="66.0" />
+      <point x="2149.0706043956043" y="66.0" />
+      <point x="-42.5" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.ProjectController" target="com.github.rogeryk.charity.server.web.service.ProjectService">
+      <point x="11.75" y="-18.0" />
+      <point x="2110.0274443120175" y="892.0" />
+      <point x="3039.162059696633" y="892.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.User" target="com.github.rogeryk.charity.server.db.domain.User.UserStatus">
+      <point x="-40.25" y="-18.0" />
+      <point x="1662.9491897606622" y="388.0" />
+      <point x="1480.5593602336487" y="388.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.repository.UserRepository" target="com.github.rogeryk.charity.server.db.domain.vo">
+      <point x="0.0" y="-18.0" />
+      <point x="2809.6252269355114" y="640.0" />
+      <point x="2720.1122710622712" y="640.0" />
+      <point x="8.875" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.RecommendProjectService" target="com.github.rogeryk.charity.server.db.domain.Project">
+      <point x="-120.39999999999964" y="-18.0" />
+      <point x="790.9991897606619" y="816.0" />
+      <point x="719.0738095238094" y="816.0" />
+      <point x="719.0738095238094" y="222.0" />
+      <point x="1367.7047619047617" y="222.0" />
+      <point x="-33.333333333333485" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Transaction" target="com.github.rogeryk.charity.server.db.domain.Project">
+      <point x="-56.333333333333485" y="-18.0" />
+      <point x="1607.7260269003152" y="262.0" />
+      <point x="1409.3714285714286" y="262.0" />
+      <point x="8.333333333333485" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Comment" target="com.github.rogeryk.charity.server.db.domain.Project">
+      <point x="-53.57142857142867" y="-18.0" />
+      <point x="1506.085714285714" y="690.0" />
+      <point x="1322.7260269003154" y="690.0" />
+      <point x="1322.7260269003154" y="252.0" />
+      <point x="1392.7047619047617" y="252.0" />
+      <point x="-8.333333333333485" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.repository.ProjectRepository" target="com.github.rogeryk.charity.server.db.domain.Category">
+      <point x="0.0" y="-18.0" />
+      <point x="2349.1252269355114" y="700.0" />
+      <point x="2333.64885894696" y="700.0" />
+      <point x="2333.64885894696" y="76.0" />
+      <point x="2217.0706043956043" y="76.0" />
+      <point x="25.5" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.form" target="com.github.rogeryk.charity.server.db.domain.Identification.IdentificationType">
+      <point x="-23.42857142857133" y="-18.0" />
+      <point x="305.3841292937027" y="796.0" />
+      <point x="83.0" y="796.0" />
+      <point x="-61.5" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.ProjectService" target="com.github.rogeryk.charity.server.db.domain.User">
+      <point x="-91.81818181818198" y="-18.0" />
+      <point x="2947.343877878451" y="816.0" />
+      <point x="2083.407142857143" y="816.0" />
+      <point x="2083.407142857143" y="514.0" />
+      <point x="1717.3530359145084" y="514.0" />
+      <point x="14.153846153846189" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.ProjectSchedule" target="com.github.rogeryk.charity.server.db.domain.Project">
+      <point x="-60.85714285714266" y="18.0" />
+      <point x="3451.9247710622712" y="106.0" />
+      <point x="1451.0380952380951" y="106.0" />
+      <point x="50.0" y="-18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Transaction" target="com.github.rogeryk.charity.server.db.domain.Transaction.TransactionType">
+      <point x="56.333333333333485" y="-18.0" />
+      <point x="1720.3926935669822" y="262.0" />
+      <point x="1968.4491897606622" y="262.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.repository.CategoryRepository" target="com.github.rogeryk.charity.server.db.domain.Category">
+      <point x="0.0" y="-18.0" />
+      <point x="2924.482614669087" y="56.0" />
+      <point x="2251.0706043956043" y="56.0" />
+      <point x="59.5" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.repository.NewsRepository" target="com.github.rogeryk.charity.server.db.domain.vo">
+      <point x="0.0" y="-18.0" />
+      <point x="2587.6252269355114" y="690.0" />
+      <point x="2684.6122710622712" y="690.0" />
+      <point x="-26.625" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.ProjectController" target="com.github.rogeryk.charity.server.db.domain.User.IdentifyStatus">
+      <point x="58.75" y="-18.0" />
+      <point x="2157.0274443120175" y="912.0" />
+      <point x="3735.295114669087" y="912.0" />
+      <point x="3735.295114669087" y="388.0" />
+      <point x="2755.232614669087" y="388.0" />
+      <point x="75.75" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.core.search.index.UserDocument" target="com.github.rogeryk.charity.server.db.domain.User">
+      <point x="0.0" y="-18.0" />
+      <point x="1927.9071428571428" y="524.0" />
+      <point x="1710.276112837585" y="524.0" />
+      <point x="7.076923076922867" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.ProjectService" target="com.github.rogeryk.charity.server.db.repository.ProjectRepository">
+      <point x="-36.72727272727252" y="-18.0" />
+      <point x="3002.43478696936" y="786.0" />
+      <point x="2349.1252269355114" y="786.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.ProjectService" target="com.github.rogeryk.charity.server.db.domain.Project">
+      <point x="-73.4545454545455" y="-18.0" />
+      <point x="2965.707514242087" y="806.0" />
+      <point x="2094.407142857143" y="806.0" />
+      <point x="2094.407142857143" y="212.0" />
+      <point x="1442.7047619047617" y="212.0" />
+      <point x="41.666666666666515" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.core.search.index.NewsDocument" target="com.github.rogeryk.charity.server.db.domain.News">
+      <point x="67.5" y="-18.0" />
+      <point x="1345.2260269003154" y="700.0" />
+      <point x="1569.6571428571428" y="700.0" />
+      <point x="-34.5" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.vo" target="com.github.rogeryk.charity.server.db.domain.CountAnalysis">
+      <point x="40.57142857142844" y="-18.0" />
+      <point x="2751.8086996336997" y="524.0" />
+      <point x="2896.982614669087" y="524.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.RecommendProject" target="com.github.rogeryk.charity.server.db.domain.Project">
+      <point x="-4.547473508864641E-13" y="-18.0" />
+      <point x="1053.5593602336482" y="242.0" />
+      <point x="1384.3714285714286" y="242.0" />
+      <point x="-16.666666666666515" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.ProjectService" target="com.github.rogeryk.charity.server.db.repository.ProjectScheduleRepository">
+      <point x="73.4545454545455" y="-18.0" />
+      <point x="3112.616605151178" y="806.0" />
+      <point x="3541.295114669087" y="806.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Transaction" target="com.github.rogeryk.charity.server.db.domain.Transaction.TransactionStatus">
+      <point x="0.0" y="-18.0" />
+      <point x="1664.0593602336487" y="252.0" />
+      <point x="1724.4491897606622" y="252.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.vo" target="com.github.rogeryk.charity.server.db.domain.ProjectSchedule">
+      <point x="60.85714285714266" y="-18.0" />
+      <point x="2772.094413919414" y="534.0" />
+      <point x="3057.982614669087" y="534.0" />
+      <point x="3057.982614669087" y="116.0" />
+      <point x="3482.3533424908424" y="116.0" />
+      <point x="-30.42857142857156" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.RecommendProjectService" target="com.github.rogeryk.charity.server.db.domain.RecommendProject">
+      <point x="120.40000000000009" y="-18.0" />
+      <point x="1031.7991897606616" y="816.0" />
+      <point x="1131.5238095238096" y="816.0" />
+      <point x="1131.5238095238096" y="700.0" />
+      <point x="1128.2260269003152" y="700.0" />
+      <point x="74.66666666666652" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Comment" target="com.github.rogeryk.charity.server.db.domain.User">
+      <point x="0.0" y="-18.0" />
+      <point x="1559.6571428571428" y="660.0" />
+      <point x="1536.6571428571428" y="660.0" />
+      <point x="1536.6571428571428" y="514.0" />
+      <point x="1681.9684205298931" y="514.0" />
+      <point x="-21.230769230769056" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.repository.CommentRepository" target="com.github.rogeryk.charity.server.db.domain.Comment">
+      <point x="0.0" y="-18.0" />
+      <point x="-31.25" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.ProjectService" target="com.github.rogeryk.charity.server.db.domain.Category">
+      <point x="-55.09090909090901" y="-18.0" />
+      <point x="2984.071150605724" y="796.0" />
+      <point x="2221.1252269355114" y="796.0" />
+      <point x="2221.1252269355114" y="86.0" />
+      <point x="2200.0706043956043" y="86.0" />
+      <point x="8.5" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Project" target="com.github.rogeryk.charity.server.db.domain.Project.GalleryConverter">
+      <point x="-50.0" y="-18.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.User" target="com.github.rogeryk.charity.server.db.domain.Transaction">
+      <point x="-28.75" y="-18.0" />
+      <point x="1674.4491897606622" y="378.0" />
+      <point x="1621.8093602336487" y="378.0" />
+      <point x="-42.25" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.ProjectController" target="com.github.rogeryk.charity.server.web.service.RecommendProjectService">
+      <point x="-35.25" y="-18.0" />
+      <point x="2063.0274443120175" y="902.0" />
+      <point x="911.3991897606616" y="902.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.form" target="com.github.rogeryk.charity.server.db.domain.User">
+      <point x="70.28571428571422" y="-18.0" />
+      <point x="399.09841500798825" y="816.0" />
+      <point x="667.0" y="816.0" />
+      <point x="667.0" y="484.0" />
+      <point x="1660.7376512991236" y="484.0" />
+      <point x="-42.46153846153857" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.core.bumo.BumoService" target="com.github.rogeryk.charity.server.core.bumo.BumoException">
+      <point x="-42.25" y="-18.0" />
+      <point x="3296.1074371567256" y="700.0" />
+      <point x="3257.295114669087" y="700.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.repository.RecommendProjectRepository" target="com.github.rogeryk.charity.server.db.domain.RecommendProject">
+      <point x="0.0" y="-18.0" />
+      <point x="907.5738095238094" y="700.0" />
+      <point x="978.8926935669822" y="700.0" />
+      <point x="-74.66666666666652" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.ProjectController" target="com.github.rogeryk.charity.server.db.domain.User">
+      <point x="-11.75" y="-18.0" />
+      <point x="2086.5274443120175" y="892.0" />
+      <point x="1177.2260269003154" y="892.0" />
+      <point x="1177.2260269003154" y="494.0" />
+      <point x="1667.814574376047" y="494.0" />
+      <point x="-35.384615384615245" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.ProjectService" target="com.github.rogeryk.charity.server.core.bumo.BumoService">
+      <point x="55.09090909090901" y="-18.0" />
+      <point x="3094.252968787542" y="796.0" />
+      <point x="3338.3574371567256" y="796.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.ProjectController" target="com.github.rogeryk.charity.server.db.domain.ProjectSchedule">
+      <point x="82.25" y="-18.0" />
+      <point x="2180.5274443120175" y="922.0" />
+      <point x="3746.295114669087" y="922.0" />
+      <point x="3746.295114669087" y="96.0" />
+      <point x="3573.6390567765566" y="96.0" />
+      <point x="60.85714285714266" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Identification" target="com.github.rogeryk.charity.server.db.domain.Identification.IdentificationType">
+      <point x="-67.33333333333331" y="-18.0" />
+      <point x="348.66666666666674" y="700.0" />
+      <point x="206.0" y="700.0" />
+      <point x="61.5" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.vo" target="com.github.rogeryk.charity.server.db.domain.User">
+      <point x="35.5" y="-18.0" />
+      <point x="1772.4071428571428" y="534.0" />
+      <point x="1703.1991897606622" y="534.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.News" target="com.github.rogeryk.charity.server.db.domain.Comment">
+      <point x="11.5" y="18.0" />
+      <point x="1615.6571428571428" y="700.0" />
+      <point x="1613.2285714285713" y="700.0" />
+      <point x="53.57142857142867" y="-18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Project" target="com.github.rogeryk.charity.server.db.domain.Category">
+      <point x="-25.0" y="-18.0" />
+      <point x="1376.0380952380951" y="76.0" />
+      <point x="2166.0706043956043" y="76.0" />
+      <point x="-25.5" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.form" target="com.github.rogeryk.charity.server.db.domain.Project">
+      <point x="46.85714285714289" y="-18.0" />
+      <point x="375.6698435794169" y="806.0" />
+      <point x="656.0" y="806.0" />
+      <point x="656.0" y="192.0" />
+      <point x="1342.7047619047617" y="192.0" />
+      <point x="-58.333333333333485" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.form" target="com.github.rogeryk.charity.server.db.domain.Identification">
+      <point x="0.0" y="-18.0" />
+      <point x="328.81270072227403" y="786.0" />
+      <point x="416.0" y="786.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.repository.NewsRepository" target="com.github.rogeryk.charity.server.db.domain.News">
+      <point x="-67.33333333333326" y="-18.0" />
+      <point x="2520.2918936021783" y="660.0" />
+      <point x="1638.6571428571428" y="660.0" />
+      <point x="34.5" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.repository.ProjectRepository" target="com.github.rogeryk.charity.server.db.domain.Project">
+      <point x="-47.0" y="-18.0" />
+      <point x="2302.1252269355114" y="700.0" />
+      <point x="2299.0706043956043" y="700.0" />
+      <point x="2299.0706043956043" y="202.0" />
+      <point x="1451.0380952380951" y="202.0" />
+      <point x="50.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Transaction" target="com.github.rogeryk.charity.server.db.domain.User">
+      <point x="42.25" y="18.0" />
+      <point x="1706.3093602336487" y="338.0" />
+      <point x="1685.9491897606622" y="338.0" />
+      <point x="-17.25" y="-18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.ProjectService" target="com.github.rogeryk.charity.server.db.repository.CategoryRepository">
+      <point x="36.72727272727252" y="-18.0" />
+      <point x="3075.889332423905" y="786.0" />
+      <point x="3151.295114669087" y="786.0" />
+      <point x="3151.295114669087" y="262.0" />
+      <point x="2924.482614669087" y="262.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Category" target="com.github.rogeryk.charity.server.db.domain.Project">
+      <point x="-8.5" y="18.0" />
+      <point x="2183.0706043956043" y="86.0" />
+      <point x="1401.0380952380951" y="86.0" />
+      <point x="0.0" y="-18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.repository.ProjectRepository" target="com.github.rogeryk.charity.server.db.domain.vo">
+      <point x="47.0" y="-18.0" />
+      <point x="2396.1252269355114" y="670.0" />
+      <point x="2649.1122710622712" y="670.0" />
+      <point x="-62.125" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.service.ProjectService" target="com.github.rogeryk.charity.server.db.repository.UserRepository">
+      <point x="-18.363636363636488" y="-18.0" />
+      <point x="3020.798423332996" y="776.0" />
+      <point x="2809.6252269355114" y="776.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Project" target="com.github.rogeryk.charity.server.db.domain.Comment">
+      <point x="0.0" y="18.0" />
+      <point x="1401.0380952380951" y="262.0" />
+      <point x="1333.7260269003154" y="262.0" />
+      <point x="1333.7260269003154" y="680.0" />
+      <point x="1523.942857142857" y="680.0" />
+      <point x="-35.71428571428578" y="-18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.core.bumo.BumoService" target="com.github.rogeryk.charity.server.core.bumo.BumoConfig">
+      <point x="42.25" y="-18.0" />
+      <point x="3380.6074371567256" y="700.0" />
+      <point x="3451.795114669087" y="700.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.ProjectController" target="com.github.rogeryk.charity.server.web.controller.form">
+      <point x="-105.75" y="-18.0" />
+      <point x="1992.5274443120175" y="932.0" />
+      <point x="328.81270072227403" y="932.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Project" target="com.github.rogeryk.charity.server.db.domain.User">
+      <point x="33.333333333333485" y="18.0" />
+      <point x="1434.3714285714286" y="222.0" />
+      <point x="1781.0593602336487" y="222.0" />
+      <point x="1781.0593602336487" y="368.0" />
+      <point x="1720.4491897606622" y="368.0" />
+      <point x="17.25" y="-18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.form" target="com.github.rogeryk.charity.server.db.domain.Identification.Sex">
+      <point x="23.42857142857133" y="-18.0" />
+      <point x="352.24127215084536" y="796.0" />
+      <point x="625.25" y="796.0" />
+      <point x="20.25" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.CountAnalysis" target="com.github.rogeryk.charity.server.db.domain.CountAnalysis.CountType">
+      <point x="0.0" y="-18.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.vo" target="com.github.rogeryk.charity.server.db.domain.User">
+      <point x="-40.57142857142844" y="-18.0" />
+      <point x="2670.665842490843" y="474.0" />
+      <point x="1745.6607282222008" y="474.0" />
+      <point x="42.46153846153857" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.ProjectController" target="com.github.rogeryk.charity.server.db.domain.Project">
+      <point x="-82.25" y="-18.0" />
+      <point x="2016.0274443120175" y="922.0" />
+      <point x="683.6071428571427" y="922.0" />
+      <point x="683.6071428571427" y="202.0" />
+      <point x="1351.0380952380951" y="202.0" />
+      <point x="-50.0" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.web.controller.ProjectController" target="com.github.rogeryk.charity.server.db.domain.vo">
+      <point x="35.25" y="-18.0" />
+      <point x="2133.5274443120175" y="902.0" />
+      <point x="3724.295114669087" y="902.0" />
+      <point x="3724.295114669087" y="610.0" />
+      <point x="2773.3622710622712" y="610.0" />
+      <point x="62.125" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.User" target="com.github.rogeryk.charity.server.db.domain.Comment">
+      <point x="-28.307692307692378" y="18.0" />
+      <point x="1674.8914974529698" y="504.0" />
+      <point x="1525.6571428571428" y="504.0" />
+      <point x="1525.6571428571428" y="670.0" />
+      <point x="1541.7999999999997" y="670.0" />
+      <point x="-17.85714285714289" y="-18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.db.domain.Project" target="com.github.rogeryk.charity.server.db.domain.ProjectSchedule">
+      <point x="25.0" y="-18.0" />
+      <point x="1426.0380952380951" y="96.0" />
+      <point x="3421.4961996336997" y="96.0" />
+      <point x="-91.28571428571422" y="18.0" />
+    </edge>
+    <edge source="com.github.rogeryk.charity.server.core.search.repository.UserDocumentRepository" target="com.github.rogeryk.charity.server.core.search.index.UserDocument">
+      <point x="0.0" y="-18.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="2748.5" y="787.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+
