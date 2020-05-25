@@ -19,7 +19,7 @@ class RechargeModal extends Component {
     return (
       <Modal
         visible={visible}
-        onCancel={oncancel}
+        onCancel={onCancel}
         title="充值"
         footer={null}
       >

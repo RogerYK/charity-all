@@ -206,7 +206,7 @@ export default {
   }, // chainWebpack: webpackPlugin,
   proxy: {
     '/api/admin/': {
-      target: 'http://localhost:8080/',
+      target: 'http://localhost:8081/',
       changeOrigin: true,
       // pathRewrite: { '^/server': '' },
     },

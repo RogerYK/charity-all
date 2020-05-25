@@ -59,10 +59,8 @@ export default class AddProjectForm extends Component {
     this.props.releaseStore.saveProject(data)
       .then(res => {
         message.success('保存成功')
-        this.props.onCancel()
       }).catch(res => {
         message.error('保存失败')
-        this.props.onCancel()
       })
   }
 

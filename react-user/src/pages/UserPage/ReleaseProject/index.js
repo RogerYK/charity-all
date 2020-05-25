@@ -61,7 +61,7 @@ export default class ReleaseProject extends Component {
         <div className="title">
           <span className={styles['title']}>我发布的项目</span>
           <span className={styles['total']}>共{total}个项目</span>
-          { currentUser.identifyStatus === 'Identified' && <div onClick={showProjectModal} className={styles['add-project']}>发布项目</div>}
+          { currentUser.identifyStatus === 'Identified' && <Link to="/addProject" className={styles['add-project']}>发布项目</Link>}
         </div>
         <div className={styles['project-list']}>
           <div className={styles['content']}>
@@ -89,7 +89,7 @@ export default class ReleaseProject extends Component {
           </div>
           <div className={styles['pagination-wrap']}>
             { total > 9 ?
-              <Pagination defaultCurrent={1} pageSize={9} total={this.state.total}
+              <Pagination defaultCurrent={1} pageSize={9} total={total}
                 onChange={(page) => setPage(page)}
               />
               :

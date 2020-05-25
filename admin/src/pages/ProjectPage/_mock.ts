@@ -22,7 +22,7 @@ const genList = (current: number, pageSize: number) => {
       endTime: '2019-12-01 01:01:01',
       bumoAddress: '',
       donorCount: Math.floor(Math.random() * 10),
-      status: Math.floor(Math.random() * 10) % 4,
+      status: Math.floor(Math.random() * 10) % 5,
       author: {
         id: 1,
         nickname: 'yuankun',

@@ -15,7 +15,7 @@
   }
 
   .project-info {
-    width: 180px;
+    width: 200px;
     height: 100%;
     padding: 20px 20px;
     position: relative;
@@ -34,12 +34,13 @@
     }
 
     > .name {
-      height: 48px;
+      height: 30px;
       line-height: 24px;
       font-size: 14px;
       color: #223318;
       font-weight: bold;
     }
+
 
     > .other {
       height: 24px;
@@ -70,5 +71,34 @@
     justify-content: center;
     align-items: center;
 
+  }
+}
+
+
+
+.transactionStatus {
+  
+  .icon {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    vertical-align: middle;
+    border-radius: 50%;
+    background-color: #d9d9d9;;
+  }
+  .UnPay {
+    background-color: #d9d9d9;;
+  }
+  .Paying {
+    background-color:#1890ff;;
+  }
+  .Success {
+    background-color: #52c41a;
+  }
+  .Failed {
+    background-color: #ff4d4f;
+  }
+  .label {
+    margin-left: 5px;
   }
 }
