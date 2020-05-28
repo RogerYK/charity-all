@@ -184,6 +184,7 @@ public class BumoService {
         blobRequest.setNonce(getAccountNonce(sourceAddress)+1);
         blobRequest.setFeeLimit(ToBaseUnit.BU2MO("0.01"));
         blobRequest.setGasPrice(1000L);
+        blobRequest.addOperation(buSendOperation);
 
         BlobAndSignatures blobAndSignatures = getBlogAndSignatures(blobRequest, new String[]{config.getFeeAccountPrivateKey()});
 

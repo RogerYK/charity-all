@@ -53,34 +53,34 @@ public class CreateProjectJob {
         }
     }
 
-//    @Scheduled(fixedRate = 5 * 60 * 1000)   //每五分钟执行一次
-//    public void checkOverDueProject() {
-//        log.info("begin check overdue project");
-//        int limit = 50;
-//        long start = -1;
-//        while (true) {
-//            List<Project> projects = projectRepository.findOverdueProjects(start, limit);
-//            for (Project project : projects) {          //TODO 区块链中的智能合约处理。
-//                try {
-//                    if (project.getRaisedMoney().compareTo(project.getTargetMoney()) >= 0) {
-//                        log.info("project raise success id={}", project.getId());
-//                        project.setStatus(Project.ProjectStatus.SUCCESS);
-//                    } else {
-//                        log.info("project failed success id={}", project.getId());
-//                        project.setStatus(Project.ProjectStatus.FAIL);
-//                        bumoService.invokeContract(project.getBumoAddress()); //筹款失败需要手动触发合约将筹款退回
-//                    }
-//                    projectRepository.save(project);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    log.error("checkout overdue error :{}", e.toString());
-//                }
-//            }
-//            if (projects.size() < limit) {
-//                break; //说明已经处理结束
-//            } else {
-//                start = projects.get(limit-1).getId();
-//            }
-//        }
-//    }
+    @Scheduled(fixedRate = 5 * 60 * 1000)   //每五分钟执行一次
+    public void checkOverDueProject() {
+        log.info("begin check overdue project");
+        int limit = 50;
+        long start = -1;
+        while (true) {
+            List<Project> projects = projectRepository.findOverdueProjects(start, limit);
+            for (Project project : projects) {          //TODO 区块链中的智能合约处理。
+                try {
+                    if (project.getRaisedMoney().compareTo(project.getTargetMoney()) >= 0) {
+                        log.info("project raise success id={}", project.getId());
+                        project.setStatus(Project.ProjectStatus.SUCCESS);
+                    } else {
+                        log.info("project failed success id={}", project.getId());
+                        project.setStatus(Project.ProjectStatus.FAIL);
+                        bumoService.invokeContract(project.getBumoAddress()); //筹款失败需要手动触发合约将筹款退回
+                    }
+                    projectRepository.save(project);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    log.error("checkout overdue error :{}", e.toString());
+                }
+            }
+            if (projects.size() < limit) {
+                break; //说明已经处理结束
+            } else {
+                start = projects.get(limit-1).getId();
+            }
+        }
+    }
 }

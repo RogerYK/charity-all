@@ -137,6 +137,7 @@ public class OrderService {
         Project project = transaction.getProject();
         if (project != null) {
             project.setRaisedMoney(project.getRaisedMoney().add(transaction.getMoney()));
+            project.setDonorCount(project.getDonorCount()+1);
             projectRepository.save(project);
         }
     }

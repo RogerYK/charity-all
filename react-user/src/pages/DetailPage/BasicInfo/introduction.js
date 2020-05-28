@@ -121,7 +121,7 @@ function getTimeCoutent(project) {
       timeConent.time += `${remain.days()}天`;
     }
   } else {
-    timeConent.time = `${endTime.format("YYYY-MM-DD")}天`;
+    timeConent.time = `${endTime.format("YYYY-MM-DD")}`;
     timeConent.label = "结束时间";
   }
   return timeConent;

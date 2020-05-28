@@ -49,10 +49,7 @@ export default class ReleaseProject extends Component {
     const {currentUser} = this.props.userStore
     const {
       selectProjectId,
-      projectModalVisible,
       scheduleModalVisible,
-      showProjectModal,
-      projectModalCancel,
       showScheduleModal,
       scheduleModalCancel
     } = this
@@ -75,6 +72,7 @@ export default class ReleaseProject extends Component {
                   <div key={p.id} className={styles['project-card-wrap']} >
                     <ProjectCard project={p} />
                     <div className={styles['project-mask']}>
+                      
                       <Button type="primary" style={{marginBottom: 20}} onClick={() => showScheduleModal(p.id)}>添加进展</Button>
                       <Link to={`/detail/${p.id}`}><Button>查看详情</Button></Link>
                     </div>
@@ -107,19 +105,6 @@ export default class ReleaseProject extends Component {
           title="添加进展"
         >
           <ScheduleForm onCancel={scheduleModalCancel} projectId={selectProjectId} />
-        </Modal>
-
-        <Modal
-          width={800}
-          name="新建项目"
-          visible={projectModalVisible}
-          footer={null}
-          onCancel={projectModalCancel}
-          title="添加项目"
-        >
-          <div className={styles['project-modal']}>
-            {/* <AddProjectForm onCancel={projectModalCancel} /> */}
-          </div>
         </Modal>
       </div>
     )

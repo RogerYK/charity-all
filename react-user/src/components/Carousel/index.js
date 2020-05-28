@@ -13,29 +13,53 @@ export default class Carousel extends Component {
     this.duration = 300
   }
 
+  componentDidMount() {
+    const {interval = 5000} = this.props
+    this.timeId = setInterval(() => {
+      this.setState({
+        current: this.state.current+1
+      })
+    }, interval)
+  }
+
+  componentWillUnmount() {
+    this.clearTimer()
+  }
+
+  clearTimer() {
+    if (this.timeId) {
+      clearInterval(this.timeId)
+      this.timeId = null
+    }
+  }
+
   toLast() {
+    this.clearTimer();
     this.setState({
       current:this.state.current-1,
     })
   }
 
   toNext() {
+    this.clearTimer()
     this.setState({
       current: this.state.current+1
     })
   }
 
   leftAdjust() {
-    setTimeout(()=> {
+    const x = setTimeout(()=> {
       this.duration = 0
       this.setState({current: this.props.children.length-1})
+      clearTimeout(x)
     }, 300)
   }
 
   rightAdjust() {
-    setTimeout(()=> {
+    const x = setTimeout(()=> {
       this.duration = 0
       this.setState({current: 0})
+      clearTimeout(x)
     }, 300)
   }
 

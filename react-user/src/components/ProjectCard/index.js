@@ -4,13 +4,24 @@ import styles from './style.module.scss'
 import Progress from '../Progress';
 
 
+
+function getStatusTitle(status, raisedMoney) {
+  if (status === 0) {
+    return '创建中'
+  } else if (status === 1) {
+    return '申请中'
+  } else {
+    return raisedMoney.toString().replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
+  } 
+}
+
+
 export default (props) => {
 
-  const {img, name, author, raisedMoney, targetMoney, donorCount} = props.project
+  const {img, name, author, raisedMoney, targetMoney, donorCount, status} = props.project
 
-  const moneyStr = raisedMoney.toString().replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
   const percent = (raisedMoney/targetMoney*100).toFixed(2);
-
+  const statusTitle = getStatusTitle(status, raisedMoney)
 
   return (
     <div className={`${styles['project-card']} ${props.bordered ? styles['bordered']: ''}`}>
@@ -22,10 +33,10 @@ export default (props) => {
           <div className={styles['name']}>{author.nickName}</div>
         </div>
         <div className={styles['status']}>
-          <div className={styles['money']}>
-            ￥{moneyStr}
+          <div className={styles['title']}>
+            ￥{statusTitle}
           </div>
-          <div className={styles['percent']}>{percent}%</div>
+          {status > 2 && <div className={styles['right']}>{percent}%</div>}
         </div>
         <Progress value={percent}/>
         <div className={styles['count']}>{donorCount} 支持者</div>
