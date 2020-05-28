@@ -44,6 +44,13 @@ export default class DetailPage extends Component {
 
   @action
   handleFollow = () => {
+    const {commonStore, history} = this.props
+    if (!commonStore.logined) {
+      setTimeout(() => {
+        history.push('/login')
+      }, 100);
+      return
+    }
     const project = this.props.detailStore.project;
     api.User.followProject({projectId: project.id, follow: true})
       .then(res => {
@@ -55,6 +62,13 @@ export default class DetailPage extends Component {
 
   @action
   handleUnFollow = () => {
+    const {commonStore, history} = this.props
+    if (!commonStore.logined) {
+      setTimeout(() => {
+        history.push('/login')
+      }, 100);
+      return
+    }
     const project = this.props.detailStore.project;
     api.User.followProject({projectId: project.id, follow: false})
       .then(res => {
