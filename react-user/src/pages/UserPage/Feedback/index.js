@@ -41,8 +41,8 @@ export default class FeedBack extends Component {
         <Form.Item {...formItemLayout}>
           <Input.TextArea
             placeholder="在此留言您需要反馈的问题，建议尽可能描述清楚步骤并附图说明，客服人员将在三个工作日答复你"
-           rows={8} 
-           value={this.state.message}
+            rows={8} 
+            value={this.state.message}
             onChange={this.handleMessageChange}>
           </Input.TextArea>
         </Form.Item>

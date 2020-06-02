@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Button, Card, Input, Checkbox } from 'antd';
+import { Button, Card, Input, Checkbox, Form } from 'antd';
 
 import './style.css'
 
@@ -9,6 +7,8 @@ const FormItem = Form.Item
 
 
 class SignForm extends Component {
+
+  formRef = React.createRef()
 
   state = {
     confirmDirty: false,
@@ -20,34 +20,29 @@ class SignForm extends Component {
   }
 
   compareToFirstPassword = (rule, value, callback) => {
-    const form = this.props.form;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('两次密码不一致');
-    } else {
-      callback();
-    }
-  }
-
-  validateToNextPassword = (rule, value, callback) => {
-    const form = this.props.form;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
-    }
-    callback();
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault()
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        this.props.onSubmit()
+    return new Promise( (resolve, reject) => {
+      const form = this.formRef.current;
+      if (value && value !== form.getFieldValue('password')) {
+        reject('两次密码不一致');
+      } else {
+        resolve()
       }
     })
   }
 
+  validateToNextPassword = (rule, value, callback) => {
+    return new Promise((resolve => {
+      const form = this.formRef.current;
+      if (value && this.state.confirmDirty) {
+        form.validateFields(['confirm'], { force: true });
+      }
+      resolve();
+    }))
+  }
+
 
   render() {
-    const { getFieldDecorator } = this.props.form
+    const {onSubmit} = this.props
     const formItemLayout = {
       labelCol: {
         span: 6,
@@ -66,48 +61,68 @@ class SignForm extends Component {
 
     return (
       <Card className='sign-form' title={<div style={{ textAlign: 'center' }}>注册</div>} headStyle={{ justifyContent: "center" }}>
-        <Form>
-          <FormItem {...formItemLayout} label='手机号码'>
-            {getFieldDecorator('phoneNumber', {
-              rules: [{
-                required: true, message: '请输入电话',
-              }]
-            })(
-              <Input />
-            )}
+        <Form ref={this.formRef} onFinish={onSubmit}>
+          <FormItem
+            {...formItemLayout}
+            name="phoneNumber"
+            label='手机号码'
+            rules={[{
+              required: true, message: '请输入电话',
+            }, {
+              pattern: /\d{11}/g, message: '格式不对',
+            }]}
+          >
+            <Input />
           </FormItem>
-          <FormItem {...formItemLayout} label='密码'>
-            {getFieldDecorator('password', {
-              rules: [{
-                required: true, message: '请输入密码',
-              }, {
-                validator: this.validateToNextPassword
-              }]
-            })(
-              <Input type='password' />
-            )}
+          <FormItem
+            {...formItemLayout}
+            name="password"
+            label='密码'
+            rules={[{
+              required: true, message: '请输入密码',
+            }, {
+              min: 6,
+              message: '密码最低6位'
+            }, {
+              max: 30,
+              message: '密码最多30位'
+            }, {
+              validator: this.validateToNextPassword
+            }]}
+          >
+            <Input.Password  type='password' />
           </FormItem>
-          <FormItem {...formItemLayout} label='确认密码'>
-            {getFieldDecorator('confirmPassword', {
-              rules: [{
-                required: true, message: '请确认密码',
-              }, {
-                validator: this.compareToFirstPassword
-              }]
-            })(
-              <Input type='password' onBlur={this.handleConfirmBlur} />
-            )}
+          <FormItem
+            {...formItemLayout}
+            label='确认密码'
+            name="confirm"
+            rules={[{
+              required: true, message: '请确认密码',
+            }, {
+              validator: this.compareToFirstPassword
+            }, {
+              min: 6,
+              message: '密码最低6位'
+            }, {
+              max: 30,
+              message: '密码最多30位'
+            }]}
+          >
+            <Input.Password type='password' onBlur={this.handleConfirmBlur} />
+          </FormItem>
+          <FormItem
+            {...tailItemLayout}
+            name="agreement"
+            rules={[{required: true,
+              message: '请同意用户协议'
+            }]}
+          >
+            <Checkbox.Group>
+              <Checkbox value="agree">我已经阅读<a href="./">用户协议</a></Checkbox>
+            </Checkbox.Group>
           </FormItem>
           <FormItem {...tailItemLayout}>
-            {getFieldDecorator('agreement', {
-              valuePropName: 'checked',
-              rules: [{required: true, message: '请同意用户协议'}]
-            })(
-              <Checkbox>我已经阅读<a href="./">用户协议</a></Checkbox>
-            )}
-          </FormItem>
-          <FormItem {...tailItemLayout}>
-            <Button onClick={this.handleSubmit} type='primary'>注册</Button>
+            <Button htmlType="submit" type='primary'>注册</Button>
           </FormItem>
         </Form>
       </Card>
@@ -115,17 +130,4 @@ class SignForm extends Component {
   }
 }
 
-export default Form.create({
-  name: 'sign_state',
-  mapPropsToFields(props) {
-    let fields =  Object.keys(props.fields).map(key => [key, Form.createFormField({...props.fields[key]})])
-    let o = {}
-    for (let [key, value] of fields)  {
-      o[key] = value
-    }
-    return o
-  },
-  onFieldsChange(props, changedFields) {
-    props.onChange(changedFields)
-  }
-})(SignForm)
+export default SignForm

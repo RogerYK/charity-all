@@ -20,44 +20,38 @@ export default class SignPage extends Component {
       password: {value: ''},
     }
   }
-
-  componentDidMount() {
-    window.scrollTo(0, 0)
+  
+  handleChange = (changedFields) => {
+    console.log(changedFields)
+    this.setState((state) => ({
+      ...state,
+      ...changedFields,
+    }))
   }
 
-    handleChange = (changedFields) => {
-      console.log(changedFields)
-      this.setState((state) => ({
-        ...state,
-        ...changedFields,
-      }))
-    }
-
-    onSubmit = () => {
-      console.log(this.state)
-      const {phoneNumber, password} = this.state
-      console.log(phoneNumber.value, password.value)
-      api.Auth.sign({phoneNumber:phoneNumber.value, password: password.value})
-        .then(() => {
-          message.success('注册成功')
-          setTimeout(() => {
-            this.props.history.push('/login')
-          })
+  onSubmit = (values) => {
+    console.log(values)
+    api.Auth.sign({phoneNumber:values.phoneNumber, password: values.password})
+      .then(() => {
+        message.success('注册成功')
+        setTimeout(() => {
+          this.props.history.push('/login')
         })
-    }
+      })
+  }
 
-    render() {
-      return (
-        <div className={styles['sign-container']}>
-          <div className={styles["background-wrap"]}>
-            <Carousel effect="fade" dots={false} autoplay={true}>
-              {bgImgs.map((img, i) => <img key={i} className={styles["bg-img"]} src={img} alt="im" />)}
-            </Carousel>
-          </div>
-          <SignForm fields={this.state} onChange={this.handleChange} 
-            onSubmit={this.onSubmit}
-          />
+  render() {
+    return (
+      <div className={styles['sign-container']}>
+        <div className={styles["background-wrap"]}>
+          <Carousel effect="fade" dots={false} autoplay={true}>
+            {bgImgs.map((img, i) => <img key={i} className={styles["bg-img"]} src={img} alt="im" />)}
+          </Carousel>
         </div>
-      )
-    }
+        <SignForm fields={this.state} onChange={this.handleChange}
+          onSubmit={this.onSubmit}
+        />
+      </div>
+    )
+  }
 }
