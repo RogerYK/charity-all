@@ -28,5 +28,5 @@ export interface UserListParams {
   id?: number;
   nickName?: string;
   phoneNumber?: string;
-  pageParam?: {page?: number?; size?: number; direction?: string; field?: string;};
+  pageParam?: {page?: number; size?: number; direction?: string; field?: string;};
 }

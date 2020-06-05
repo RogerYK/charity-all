@@ -16,46 +16,46 @@ services:
     ports:
     - "6379:6379"
 
-  elasticsearch:
-    image: elasticsearch:6.4.3
-    environment:
-      - "discovery.type=single-node"
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    volumes:
-      - "./elasticsearch/.data:/usr/share/elasticsearch/data"
+#  elasticsearch:
+#    image: elasticsearch:6.4.3
+#    environment:
+#      - "discovery.type=single-node"
+#    ports:
+#      - "9200:9200"
+#      - "9300:9300"
+#    volumes:
+#      - "./elasticsearch/.data:/usr/share/elasticsearch/data"
 
 #  kibana:
 #    image: kibana:6.4.3
 #    ports:
 #      - "5601:5601"
 
-  namesrv:
-    image: rocketmqinc/rocketmq
-    ports:
-      - 9876:9876
-    environment:
-      JAVA_HOME: /usr/lib/jvm/jre
-      JAVA_OPT_EXT: "-Xms1g -Xmx1g -Xmn512m"
-    command: sh mqnamesrv
-
-  broker:
-    image: rocketmqinc/rocketmq
-    ports:
-      - 10909:10909
-      - 10911:10911
-      - 10912:10912
-    volumes:
-      - ./rocketmq/conf/broker.conf:/etc/rocketmq/conf/broker.conf
-      - ./rocketmq/.data:/root
-    #command: sh mqbroker -n namesrv:9876
-    command: sh mqbroker -n namesrv:9876 -c /etc/rocketmq/conf/broker.conf
-    depends_on:
-      - namesrv
-    environment:
-      JAVA_HOME: /usr/lib/jvm/jre
-      JAVA_OPT_EXT: "-Xms1g -Xmx1g -Xmn512m"
+#  namesrv:
+#    image: rocketmqinc/rocketmq
+#    ports:
+#      - 9876:9876
+#    environment:
+#      JAVA_HOME: /usr/lib/jvm/jre
+#      JAVA_OPT_EXT: "-Xms1g -Xmx1g -Xmn512m"
+#    command: sh mqnamesrv
+#
+#  broker:
+#    image: rocketmqinc/rocketmq
+#    ports:
+#      - 10909:10909
+#      - 10911:10911
+#      - 10912:10912
+#    volumes:
+#      - ./rocketmq/conf/broker.conf:/etc/rocketmq/conf/broker.conf
+#      - ./rocketmq/.data:/root
+#    #command: sh mqbroker -n namesrv:9876
+#    command: sh mqbroker -n namesrv:9876 -c /etc/rocketmq/conf/broker.conf
+#    depends_on:
+#      - namesrv
+#    environment:
+#      JAVA_HOME: /usr/lib/jvm/jre
+#      JAVA_OPT_EXT: "-Xms1g -Xmx1g -Xmn512m"
 #
 #  console:
 #    image: styletang/rocketmq-console-ng

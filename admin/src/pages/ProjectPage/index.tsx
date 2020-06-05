@@ -46,7 +46,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
 };
 
 const handleListQuery = async (params: any) => {
-  const { current, pageSize, sorter, ...restParams } = params!;
+  const { current, pageSize, sorter, status, ...restParams } = params!;
   const pageParam = {
     ...sorter,
     page: current,
@@ -54,6 +54,7 @@ const handleListQuery = async (params: any) => {
   };
   const { data } = await queryProject({
     ...restParams,
+    statusList: status ? [status] : undefined,
     pageParam,
   });
   return {
@@ -95,7 +96,7 @@ const TableList: React.FC<{}> = () => {
       title: '状态',
       dataIndex: 'status',
       filterMultiple: true,
-      filterDropdownVisible: false,
+      hideInSearch: true,
       valueEnum: {
         0: { text: '创建中', status: 'Default' },
         1: { text: '申请中', status: 'Processing' },
@@ -103,12 +104,6 @@ const TableList: React.FC<{}> = () => {
         3: { text: '成功', status: 'Success' },
         4: { text: '失败', status: 'Warning' },
       },
-    },
-    {
-      title: '详情',
-      dataIndex: 'content',
-      hideInSearch: true,
-      render: () => <Button>查看</Button>,
     },
     {
       title: '已筹款',
@@ -173,7 +168,7 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="查询表格"
+        headerTitle="项目信息"
         actionRef={actionRef}
         rowKey="key"
         onChange={(_, _filter, _sorter) => {

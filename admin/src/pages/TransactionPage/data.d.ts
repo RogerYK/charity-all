@@ -36,5 +36,5 @@ export interface TableListData {
 export interface TransactionListParams {
   id?: number;
   hash?: string;
-  pageParam?: {page?: number?; size?: number; direction?: string; field?: string;};
+  pageParam?: {page?: number; size?: number; direction?: string; field?: string;};
 }

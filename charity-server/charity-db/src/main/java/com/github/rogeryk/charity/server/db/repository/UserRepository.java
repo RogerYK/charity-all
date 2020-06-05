@@ -1,7 +1,6 @@
 package com.github.rogeryk.charity.server.db.repository;
 
 import com.github.rogeryk.charity.server.db.domain.User;
-import com.github.rogeryk.charity.server.db.domain.vo.CountData;
 import com.github.rogeryk.charity.server.db.domain.vo.PageData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
@@ -24,7 +24,7 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     long searchUserTotal(@Param("keyword") String keyword);
 
     @Query(value = "select date_format(created_time, '%Y-%m-%d') as `date`, count(*) as `count` from user where created_time >= :startTime and created_time < :endTime group by date_format(created_time, '%Y-%m-%d')", nativeQuery = true)
-    List<CountData> scanCountData(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+    List<Map<String, Object>> scanCountData(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
     @Query(value = "select * from `user` where user_status = 0 and id > :lastId order by id asc limit :size", nativeQuery = true)
     List<User> findCreatingUser(@Param("lastId") long lastId, @Param("size") int size);

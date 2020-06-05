@@ -19,7 +19,7 @@ class SignForm extends Component {
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   }
 
-  compareToFirstPassword = (rule, value, callback) => {
+  compareToFirstPassword = (rule, value) => {
     return new Promise( (resolve, reject) => {
       const form = this.formRef.current;
       if (value && value !== form.getFieldValue('password')) {
@@ -30,7 +30,7 @@ class SignForm extends Component {
     })
   }
 
-  validateToNextPassword = (rule, value, callback) => {
+  validateToNextPassword = (rule, value) => {
     return new Promise((resolve => {
       const form = this.formRef.current;
       if (value && this.state.confirmDirty) {

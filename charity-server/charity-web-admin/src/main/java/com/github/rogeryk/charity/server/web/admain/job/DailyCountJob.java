@@ -49,7 +49,8 @@ public class DailyCountJob {
 
 
     public void scanUserCount(LocalDate startTime, LocalDate endTime) {
-        List<CountData> data = userRepository.scanCountData(TimeUtils.localDateToDate(startTime), TimeUtils.localDateToDate(endTime));
+        List<Map<String, Object>> sourceData = userRepository.scanCountData(TimeUtils.localDateToDate(startTime), TimeUtils.localDateToDate(endTime));
+        List<CountData> data = mapToCountData(sourceData);
         data = fillData(startTime, endTime, data);
         updateCountAnalysis(data, CountAnalysis.CountType.User);
     }
@@ -57,7 +58,7 @@ public class DailyCountJob {
 
     public void scanProjectCount(LocalDate startTime, LocalDate endTime) {
         List<Map<String, Object>> sourceData = projectRepository.scanCountData(TimeUtils.localDateToDate(startTime), TimeUtils.localDateToDate(endTime));
-        List<CountData> data = sourceData.stream().map(v -> new CountData((String) v.get("date"), ((BigInteger) v.get("count")).intValue())).collect(Collectors.toList());
+        List<CountData> data = mapToCountData(sourceData);
         data = fillData(startTime, endTime, data);
         log.info("project data {}", data);
         updateCountAnalysis(data, CountAnalysis.CountType.Project);
@@ -65,7 +66,7 @@ public class DailyCountJob {
 
     public void scanTransactionCount(LocalDate startTime, LocalDate endTime) {
         List<Map<String, Object>> sourceData = transactionRepository.scanCountData(TimeUtils.localDateToDate(startTime), TimeUtils.localDateToDate(endTime));
-        List<CountData> data = sourceData.stream().map(v -> new CountData((String) v.get("data"), ((BigInteger) v.get("count")).intValue())).collect(Collectors.toList());
+        List<CountData> data = mapToCountData(sourceData);
         data = fillData(startTime, endTime, data);
         updateCountAnalysis(data, CountAnalysis.CountType.Transaction);
     }
@@ -82,6 +83,12 @@ public class DailyCountJob {
             countAnalysis.setCount(cd.getCount());
             countAnalysisRepository.save(countAnalysis);
         }
+    }
+
+    private static List<CountData> mapToCountData(List<Map<String, Object>> data) {
+        return data.stream()
+                .map(v -> new CountData((String) v.get("data"), ((BigInteger) v.get("count")).intValue()))
+                .collect(Collectors.toList());
     }
 
     private List<CountData> fillData(LocalDate startTime, LocalDate endTime, List<CountData> data) {

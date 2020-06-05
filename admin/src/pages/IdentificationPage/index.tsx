@@ -208,7 +208,7 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="查询表格"
+        headerTitle="认证信息"
         actionRef={actionRef}
         rowKey="key"
         onChange={(_, _filter, _sorter) => {
