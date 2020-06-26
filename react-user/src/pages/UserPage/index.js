@@ -16,6 +16,8 @@ import Authentication from './Authentication';
 import { observer, inject } from 'mobx-react';
 import ReleaseNews from './ReleaseNews';
 
+import defaultAvatar from './charity.png'
+
 @inject("userStore", "commonStore")
 @observer
 export default class UserPage extends Component {
@@ -39,7 +41,7 @@ export default class UserPage extends Component {
                 </>
                   :
                 <>
-                  <Avatar src={currentUser.avatar} style={{ marginRight: "20px" }} />
+                  <Avatar src={currentUser.avatar ? currentUser.avatar : defaultAvatar} style={{ marginRight: "20px" }} />
                   <span>{currentUser.nickname}</span>
                 </>
 

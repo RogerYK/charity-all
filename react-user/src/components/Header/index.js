@@ -73,7 +73,7 @@ const Header = withRouter(
                     ) : (
                       <img
                         className={styles["avatar"]}
-                        src={currentUser.avatar}
+                        src={currentUser.avatar? currentUser.avatar : logo}
                         alt="avatar"
                       />
                     )}

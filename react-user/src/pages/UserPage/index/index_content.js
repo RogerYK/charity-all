@@ -3,6 +3,7 @@ import { Card, Avatar, Divider } from 'antd';
 
 import styles from './index_content.module.scss'
 import { observer, inject } from 'mobx-react';
+import defaultAvatar from './charity.png'
 
 @inject('userStore')
 @observer
@@ -18,7 +19,7 @@ export default class IndexContent extends Component {
           hoverable={false}
         >
           <div className={styles['user-account']}>
-            <Avatar size={64} src={user.avatar} />
+            <Avatar size={64} src={user.avatar ? user.avatar : defaultAvatar} />
             <div className={styles['name']}>{user.nickname}</div>
             <div className={styles['brief']}>{user.presentation ? user.presentation: '还没有个人介绍，用一句话来介绍你自己吧'}</div>
           </div>
